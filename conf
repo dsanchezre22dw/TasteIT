@@ -1,0 +1,11 @@
+#!/bin/bash
+echo "Escribe tu nombre: "
+read a
+if [ "${a}" == "Jon" ]
+then
+git config --global user.name "Jon Seijas"
+git config --global user.email "jseijasco22dw@ikzubirimanteo.com"
+else
+git config --global user.name "David Sanchez"
+git config --global user.email "dsanchezre22dw@ikzubirimanteo.com"
+fi
