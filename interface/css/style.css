@@ -7,8 +7,11 @@
     --primary-color: #D70100;
     --secondary-color: #BA5555;
     --tertiary-color: #E9DFC3;
+
     --primary-text-color: #000000;
     --secondary-text-color: #FAF5F4;
+
+    --bg-color: #fdd56f1a;
 }
 
 /* Future
@@ -27,7 +30,18 @@
     border-radius: 9999px;
 }
 
-body{
+.body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    background-color: var(--bg-color);
+}
+
+#container{
+    max-width: 1320px;
+    width: 100vw;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,19 +50,6 @@ body{
 section{
     margin-top: 50px;
     margin-bottom: 50px;
-}
-
-.hr{
-    background-color: var(--secondary-color);
-    width: 50vw;
-    height: 5px;
-    border-radius: 10px;
-    margin: 10px;
-    border: 1px solid var(--secondary-color);
-}
-
-h2{
-    text-align: center;
 }
 
 header{
@@ -74,9 +75,15 @@ header{
     border-radius: 20px;
 }
 
+#mainTitle{
+    font-size: 6rem;
+    margin: 8rem 0;
+}
+
 main h5{
-    width: 17rem;
-    margin-bottom: 50px;
+    max-width: 50rem;
+    width: 50%;
+    margin-bottom: 15rem;
 }
 
 #pasta{
@@ -84,14 +91,84 @@ main h5{
 
     z-index: -1;
 
-    top: 11%;
-    left: 60%;
+    top: 35%;
+    left: 53%;
 
-    width: 10rem;
+    width: 50%;
+    max-width: 40rem;
 }
 
-.functions article{
+#tomate{
+    position: absolute;
+
+    z-index: -1;
+
+    top: 13%;
+    left: -23%;
+
+    width: 50%;
+    max-width: 40rem;
+}
+
+.hr{
+    background-color: var(--secondary-color);
+    width: 80%;
+    height: 5px;
+    border-radius: 10px;
+    margin: 10px;
+    border: 1px solid var(--secondary-color);
+}
+
+.sectionTitle{
+    text-align: center;
+    margin: 2rem;
+
+    font-size: 5rem;
+}
+
+#recipe{
     display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carousel{
+    width: 95%;
+}
+
+.carouselCard{
+    width: 100%;
+    padding: 2%;
+    border-radius: 50px;
+
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+    background-color: var(--tertiary-color);
+
+    align-self: center;
+    justify-self: center;
+}
+
+.carouselCard img{
+    width: 40%;
+}
+
+.carouselCard div{
+    width: 40%;
+}
+
+#functions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#functions article{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 }
 
 svg{
