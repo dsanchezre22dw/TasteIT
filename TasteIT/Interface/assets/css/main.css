@@ -295,8 +295,8 @@ section {
   color: var(--color-primary);
 }
 
-.header .btn-book-a-table,
-.header .btn-book-a-table:focus {
+.header .btn-register,
+.header .btn-register:focus {
   font-size: 14px;
   color: #fff;
   background: var(--color-primary);
@@ -306,8 +306,8 @@ section {
   transition: 0.3s;
 }
 
-.header .btn-book-a-table:hover,
-.header .btn-book-a-table:focus:hover {
+.header .btn-register:hover,
+.header .btn-register:focus:hover {
   color: #fff;
   background: rgba(206, 18, 18, 0.8);
 }
@@ -360,7 +360,7 @@ section {
   left: 10%;
   right: 10%;
   bottom: 10%;
-  background-color: #fff;
+  background-color: #ffffff73 ;
   box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.08);
   padding: 20px;
   text-align: center;
@@ -466,6 +466,19 @@ section {
 .about .play-btn:hover:after {
   border-left: 15px solid var(--color-primary);
   transform: scale(20);
+}
+
+.about button[type=submit] {
+  background: var(--color-primary);
+  border: 0;
+  padding: 14px 60px;
+  color: #fff;
+  transition: 0.4s;
+  border-radius: 50px;
+}
+
+.about button[type=submit]:hover {
+  background: #ec2727;
 }
 
 @keyframes pulsate-btn {
@@ -1289,7 +1302,7 @@ section {
   margin-bottom: 30px;
 }
 
-.hero .btn-book-a-table {
+.hero .btn-register {
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 1px;
@@ -1302,7 +1315,7 @@ section {
   box-shadow: 0 8px 28px rgba(206, 18, 18, 0.2);
 }
 
-.hero .btn-book-a-table:hover {
+.hero .btn-register:hover {
   background: rgba(206, 18, 18, 0.8);
   box-shadow: 0 8px 28px rgba(206, 18, 18, 0.45);
 }
