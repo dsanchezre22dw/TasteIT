@@ -1,6 +1,7 @@
 *{
     margin: 0;
     padding: 0;
+
 }
 
 :root{
@@ -199,6 +200,13 @@ svg{
     border-radius: 9999px;
 }
 
+footer{
+    width: 100vw;
+    padding: 2rem 0;
+    background-color: var(--tertiary-color);
+    text-align: center;
+}
+
 .animated-element {
     opacity: 0;
     transform: translateY(20px); /* Desplazamiento inicial */
@@ -210,24 +218,32 @@ svg{
     transform: translateY(0);
 }
 
+@media screen and (max-width: 1024px) {
+    #pasta{
+        display: none;
+    }
 
-@media screen and (max-width: 600px) {
     #mainTitle{
-        font-size: 4rem;
-        margin: 5rem 0;
-        padding: 0.5rem;
-        text-align: right;
+        padding: 1rem;
     }
 
     main h5{
         width: 100%;
         margin: 1.5rem;
-        margin-bottom: 7rem;
         text-align: center;
     }
+}
 
-    #pasta{
-        display: none;
+
+@media screen and (max-width: 768px) {
+    #mainTitle{
+        font-size: 4rem;
+        margin: 5rem 0;
+        text-align: right;
+    }
+
+    main h5{
+        margin-bottom: 7rem;
     }
 
     #tomate{
@@ -270,6 +286,11 @@ svg{
     }
 
     #functions article{
-        flex-direction: column;
+        gap: 0;
+    }
+
+    #functions article *{
+
+        margin: .7rem;
     }
 }

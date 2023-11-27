@@ -14,7 +14,7 @@
     </header>
     <div id="container">
       <main>
-          <h1 class="animated-element" id="mainTitle">Impress your friends and family with<br>a recipe</h1>
+          <h1 class="animated-element" id="mainTitle">Impress your family and friends with<br>a recipe</h1>
           <h5 class="animated-element">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus ante at arcu molestie, vel faucibus mauris suscipit</h5>
           <img id="pasta" class="animated-element" src="media/Pasta.png" alt="">
           <img id="tomate" class="animated-element" src="media/tomate.png" alt="">
@@ -22,7 +22,7 @@
 
       <hr class="animated-element hr">
 
-      <section id="recipe">
+      <section id="recipe" class="row">
           <h2 class="animated-element sectionTitle">Recipes</h2>
           <div id="carouselExampleCaptions" class="carousel slide animated-element">
               <div class="carousel-indicators">
@@ -84,7 +84,7 @@
 
       <hr class="animated-element hr">
 
-      <section>
+      <section class="row">
           <h2 class="animated-element sectionTitle">What is TasteIT?</h2>
           <article>
               <p class="animated-element">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus ante at arcu molestie, vel faucibus mauris suscipit. Nullam tempor mi at velit porttitor euismod. Morbi porta purus in feugiat varius.</p>
@@ -94,7 +94,7 @@
 
       <hr class="animated-element hr">
 
-      <section>
+      <section class="row">
           <h2 class="animated-element sectionTitle">What can you do?</h2>
           <h3 class="animated-element subtitle">Lorem ipsum dolor</h3>
           <div id="functions">
@@ -169,10 +169,29 @@
       <hr class="animated-element hr">
 
       <section>
-          <h2 class="animated-element sectionTitle">What is TasteIT?</h2>
+          <h2 class="animated-element sectionTitle">Contact Us</h2>
           <article>
-              <p class="animated-element">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus ante at arcu molestie, vel faucibus mauris suscipit. Nullam tempor mi at velit porttitor euismod. Morbi porta purus in feugiat varius.</p>
-              <p class="animated-element">Quisque sit amet neque in lorem porta rutrum sit amet vel dolor. Sed vel vehicula ex, sit amet eleifend nulla. Curabitur feugiat sem vitae enim faucibus commodo. Donec placerat nibh sodales auctor accumsan. Fusce vel aliquam diam.</p>
+            <div class="form-floating mb-3 animated-element">
+              <input type="text" class="form-control" id="floatingInput" placeholder="Name">
+              <label for="floatingInput">Name</label>
+            </div>
+            <div class="form-floating mb-3 animated-element">
+              <input type="text" class="form-control" id="floatingInput" placeholder="Surname">
+              <label for="floatingPassword">Surname</label>
+            </div>
+            <div class="form-floating mb-3 animated-element">
+              <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+              <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating mb-3 animated-element">
+              <input type="text" class="form-control" id="floatingInput" placeholder="Subject">
+              <label for="floatingInput">Subject</label>
+            </div>
+            <div class="form-floating mb-3 animated-element">
+              <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+              <label for="floatingTextarea2">Comments</label>
+            </div>
+            <input class="btn btn-primary mb-3" type="submit" value="Input">
           </article>
       </section>
     </div>
