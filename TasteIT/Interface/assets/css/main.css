@@ -1120,7 +1120,7 @@ section {
   }
 
   .gallery .swiper-slide-active {
-    border: 6px solid var(--color-primary);
+    border: 6px solid var(--color-primary); //ESTO
     padding: 4px;
     background: #fff;
     z-index: 1;
