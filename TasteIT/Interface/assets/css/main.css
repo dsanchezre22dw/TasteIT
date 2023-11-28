@@ -494,6 +494,16 @@ section {
 }
 
 /*--------------------------------------------------------------
+# Functionalities Section
+--------------------------------------------------------------*/
+#movil_silueta{
+  width: 600px;
+  display: flex;
+}
+
+
+
+/*--------------------------------------------------------------
 # Why Us Section
 --------------------------------------------------------------*/
 .why-us .why-box {
@@ -1435,4 +1445,15 @@ section {
 
 .footer .credits a {
   color: #fff;
+}
+
+
+.a{
+  background-color: green;
+  margin-bottom: 20px;
+}
+
+.b{
+  background-color: yellow;
+  margin: 0 auto;
 }
