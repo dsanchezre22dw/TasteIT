@@ -497,10 +497,43 @@ section {
 # Functionalities Section
 --------------------------------------------------------------*/
 #movil_silueta{
-  width: 600px;
   display: flex;
+  width: 300px;
+  margin: 0 auto;
 }
 
+.content_functionalities{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  height: 100%;
+  background-color: purple;
+}
+
+.functionality{
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.functionality img{
+  width: 15%;
+  border: 1px solid red;
+  padding: 10px;
+  background-color: red;
+  border-radius: 100%;
+}
+
+.name_functionality{
+  background-color: yellow;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 
 /*--------------------------------------------------------------
@@ -1448,12 +1481,3 @@ section {
 }
 
 
-.a{
-  background-color: green;
-  margin-bottom: 20px;
-}
-
-.b{
-  background-color: yellow;
-  margin: 0 auto;
-}
