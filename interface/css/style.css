@@ -1,7 +1,6 @@
 *{
     margin: 0;
     padding: 0;
-
 }
 
 :root{
@@ -116,7 +115,7 @@ main h5{
     width: 80%;
     height: 5px;
     border-radius: 10px;
-    margin: 10px;
+    margin: 50px 0;
     border: 1px solid var(--secondary-color);
 }
 
@@ -200,6 +199,21 @@ svg{
     border-radius: 9999px;
 }
 
+#floatingInput:focus{
+    box-shadow: 0 0 10px var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+#floatingTextarea2:focus{
+    box-shadow: 0 0 10px var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn{
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
 footer{
     width: 100vw;
     padding: 2rem 0;
@@ -274,7 +288,8 @@ footer{
     }
 
     .sectionTitle{
-        margin: 1.5rem;
+        margin: 1rem;
+        font-size: 4rem;
     }
 
     .subtitle{
