@@ -2,7 +2,7 @@ import React from 'react';
 
 const Testimonials = ()=>{
     return(
-      <section id="testimonials" class="testimonials section-bg">
+      <section id="testimonials" class="testimonials">
         <div class="container" data-aos="fade-up">
 
           <div class="section-header">
