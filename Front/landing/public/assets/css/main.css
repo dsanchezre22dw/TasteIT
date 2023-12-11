@@ -578,27 +578,6 @@ section {
 .functionality img{
   width: 15%;
   padding: 8px;
-  border-radius: 100%;
-}
-
-#func1{
-  border: 1px solid #ffb5b5;
-  background-color: #ffb5b5;
-}
-
-#func2{
-  border: 1px solid #f0847f;
-  background-color: #f0847f;
-}
-
-#func3{
-  border: 1px solid #d9948d;
-  background-color: #d9948d;
-}
-
-#func4{
-  border: 1px solid #ce4739;
-  background-color: #ce4739;
 }
 
 .name_functionality{
