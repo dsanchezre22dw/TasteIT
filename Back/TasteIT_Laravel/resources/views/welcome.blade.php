@@ -136,5 +136,12 @@
                 </div>
             </div>
         </div>
+        <div>
+            {{$user->fridge->id}}
+            
+            @foreach($user->recipe as $recipe)
+                {{$recipe->title}}
+            @endforeach
+        </div>
     </body>
 </html>

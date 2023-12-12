@@ -16,4 +16,7 @@ class Recipe extends Model
         'difficulty',
     ];
     
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
 }

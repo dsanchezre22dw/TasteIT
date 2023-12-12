@@ -28,4 +28,16 @@ class User extends Model
         'password' => 'hashed',
     ];
 
+    public function shopping_list() {
+        return $this->hasOne('App\Models\Shopping_list');
+    }
+    
+    public function fridge() {
+        return $this->hasOne('App\Models\Fridge');
+    }
+
+    public function recipe() {
+        return $this->hasMany('App\Models\Recipe');
+    }
+
 }
