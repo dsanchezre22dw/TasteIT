@@ -1,3 +1,5 @@
+import React from 'react';
+
 import TestimonialsItem from "./TestimonialsItem";
 
 export default function TestimonialsList(){

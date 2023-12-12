@@ -1,3 +1,5 @@
+import React from 'react';
+
 import StatsItem from "./StatsItem";
 
 export default function StatsList(){

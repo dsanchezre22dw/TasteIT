@@ -1,14 +1,12 @@
 import React from 'react';
+import SectionTitle from './SectionTitle';
 
 const About = ()=>{
     return(
       <section id="about" className="about">
         <div className="container" data-aos="fade-up">
 
-          <div className="section-header">
-            <h2>About Us</h2>
-            <p>Learn More <span>About Us</span></p>
-          </div>
+          <SectionTitle title="About Us" color="What is" span="Taste IT?"/>
 
           <div className="row gy-4">
           <div className="col-lg-7 position-relative about-img" style={{ backgroundImage: 'url(assets/img/about-4.jpg)', backgroundSize: 'cover' }} data-aos="fade-up" data-aos-delay="150">              <div className="call-us position-absolute">

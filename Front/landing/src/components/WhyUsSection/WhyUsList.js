@@ -1,3 +1,5 @@
+import React from 'react';
+
 import WhyUsItem from "./WhyUsItem";
 
 export default function WhyUsList(){

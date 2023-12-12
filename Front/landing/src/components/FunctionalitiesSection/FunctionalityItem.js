@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function FunctionalityItem(props){
     return (
         <div className="functionality d-flex">

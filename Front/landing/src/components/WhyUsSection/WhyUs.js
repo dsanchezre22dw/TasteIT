@@ -15,7 +15,7 @@ const WhyUs = ()=>{
                   We are more than a recipe platform. We offer a unique culinary experience, celebrating diversity, inspiring creativity, and connecting a community passionate about food. 
                 </p>
                 <div className="text-center">
-                  <a href="#" className="more-btn">Learn More <i className="bx bx-chevron-right"></i></a>
+                  <a href="#" className="more-btn">Learn More</a>
                 </div>
               </div>
             </div>

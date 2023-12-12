@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function WhyUsItem(props){
     return (
         <div className="col-xl-4" data-aos="fade-up" data-aos-delay="200">

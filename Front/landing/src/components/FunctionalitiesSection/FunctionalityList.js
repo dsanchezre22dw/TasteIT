@@ -1,3 +1,4 @@
+import React from 'react';
 import FunctionalityItem from "./FunctionalityItem";
 
 export default function FunctionalityList(){

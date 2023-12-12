@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function TestimonialsItem(props){
     return (
         <div className="swiper-slide">
@@ -33,7 +35,5 @@ function StarRating({ count }) {
       ));
     };
   
-    return (
-        generateStars()
-    );
-  }
+    return (generateStars());
+}

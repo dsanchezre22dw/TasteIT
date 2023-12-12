@@ -1,4 +1,5 @@
 import React from 'react';
+import IconButton from './IconButton';
 
 const Hero = ()=>{
     return(
@@ -11,6 +12,7 @@ const Hero = ()=>{
             <div className="d-flex" data-aos="fade-up" data-aos-delay="200">
               <a href="#" className="btn-register">Register</a>
               <a href="https://www.youtube.com/watch?v=b1DC4TxeSdE" className="glightbox btn-watch-video d-flex align-items-center"><i className="bi bi-play-circle"></i><span>Watch Video</span></a>
+              <IconButton href="https://www.youtube.com/watch?v=b1DC4TxeSdE"/>
             </div>
           </div>
           <div className="col-lg-5 order-1 order-lg-2 text-center text-lg-start">

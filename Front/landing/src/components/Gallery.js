@@ -1,14 +1,12 @@
 import React from 'react';
+import SectionTitle from './SectionTitle';
 
 const Gallery = ()=>{
     return(
       <section id="gallery" className="gallery section-bg">
         <div className="container" data-aos="fade-up">
 
-          <div className="section-header">
-            <h2>gallery</h2>
-            <p>Check <span>Our Recipes</span></p>
-          </div>
+          <SectionTitle title="Gallery" color="Check" span="Our Recipes"/>
 
           <div className="container">
             <div className="swiper tranding-slider">

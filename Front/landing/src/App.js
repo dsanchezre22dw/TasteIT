@@ -1,17 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 import About from './components/About';
-import Chefs from './components/Chefs';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import Functionalities from './components/Functionalities';
+import Chefs from './components/ChefsSection/Chefs';
+import Contact from './components/ContactSection/Contact';
+import Footer from './components/FooterSection/Footer';
+import Functionalities from './components/FunctionalitiesSection/Functionalities';
 import Gallery from './components/Gallery';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Stats from './components/Stats';
-import Testimonials from './components/Testimonials';
-import WhyUs from './components/WhyUs';
-
+import Stats from './components/StatsSection/Stats';
+import Testimonials from './components/TestimonialsSection/Testimonials';
+import WhyUs from './components/WhyUsSection/WhyUs';
 
 
 function App() {
@@ -22,9 +20,9 @@ function App() {
     <main id="main">
       <About/>
       <Functionalities/>
+      <Gallery/>
       <WhyUs/>
       <Stats/>
-      <Gallery/>
       <Testimonials/>
       <Chefs/>
       <Contact/>

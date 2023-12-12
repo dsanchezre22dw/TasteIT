@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function StatsItem(props){
     return (
         <div className="col-lg-3 col-md-6">
