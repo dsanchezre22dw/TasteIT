@@ -16,5 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $user = App\Models\User::first();
 
-    return view('welcome')->with('user',$user);
+    $ingredient = App\Models\Ingredient::first();
+
+    return view('welcome',['user' => $user,'ingredient' => $ingredient]);
 });

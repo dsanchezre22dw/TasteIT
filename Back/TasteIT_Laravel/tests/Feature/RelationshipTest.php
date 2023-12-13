@@ -39,5 +39,12 @@ class RelationsTest extends TestCase
      * Many to Many
      */
 
+     public function ingredient_recipe_relationship(): void
+     {
+         $recipe = Recipe::find(2);
+         $recipe->ingredients()->attach(1);
+ 
+         $this->assertNotNull($recipe);
+     }
 
 }
