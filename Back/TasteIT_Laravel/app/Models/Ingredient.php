@@ -13,4 +13,7 @@ class Ingredient extends Model
         'name',
     ];
 
+    public function recipes() {
+        return $this->belongsToMany('App\Models\Recipe')->withPivot('amount');
+    }
 }

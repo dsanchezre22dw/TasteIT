@@ -35,4 +35,9 @@ class RelationsTest extends TestCase
          $this->assertEquals($recipe,$recipeId);
      }
 
+    /**
+     * Many to Many
+     */
+
+
 }
