@@ -25,6 +25,19 @@ return new class extends Migration
             
             $table->timestamps();
         });
+
+        /*
+         Trigger for creating a fridge and shopping list
+         
+        DB::unprepared('
+            CREATE TRIGGER new_fridge_shopping_list
+            AFTER INSERT ON users
+            FOR EACH ROW
+            BEGIN
+                insert into fridges values (new.id);
+                update users 
+            END;
+        ');*/
     }
 
     /**

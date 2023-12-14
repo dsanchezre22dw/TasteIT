@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
+use App\Events\CreatedUser;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -23,6 +24,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+
         return [
             'username' => $this->faker->name(),
             'firstName' => $this->faker->firstName(),
@@ -31,5 +33,12 @@ class UserFactory extends Factory
             'password' => '1234567890',
             'enabled' => true,
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user) {
+            event(new CreatedUser($user));
+        });
     }
 }
