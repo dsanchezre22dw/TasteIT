@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('firstName');
             $table->string('surname')->nullable();
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('password');
             $table->string('profileImg')->nullable();
             $table->enum('type',['standard','chef','admin']);
