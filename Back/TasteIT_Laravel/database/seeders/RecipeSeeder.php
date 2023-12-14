@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Recipe;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class RecipeSeeder extends Seeder
 {
@@ -12,6 +13,6 @@ class RecipeSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Recipe::factory(200)->create();
     }
 }

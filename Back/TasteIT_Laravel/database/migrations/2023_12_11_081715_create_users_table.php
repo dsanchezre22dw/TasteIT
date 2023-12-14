@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('profileImg')->nullable();
-            $table->enum('type',['standard','chef','admin']);
-            $table->boolean('enabled');
+            $table->enum('type',['standard','chef','admin'])->default('standard');
+            $table->boolean('enabled')->default(true);
             
             $table->timestamps();
         });

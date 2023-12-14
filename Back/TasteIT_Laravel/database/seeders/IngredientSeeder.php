@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Ingredient;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class IngredientSeeder extends Seeder
 {
@@ -12,6 +13,6 @@ class IngredientSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Ingredient::factory(1000)->create();
     }
 }
