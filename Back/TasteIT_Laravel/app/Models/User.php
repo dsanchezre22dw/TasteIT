@@ -52,8 +52,12 @@ class User extends Model
         return $this->belongsToMany('App\Models\Recipe','valorations')->withPivot('id','valoration','description');
     }
 
-    public function follows() {
-        return $this->belongsToMany('App\Models\User','follows');
+    public function followers() {
+        return $this->belongsToMany('App\Models\User','follows','followed_id','follower_id');
+    }
+
+    public function following() {
+        return $this->belongsToMany('App\Models\User','follows','follower_id','followed_id');
     }
 
 }

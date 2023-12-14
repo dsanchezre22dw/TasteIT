@@ -170,6 +170,16 @@
                 {{$valoration->pivot->valoration}}
                 {{$valoration->pivot->description}}
             @endforeach
+            <br>
+            {{$user->firstName}}
+            @foreach($user->following as $follow)
+                {{$follow->firstName}}
+            @endforeach
+            <br>
+            @foreach($ingredient->ingredient_types as $type)
+                {{$type->name}}
+            @endforeach
+            <br>
         </div>
     </body>
 </html>

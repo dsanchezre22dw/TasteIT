@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $user = App\Models\User::first();
+    $user = App\Models\User::find(1);
 
     $ingredient = App\Models\Ingredient::first();
 
