@@ -40,4 +40,20 @@ class User extends Model
         return $this->hasMany('App\Models\Recipe');
     }
 
+    public function saves() {
+        return $this->belongsToMany('App\Models\Recipe','saves');
+    }
+
+    public function comments() {
+        return $this->belongsToMany('App\Models\Recipe','comments')->withPivot('comment');
+    }
+
+    public function valorations() {
+        return $this->belongsToMany('App\Models\Recipe','valorations')->withPivot('id','valoration','description');
+    }
+
+    public function follows() {
+        return $this->belongsToMany('App\Models\User','follows');
+    }
+
 }

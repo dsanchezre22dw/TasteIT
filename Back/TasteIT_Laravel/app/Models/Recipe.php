@@ -23,4 +23,16 @@ class Recipe extends Model
     public function ingredients() {
         return $this->belongsToMany('App\Models\Ingredient')->withPivot('amount');
     }
+
+    public function saves() {
+        return $this->belongsToMany('App\Models\User','saves');
+    }
+
+    public function comments() {
+        return $this->belongsToMany('App\Models\User','comments')->withPivot('comment');
+    }
+
+    public function valorations() {
+        return $this->belongsToMany('App\Models\User','valorations')->withPivot('id','valoration','description');
+    }
 }

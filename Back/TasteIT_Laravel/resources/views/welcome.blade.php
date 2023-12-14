@@ -157,6 +157,19 @@
                 {{$fridge->id}}
             @endforeach
             <br>
+            @foreach($user->saves as $save)
+                {{$save->title}}
+            @endforeach
+            <br>
+            @foreach($user->comments as $comment)
+                {{$comment->pivot->comment}}
+            @endforeach
+            <br>
+            @foreach($user->valorations as $valoration)
+                {{$valoration->title}}
+                {{$valoration->pivot->valoration}}
+                {{$valoration->pivot->description}}
+            @endforeach
         </div>
     </body>
 </html>
