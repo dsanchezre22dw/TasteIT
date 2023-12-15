@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
@@ -16,6 +16,12 @@ export default function Register() {
         password_confirmation: '',
     });
 
+    const [errorMessages, setErrorMessages] = useState({
+        firstname: '',
+        surname: '',
+        // Otros campos que necesiten validación
+    });
+
     useEffect(() => {
         return () => {
             reset('password', 'password_confirmation');
@@ -25,14 +31,76 @@ export default function Register() {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('register'));
+        var errors_exist = "";
+
+        errors_exist += validateFirstName();
+        errors_exist += validateSurname();
+
+        if (errors_exist === ""){
+            post(route('register'));
+        }
+
     };
+
+    function validateFirstName(){
+        if (!(allLetter(data.firstname))){
+            setErrorMessages((prevErrors) => ({
+                ...prevErrors,
+                firstname: 'Field firstname can only contain letters',
+            }));
+
+            return "yes";
+
+        }else{
+
+            console.log('hola1')
+            setErrorMessages((prevErrors) => ({
+                ...prevErrors,
+                firstname: '',
+            }));
+
+            return "";
+        }
+    }
+
+    function validateSurname(){
+        if (!(allLetter(data.surname))){
+            setErrorMessages((prevErrors) => ({
+                ...prevErrors,
+                surname: 'Field surname can only contain letters',
+            }));
+
+            return "yes";
+
+        }else{
+
+            console.log('hola2')
+            setErrorMessages((prevErrors) => ({
+                ...prevErrors,
+                surname: '',
+            }));
+
+            return "";
+        }
+    }
+
+
+    function allLetter(inputtxt){
+
+        var letters = /^[A-Za-z]+$/;
+
+        if (inputtxt.match(letters)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     return (
         <GuestLayout>
             <Head title="Register" />
 
-            <form onSubmit={submit}>
+            <form name="form_register" onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="firstname" value="First name*" />
 
@@ -45,9 +113,11 @@ export default function Register() {
                         isFocused={true}
                         onChange={(e) => setData('firstname', e.target.value)}
                         required
+                        maxLength='50'
                     />
 
-                    <InputError message={errors.firstname} className="mt-2" />
+                    <InputError message={errorMessages.firstname} className="mt-2" />
+
                 </div>
 
                 <div className="mt-4">
@@ -60,9 +130,11 @@ export default function Register() {
                         className="mt-1 block w-full"
                         autoComplete="name"
                         onChange={(e) => setData('surname', e.target.value)}
+                        maxLength='100'
                     />
 
-                    <InputError message={errors.surname} className="mt-2" />
+                    <InputError message={errorMessages.firstname} className="mt-2" />          
+                    
                 </div>
 
                 <div className="mt-4">
@@ -76,6 +148,7 @@ export default function Register() {
                         autoComplete="username"
                         onChange={(e) => setData('username', e.target.value)}
                         required
+                        maxLength='50'
                     />
 
                     <InputError message={errors.username} className="mt-2" />
