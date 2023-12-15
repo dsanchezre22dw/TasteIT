@@ -20,7 +20,11 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(UserSeeder::class);
-        //$this->call(RecipeSeeder::class);
-        //$this->call(IngredientSeeder::class);
+        $this->call(RecipeSeeder::class);
+        $this->call(IngredientSeeder::class);
+        $this->call(Ingredient_typeSeeder::class);
+        $this->call(ValorationSeeder::class);
+        $this->call(CommentSeeder::class);
+        $this->call(SaveSeeder::class);
     }
 }

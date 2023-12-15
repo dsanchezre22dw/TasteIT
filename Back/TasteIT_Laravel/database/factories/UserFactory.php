@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Events\CreatedUser;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;

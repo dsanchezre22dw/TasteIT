@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('recipe_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
 
             $table->enum('valoration',[1,2,3,4,5]);
-            $table->string('description')->nullable();
+            $table->string('description',1024)->nullable();
 
             $table->timestamps();
         });

@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Models\Fridge;
+use App\Models\Shopping_list;
 use App\Events\CreatedUser;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 
-class CreateFridge
+class CreateShoppingList
 {
     /**
      * Create the event listener.
@@ -22,13 +22,10 @@ class CreateFridge
      */
     public function handle(CreatedUser $event): void
     {
-        // Crear un nuevo frigorífico
-        $fridge = Fridge::create([
+        $shopping_list = Shopping_list::create([
             'user_id' => $event->user->id,
-            // Agrega aquí cualquier otro campo que necesites inicializar
         ]);
 
-        // Actualizar la columna frigo_id del usuario con el ID del nuevo frigorífico
-        $event->user->update(['fridge_id' => $fridge->id]);
+        $event->user->update(['shopping_list_id' => $shopping_list->id]);
     }
 }
