@@ -19,8 +19,70 @@ export default function Register() {
     const [errorMessages, setErrorMessages] = useState({
         firstname: '',
         surname: '',
+        password: '',
         // Otros campos que necesiten validación
     });
+
+    useEffect(() => {
+        var myInput = document.getElementById("password");
+        var letter = document.getElementById("letter");
+        var capital = document.getElementById("capital");
+        var number = document.getElementById("number");
+        var length = document.getElementById("length");
+      
+        // When the user clicks on the password field, show the message box
+        myInput.onfocus = function() {
+          document.getElementById("message").style.display = "block";
+        }
+      
+        // When the user clicks outside of the password field, hide the message box
+        myInput.onblur = function() {
+          document.getElementById("message").style.display = "none";
+        }
+      
+        // When the user starts to type something inside the password field
+        myInput.onkeyup = function() {
+          // Validate lowercase letters
+          var lowerCaseLetters = /[a-z]/g;
+          if(myInput.value.match(lowerCaseLetters)) {  
+            letter.classList.remove("invalid");
+            letter.classList.add("valid");
+          } else {
+            letter.classList.remove("valid");
+            letter.classList.add("invalid");
+          }
+          
+          // Validate capital letters
+          var upperCaseLetters = /[A-Z]/g;
+          if(myInput.value.match(upperCaseLetters)) {  
+            capital.classList.remove("invalid");
+            capital.classList.add("valid");
+          } else {
+            capital.classList.remove("valid");
+            capital.classList.add("invalid");
+          }
+      
+          // Validate numbers
+          var numbers = /[0-9]/g;
+          if(myInput.value.match(numbers)) {  
+            number.classList.remove("invalid");
+            number.classList.add("valid");
+          } else {
+            number.classList.remove("valid");
+            number.classList.add("invalid");
+          }
+          
+          // Validate length
+          if(myInput.value.length >= 8) {
+            length.classList.remove("invalid");
+            length.classList.add("valid");
+          } else {
+            length.classList.remove("valid");
+            length.classList.add("invalid");
+          }
+        }
+      
+    }, []);
 
     useEffect(() => {
         return () => {
@@ -35,6 +97,7 @@ export default function Register() {
 
         errors_exist += validateFirstName();
         errors_exist += validateSurname();
+        errors_exist += validatePassword();
 
         if (errors_exist === ""){
             post(route('register'));
@@ -53,7 +116,6 @@ export default function Register() {
 
         }else{
 
-            console.log('hola1')
             setErrorMessages((prevErrors) => ({
                 ...prevErrors,
                 firstname: '',
@@ -64,20 +126,37 @@ export default function Register() {
     }
 
     function validateSurname(){
-        if (!(allLetter(data.surname))){
+        if (data.surname === "" || allLetter(data.surname)){
+            setErrorMessages((prevErrors) => ({
+                ...prevErrors,
+                surname: '',
+            }));
+
+            return "";
+        }else{
             setErrorMessages((prevErrors) => ({
                 ...prevErrors,
                 surname: 'Field surname can only contain letters',
+            }));
+
+            return "yes"
+        }
+    }
+
+    function validatePassword(){
+        if (data.password !== data.password_confirmation){
+            setErrorMessages((prevErrors) => ({
+                ...prevErrors,
+                password: 'The passwords are not the same',
             }));
 
             return "yes";
 
         }else{
 
-            console.log('hola2')
             setErrorMessages((prevErrors) => ({
                 ...prevErrors,
-                surname: '',
+                password: '',
             }));
 
             return "";
@@ -87,7 +166,7 @@ export default function Register() {
 
     function allLetter(inputtxt){
 
-        var letters = /^[A-Za-z]+$/;
+        var letters = /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ]+$/;
 
         if (inputtxt.match(letters)){
             return true;
@@ -117,6 +196,7 @@ export default function Register() {
                     />
 
                     <InputError message={errorMessages.firstname} className="mt-2" />
+                    <InputError message={errors.firstname} className="mt-2" />
 
                 </div>
 
@@ -133,7 +213,8 @@ export default function Register() {
                         maxLength='100'
                     />
 
-                    <InputError message={errorMessages.firstname} className="mt-2" />          
+                    <InputError message={errorMessages.surname} className="mt-2" />          
+                    <InputError message={errors.surname} className="mt-2" />  
                     
                 </div>
 
@@ -179,13 +260,23 @@ export default function Register() {
                         type="password"
                         name="password"
                         value={data.password}
+                        title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                         className="mt-1 block w-full"
                         autoComplete="new-password"
                         onChange={(e) => setData('password', e.target.value)}
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                         required
                     />
 
+                    <InputError message={errorMessages.password} className="mt-2" />
                     <InputError message={errors.password} className="mt-2" />
+                </div>
+
+                <div id="message">
+                    <p id="letter" className="invalid">A <b>lowercase</b> letter</p>
+                    <p id="capital" className="invalid">A <b>capital uppercase</b> letter</p>
+                    <p id="number" className="invalid">A <b>number</b></p>
+                    <p id="length" className="invalid">Minimum <b>8 characters</b></p>
                 </div>
 
                 <div className="mt-4">
@@ -218,6 +309,8 @@ export default function Register() {
                     </PrimaryButton>
                 </div>
             </form>
+
         </GuestLayout>
+
     );
 }
