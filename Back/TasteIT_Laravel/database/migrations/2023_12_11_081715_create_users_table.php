@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('profileImg')->nullable();
             $table->enum('type',['standard','chef','admin']);
             $table->boolean('enabled');
+            $table->rememberToken();
             
             $table->timestamps();
         });

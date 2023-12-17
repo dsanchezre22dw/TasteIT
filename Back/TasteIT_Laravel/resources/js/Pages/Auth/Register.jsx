@@ -247,6 +247,7 @@ export default function Register() {
                         autoComplete="email"
                         onChange={(e) => setData('email', e.target.value)}
                         required
+                        maxLength='100'
                     />
 
                     <InputError message={errors.email} className="mt-2" />

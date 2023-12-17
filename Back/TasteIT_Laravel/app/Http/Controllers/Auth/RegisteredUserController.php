@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
             'firstname' => 'required|string|max:50',
             'surname' => 'nullable|string|max:100',
             'username' => 'required|string|max:50|unique:'.User::class,
-            'email' => 'required|string|lowercase|email|max:100|unique:'.User::class,
+            'email' => 'required|lowercase|email|max:100|unique:'.User::class,
             'password' => ['required', 'confirmed', 'min:8', Password::min(8)->mixedCase()->numbers()],
         ]);
 
@@ -53,7 +53,7 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        //Auth::login($user);
+        Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }
