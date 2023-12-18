@@ -12,15 +12,15 @@ import Stats from '@/Pages/Landing/StatsSection/Stats';
 import Testimonials from '@/Pages/Landing/TestimonialsSection/Testimonials';
 import WhyUs from '@/Pages/Landing/WhyUsSection/WhyUs';
 
-import '../../css/main.css'
+import '../../css/landing.css'
 
 
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+export default function Landing({ auth, laravelVersion, phpVersion }) {
 
 
     return (
         <>
-        <Header/>
+        <Header auth={auth}/>
         <Hero/>
         <main id="main">
           <About/>
