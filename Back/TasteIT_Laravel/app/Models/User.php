@@ -44,4 +44,24 @@ class User extends AuthenticatableUser
         return $this->hasMany('App\Models\Recipe');
     }
 
+    public function saves() {
+        return $this->belongsToMany('App\Models\Recipe','saves');
+    }
+
+    public function comments() {
+        return $this->belongsToMany('App\Models\Recipe','comments')->withPivot('comment');
+    }
+
+    public function valorations() {
+        return $this->belongsToMany('App\Models\Recipe','valorations')->withPivot('id','valoration','description');
+    }
+
+    public function followers() {
+        return $this->belongsToMany('App\Models\User','follows','followed_id','follower_id');
+    }
+
+    public function following() {
+        return $this->belongsToMany('App\Models\User','follows','follower_id','followed_id');
+    }
+
 }

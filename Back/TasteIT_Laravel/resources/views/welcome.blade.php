@@ -138,11 +138,49 @@
             </div>
         </div>
         <div>
+
+        
             {{$user->fridge->id}}
-            
+            <br>
             @foreach($user->recipe as $recipe)
                 {{$recipe->title}}
             @endforeach
+            <br>
+            @foreach($ingredient->recipes as $recipe)
+                {{$recipe->pivot->amount}}
+            @endforeach
+            <br>
+            @foreach($ingredient->shopping_lists as $shopping_list)
+                {{$shopping_list->pivot->amount}}
+            @endforeach
+            <br>
+            @foreach($ingredient->fridges as $fridge)
+                {{$fridge->id}}
+            @endforeach
+            <br>
+            @foreach($user->saves as $save)
+                {{$save->title}}
+            @endforeach
+            <br>
+            @foreach($user->comments as $comment)
+                {{$comment->pivot->comment}}
+            @endforeach
+            <br>
+            @foreach($user->valorations as $valoration)
+                {{$valoration->title}}
+                {{$valoration->pivot->valoration}}
+                {{$valoration->pivot->description}}
+            @endforeach
+            <br>
+            {{$user->firstName}}
+            @foreach($user->following as $follow)
+                {{$follow->firstName}}
+            @endforeach
+            <br>
+            @foreach($ingredient->ingredient_types as $type)
+                {{$type->name}}
+            @endforeach
+            <br>
         </div>
     </body>
 </html>
