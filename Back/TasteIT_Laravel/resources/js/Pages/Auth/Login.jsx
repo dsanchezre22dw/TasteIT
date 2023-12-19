@@ -29,7 +29,12 @@ export default function LoginDavid( { status, canResetPassword } ) {
   };
 
   return (
-    <section className="h-full bg-rose-300 dark:bg-neutral-700">
+    <section className="h-full"
+    style={{
+      background: 'linear-gradient(90deg, rgb(204, 152, 152), rgba(121,9,9,1))',
+    }}
+    
+    >
       <div className="container h-screen p-10">
         <div className="g-6 flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
           <div className="w-full">
