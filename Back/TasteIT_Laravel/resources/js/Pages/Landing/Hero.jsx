@@ -15,8 +15,8 @@ const Hero = ()=>{
               <IconButton href="https://www.youtube.com/watch?v=b1DC4TxeSdE"/>
             </div>
           </div>
-          <div className="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
-            <img src="assets/img/hero-img.png" className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300"/>
+          <div className="a col-lg-5 order-1 order-lg-2 text-center text-lg-start">
+            <img id="david" src="assets/img/hero-img.png" className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300"/>
           </div>
         </div>
       </div>
