@@ -18,24 +18,30 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
 
-    if (auth()->check()) {
-        $view = "Dashboard";
-    } else {
-        $view = "Landing";
+    if (!(auth()->check())) {
+
+        return Inertia::render("Landing", []);
+
     }
 
-    return Inertia::render($view, []);
+    return Redirect::route('dashboard');
 })->name('index');
 
 
-Route::get('/admin', function () {
+Route::get('/dashboard', function () {
     if (Gate::allows('access-admin')){
         return Inertia::render('Admin', []);
     }
 
-    abort('404');
+    if (Gate::allows('access-standard')){
+        return Inertia::render('Standard', []);
+    }
 
-})->name('admin');
+    if (Gate::allows('access-chef')){
+        return Inertia::render('Chef', []);
+    }
+
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
