@@ -15,12 +15,13 @@ import WhyUs from '@/Pages/Landing/WhyUsSection/WhyUs';
 import '../../css/landing.css'
 
 
-export default function Landing({ auth, laravelVersion, phpVersion }) {
+export default function Landing({ }) {
 
 
     return (
         <>
-        <Header auth={auth}/>
+        <Head title="Landing TasteIT" />
+        <Header/>
         <Hero/>
         <main id="main">
           <About/>
@@ -34,7 +35,7 @@ export default function Landing({ auth, laravelVersion, phpVersion }) {
         </main>
         <Footer/>
         <a href="#" className="scroll-top d-flex align-items-center justify-content-center"><i className="bi bi-arrow-up-short"></i></a>
-        
+        <div id="preloader"></div>
         </>
       );
 }

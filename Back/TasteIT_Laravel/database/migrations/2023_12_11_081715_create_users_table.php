@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('enabled');
             $table->rememberToken();
             
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
     }
