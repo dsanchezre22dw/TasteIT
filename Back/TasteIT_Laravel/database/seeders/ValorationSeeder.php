@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Valoration;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class UserSeeder extends Seeder
+class ValorationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        User::factory(50)->create();
+        Valoration::factory(1000)->create();
     }
 }

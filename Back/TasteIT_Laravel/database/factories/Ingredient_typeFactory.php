@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Fridge>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ingredient_type>
  */
-class FridgeFactory extends Factory
+class Ingredient_typeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class FridgeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->word(),
         ];
     }
 }

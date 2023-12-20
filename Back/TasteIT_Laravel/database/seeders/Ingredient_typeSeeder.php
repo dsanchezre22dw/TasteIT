@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Ingredient_type;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class UserSeeder extends Seeder
+class Ingredient_typeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        User::factory(50)->create();
+        Ingredient_type::factory(200)->create();
     }
 }

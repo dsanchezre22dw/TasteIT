@@ -20,13 +20,27 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('profileImg')->nullable();
-            $table->enum('type',['standard','chef','admin']);
-            $table->boolean('enabled');
+            $table->enum('type',['standard','chef','admin'])->default('standard');
+            $table->boolean('enabled')->default(true);
             $table->rememberToken();
+
             
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
+
+        /*
+         Trigger for creating a fridge and shopping list
+         
+        DB::unprepared('
+            CREATE TRIGGER new_fridge_shopping_list
+            AFTER INSERT ON users
+            FOR EACH ROW
+            BEGIN
+                insert into fridges values (new.id);
+                update users 
+            END;
+        ');*/
     }
 
     /**

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('recipe_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
 
-            $table->string('comment');
+            $table->string('comment',1024);
 
             $table->timestamps();
         });

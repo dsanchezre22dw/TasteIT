@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ingredient_ingredient_type');
+        Schema::dropIfExists('ingredient_ingredient_types');
     }
 };
