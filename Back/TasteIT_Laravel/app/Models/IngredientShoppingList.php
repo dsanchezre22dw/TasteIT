@@ -5,14 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class IngredientIngredientType extends Model
+class IngredientShoppingList extends Model
 {
     use HasFactory;
 
-    protected $table = "ingredient_ingredient_type";
+    protected $table = "ingredient_shopping_list";
 
     protected $fillable = [
         'ingredient_id',
-        'ingredient_type_id',
+        'shopping_list_id',
+        'amount,'
     ];
+
 }
