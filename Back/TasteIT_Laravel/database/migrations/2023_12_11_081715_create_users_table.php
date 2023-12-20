@@ -15,14 +15,17 @@ return new class extends Migration
             $table->id();
 
             $table->string('username')->unique();
-            $table->string('firstName');
+            $table->string('firstname');
             $table->string('surname')->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->string('profileImg')->nullable();
             $table->enum('type',['standard','chef','admin'])->default('standard');
             $table->boolean('enabled')->default(true);
+            $table->rememberToken();
+
             
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
 
