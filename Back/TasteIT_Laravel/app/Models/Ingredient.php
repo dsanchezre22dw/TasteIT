@@ -25,7 +25,4 @@ class Ingredient extends Model
         return $this->belongsToMany('App\Models\Shopping_list')->withPivot('amount');
     }
 
-    public function ingredient_types() {
-        return $this->belongsToMany('App\Models\Ingredient_type');
-    }
 }
