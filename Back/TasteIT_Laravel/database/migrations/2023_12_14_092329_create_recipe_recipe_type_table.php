@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ingredient_ingredient_type', function (Blueprint $table) {
-            $table->foreignId('ingredient_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('ingredient_type_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+        Schema::create('recipe_recipe_type', function (Blueprint $table) {
+            $table->foreignId('recipe_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('recipe_type_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ingredient_ingredient_types');
+        Schema::dropIfExists('recipe_recipe_types');
     }
 };

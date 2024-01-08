@@ -36,4 +36,8 @@ class Recipe extends Model
     public function valorations() {
         return $this->belongsToMany('App\Models\User','valorations')->withPivot('id','valoration','description');
     }
+
+    public function recipe_types() {
+        return $this->belongsToMany('App\Models\Recipe_type');
+    }
 }

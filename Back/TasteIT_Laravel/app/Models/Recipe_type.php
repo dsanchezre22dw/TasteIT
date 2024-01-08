@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ingredient_type extends Model
+class Recipe_type extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class Ingredient_type extends Model
         'name',
     ];
 
-    public function ingredients() {
-        return $this->belongsToMany('App\Models\Ingredient');
+    public function recipes() {
+        return $this->belongsToMany('App\Models\Recipe');
     }
 }
