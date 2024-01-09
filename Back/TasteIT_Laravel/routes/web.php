@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\LocaleCookieMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,5 +51,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/lang/{locale}', function ($locale) {
+    return redirect()->back()->withCookie('locale', $locale);
+});
 
-require __DIR__.'/auth.php';
+Route::middleware(LocaleCookieMiddleware::class)->group(function () {
+    require __DIR__.'/auth.php';
+});
+
+
