@@ -30,15 +30,15 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     if (Gate::allows('access-admin')){
-        return Inertia::render('Admin', []);
+        return Inertia::render('Dashboard/pages/dashboard/home', []);
     }
 
     if (Gate::allows('access-standard')){
-        return Inertia::render('Standard', []);
+        return Inertia::render('Dashboard/Standard/Standard', []);
     }
 
     if (Gate::allows('access-chef')){
-        return Inertia::render('Chef', []);
+        return Inertia::render('Dashboard/Chef/Chef', []);
     }
 
 })->middleware(['auth', 'verified'])->name('dashboard');
