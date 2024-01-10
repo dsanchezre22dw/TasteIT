@@ -1,13 +1,19 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { Dashboard, Auth } from "@/layouts";
+import React from "react";
+import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
+import { Dashboard, Auth } from "../../layouts";
+import { MaterialTailwindControllerProvider } from "../../context/index";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/dashboard/*" element={<Dashboard />} />
-      <Route path="/auth/*" element={<Auth />} />
-      <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
-    </Routes>
+    <BrowserRouter>
+      <MaterialTailwindControllerProvider>
+        <Routes>
+          <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route path="/auth/*" element={<Auth />} />
+          <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
+        </Routes>
+      </MaterialTailwindControllerProvider>
+    </BrowserRouter>
   );
 }
 

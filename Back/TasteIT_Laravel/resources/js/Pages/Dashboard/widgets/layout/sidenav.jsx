@@ -7,7 +7,7 @@ import {
   IconButton,
   Typography,
 } from "@material-tailwind/react";
-import { useMaterialTailwindController, setOpenSidenav } from "@/context";
+import { useMaterialTailwindController, setOpenSidenav } from "../../context";
 
 export function Sidenav({ brandImg, brandName, routes }) {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -78,7 +78,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     >
                       {icon}
                       <Typography
-                        color="inherit"
+                        color="red"
                         className="font-medium capitalize"
                       >
                         {name}

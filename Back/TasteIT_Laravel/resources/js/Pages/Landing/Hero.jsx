@@ -7,7 +7,7 @@ const Hero = ()=>{
       <div className="container">
         <div className="row justify-content-between gy-5">
           <div className="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
-            <h2 data-aos="fade-up">Create, share,<br/>enjoy</h2>
+            <h2 data-aos="fade-up" class="text-[#000]">Create, share,<br/>enjoy</h2>
             <p data-aos="fade-up" data-aos-delay="100">Share unforgettable culinary moments, where every recipe is a story to tell.</p>
             <div className="d-flex" data-aos="fade-up" data-aos-delay="200">
               <a href="#" className="btn-register">Register</a>
