@@ -13,6 +13,8 @@ const icon = {
   className: "w-5 h-5 text-inherit",
 };
 
+const basePath = "/dashboard"
+
 export const routes = [
   {
     layout: "dashboard",
@@ -20,25 +22,25 @@ export const routes = [
       {
         icon: <HomeIcon {...icon} />,
         name: "dashboard",
-        path: "/home",
+        path: `/home`,
         element: <Home />,
       },
       {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
-        path: "/profile",
+        path: `/profile`,
         element: <Profile />,
       },
       {
         icon: <TableCellsIcon {...icon} />,
         name: "tables",
-        path: "/tables",
+        path: `/tables`,
         element: <Tables />,
       },
       {
         icon: <InformationCircleIcon {...icon} />,
         name: "notifications",
-        path: "/notifications",
+        path: `/notifications`,
         element: <Notifications />,
       },
     ],

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,38 @@ Route::get('/', function () {
     return Redirect::route('dashboard');
 })->name('index');
 
+
+Route::get('dashboard/{any}', function () {
+
+    return Inertia::render('Dashboard/layouts/dashboard', []);
+
+})->where('any', '.*')
+ ->name('prueba');
+
+/*
+Route::get('dashboard/profile', function () {
+
+    return Inertia::render('Dashboard/layouts/dashboard', []);
+
+})->name('prueba');
+
+Route::get('dashboard/tables', function () {
+
+    return Inertia::render('Dashboard/layouts/dashboard', []);
+
+})->name('prueba');
+
+Route::get('dashboard/notifications', function () {
+
+    return Inertia::render('Dashboard/layouts/dashboard', []);
+
+})->name('prueba');
+
+
+Route::get('dashboard/dashboard/{any}', [DashboardController::class, 'redirectToCorrectRoute'])
+    ->where('any', '.*')
+    ->name('dashboard.redirect');
+*/
 
 Route::get('/dashboard', function () {
     if (Gate::allows('access-admin')){
