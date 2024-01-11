@@ -11,7 +11,6 @@ module.exports = withMT({
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.jsx',
-        './resources/js/Pages/Dashboard/layouts/dashboard.jsx',
     ],
     
     theme: {

@@ -9,7 +9,6 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
-import "../css/tailwind.css";
 
 createInertiaApp({
     title: (title) => `${title}`,

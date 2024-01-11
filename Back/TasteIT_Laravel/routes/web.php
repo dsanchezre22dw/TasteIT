@@ -30,8 +30,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     if (Gate::allows('access-admin')){
-        return Inertia::render('Dashboard/pages/Admin/Admin', []);
-        //return Inertia::render('Dashboard/layouts/dashboard', []);
+        //return Inertia::render('Dashboard/pages/Admin/Admin', []);
+        return Inertia::render('Dashboard/layouts/dashboard', []);
         //return Inertia::render('Dashboard/pages/dashboard/home', []);
     }
 
