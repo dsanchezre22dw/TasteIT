@@ -29,12 +29,32 @@ Route::get('/', function () {
 })->name('index');
 
 
+use Illuminate\Support\Facades\Redirect;
+
+/*
 Route::get('dashboard/{any}', function () {
+    return Redirect::route('dashboard');
+})->where('any', '^(?!home|profile|tables|notifications).*') // Excluye 'home' y 'profile'
+->name('prueba');
+*/
+
+Route::get('dashboard/home', function () {
 
     return Inertia::render('Dashboard/layouts/dashboard', []);
 
-})->where('any', '.*')
- ->name('prueba');
+})->name('home');
+
+Route::get('/home', function () {
+
+    return Inertia::render('Dashboard/layouts/dashboard', []);
+
+})->name('homee');
+
+Route::get('dashboard/profile', function () {
+
+    return Inertia::render('Dashboard/layouts/dashboard', []);
+
+})->name('profile');
 
 /*
 Route::get('dashboard/profile', function () {

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link} from "react-router-dom";
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { IconButton } from "@material-tailwind/react";
 import {
@@ -16,6 +16,7 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen bg-blue-gray-50/50">
+      <Link to='/prueba'>aaaaaa</Link>
       <Sidenav
         routes={routes}
         brandImg={
@@ -45,6 +46,7 @@ export function Dashboard() {
         </Routes>
         <div className="text-blue-gray-600">
           <Footer />
+          <Link to='/prueba'>aaaaaa</Link>
         </div>
       </div>
     </div>
