@@ -1,3 +1,37 @@
-#david{
-    color: red;
+#image-uploader {
+    width: 500px;
+    height: 500px;
+    border-radius: 10px;
+    border: 2px dashed #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+#upload-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 5px;
+}
+
+#upload-text {
+    margin: 3px;
+}
+
+#image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+#image-uploader input {
+    display: none;
 }

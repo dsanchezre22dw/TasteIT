@@ -9,6 +9,7 @@ import {
 } from "../widgets/layout";
 import routes from "../routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "../context";
+import PostRecipe from "../pages/dashboard/postrecipe";
 
 export function Dashboard() {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -34,15 +35,7 @@ export function Dashboard() {
         >
           <Cog6ToothIcon className="h-5 w-5" />
         </IconButton>
-        <Routes>
-          {routes.map(
-            ({ layout, pages }) =>
-              layout === "dashboard" &&
-              pages.map(({ path, element }) => (
-                <Route exact path={path} element={element} />
-              ))
-          )}
-        </Routes>
+        <PostRecipe/>
         <div className="text-blue-gray-600">
           <Footer />
         </div>
