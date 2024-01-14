@@ -29,43 +29,22 @@ Route::get('/', function () {
 })->name('index');
 
 
-Route::get('dashboard/{any}', function () {
+Route::get('/dashboard/{any}', function ($any) {
+    if (in_array($any, ['home', 'profile', 'tables', 'notifications'])) {
+        // Redirigir a 'dashboard' para rutas específicas
+        return Inertia::render('Dashboard/layouts/dashboard', []);
 
-    return Inertia::render('Dashboard/layouts/dashboard', []);
-
-})->where('any', '.*')
- ->name('prueba');
-
-/*
-Route::get('dashboard/profile', function () {
-
-    return Inertia::render('Dashboard/layouts/dashboard', []);
-
-})->name('prueba');
-
-Route::get('dashboard/tables', function () {
-
-    return Inertia::render('Dashboard/layouts/dashboard', []);
-
-})->name('prueba');
-
-Route::get('dashboard/notifications', function () {
-
-    return Inertia::render('Dashboard/layouts/dashboard', []);
-
+    } else {
+        // Renderizar la vista para otras rutas
+        return Redirect::route('dashboard');
+    }
 })->name('prueba');
 
 
-Route::get('dashboard/dashboard/{any}', [DashboardController::class, 'redirectToCorrectRoute'])
-    ->where('any', '.*')
-    ->name('dashboard.redirect');
-*/
 
 Route::get('/dashboard', function () {
     if (Gate::allows('access-admin')){
-        //return Inertia::render('Dashboard/pages/Admin/Admin', []);
         return Inertia::render('Dashboard/layouts/dashboard', []);
-        //return Inertia::render('Dashboard/pages/dashboard/home', []);
     }
 
     if (Gate::allows('access-standard')){

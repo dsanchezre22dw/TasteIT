@@ -22,6 +22,7 @@
     "dependencies": {
         "@heroicons/react": "^2.1.1",
         "@material-tailwind/react": "^2.1.8",
+        "apexcharts": "^3.45.1",
         "react-apexcharts": "^1.4.1",
         "tw-elements-react": "^1.0.0-alpha2"
     }
