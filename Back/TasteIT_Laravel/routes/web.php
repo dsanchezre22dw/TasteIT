@@ -45,6 +45,7 @@ Route::get('/dashboard/{any}', function ($any) {
 Route::get('/dashboard', function () {
     if (Gate::allows('access-admin')){
         return Inertia::render('Dashboard/layouts/dashboard', []);
+        //return Inertia::render('Dashboard/pages/Admin/Admin', []);
     }
 
     if (Gate::allows('access-standard')){

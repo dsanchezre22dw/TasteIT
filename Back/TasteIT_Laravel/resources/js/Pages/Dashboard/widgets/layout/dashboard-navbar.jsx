@@ -1,4 +1,5 @@
 import { useLocation, Link } from "react-router-dom";
+import UserButton from "@/Components/UserButton";
 import {
   Navbar,
   Typography,
@@ -26,7 +27,7 @@ import {
   setOpenSidenav,
 } from "../../context";
 
-export function DashboardNavbar() {
+export function DashboardNavbar({ auth }) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
@@ -83,23 +84,14 @@ export function DashboardNavbar() {
           >
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500" />
           </IconButton>
-          <Link to="/auth/sign-in">
-            <Button
-              variant="text"
-              color="blue-gray"
-              className="hidden items-center gap-1 px-4 xl:flex normal-case"
-            >
-              <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-              Sign In
-            </Button>
-            <IconButton
+          <UserButton user={auth.user}/>
+          <IconButton
               variant="text"
               color="blue-gray"
               className="grid xl:hidden"
-            >
+          >
               <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-            </IconButton>
-          </Link>
+          </IconButton>
           <Menu>
             <MenuHandler>
               <IconButton variant="text" color="blue-gray">
