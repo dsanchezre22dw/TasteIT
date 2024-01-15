@@ -11,7 +11,7 @@ import routes from "../routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "../context";
 import PostRecipe from "../pages/dashboard/postrecipe";
 
-export function Dashboard() {
+export function Dashboard({ auth }) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
 
@@ -24,7 +24,7 @@ export function Dashboard() {
         }
       />
       <div className="p-4 xl:ml-80">
-        <DashboardNavbar />
+        <DashboardNavbar auth={auth}/>
         <Configurator />
         <IconButton
           size="lg"
