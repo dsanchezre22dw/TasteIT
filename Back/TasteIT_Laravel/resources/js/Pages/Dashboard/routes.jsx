@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Tables, Notifications } from "./pages/dashboard";
 import { SignIn, SignUp } from "./pages/auth";
+import Users from "./pages/dashboard/users";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -45,6 +46,13 @@ export const routes = [
         route: "/notifications",
         element: <Notifications />,
       },
+      {
+        icon: <InformationCircleIcon {...icon} />,
+        name: "users",
+        path: `/dashboard/users`,
+        route: "/users",
+        element: <Users />,
+      }
     ],
   },
   {

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { IconButton } from "@material-tailwind/react";
@@ -10,7 +11,7 @@ import {
 import routes from "../routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "../context";
 
-export function Dashboard({ auth }) {
+export function Dashboard({ auth, users }) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
 
@@ -39,7 +40,7 @@ export function Dashboard({ auth }) {
             ({ layout, pages }) =>
               layout === "dashboard" &&
               pages.map(({ path, element }) => (
-                <Route exact path={path} element={element} />
+                <Route exact key={path} path={path} element={React.cloneElement(element, { users })} />
               ))
           )}
         </Routes>

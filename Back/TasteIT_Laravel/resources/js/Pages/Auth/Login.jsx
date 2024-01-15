@@ -22,7 +22,6 @@ export default function LoginDavid( { status, canResetPassword } ) {
   }, []);
 
   const submit = (e) => {
-    console.log("pringau")
       e.preventDefault();
 
       post(route('login'));

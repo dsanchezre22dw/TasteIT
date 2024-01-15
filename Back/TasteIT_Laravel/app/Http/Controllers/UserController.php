@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -13,7 +14,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return Inertia::render('Dashboard/layouts/dashboard', [
+            'users' => $users,
+        ]);
     }
 
     /**
