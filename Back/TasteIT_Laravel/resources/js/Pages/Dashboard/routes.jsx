@@ -17,6 +17,7 @@ const icon = {
 export const routes = [
   {
     layout: "dashboard",
+    show: "yes",
     pages: [
       {
         icon: <HomeIcon {...icon} />,
@@ -53,6 +54,21 @@ export const routes = [
         route: "/users",
         element: <Users />,
       }
+    ],
+  },
+  {
+    layout: "dashboard",
+    show: 'yes',
+    pages: [
+      {
+        icon: <ServerStackIcon {...icon} />,
+
+        name: "sign in",
+        path: `/dashboard/prueba`,
+        route: "/prueba",
+        element: <Home />,
+
+      },
     ],
   },
   {

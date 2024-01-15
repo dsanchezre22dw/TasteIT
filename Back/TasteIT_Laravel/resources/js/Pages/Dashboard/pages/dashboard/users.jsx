@@ -11,13 +11,16 @@ import {
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { authorsTableData, projectsTableData } from "../../data";
 import '../../../../../css/users.css';
+import { Head, useForm } from '@inertiajs/react';
+import { Link, NavLink } from "react-router-dom";
 
-export function Users({ users }) {
+export function Users({ users }) {  
+  const { data, setData, get, post, processing, errors, reset } = useForm({
+});
 
   const submit = (e, id) => {
     e.preventDefault();
-    get(`/dashboard/users/edit/${id}`);
-    reset();
+    get('prueba');
   };
 
 
@@ -102,15 +105,10 @@ export function Users({ users }) {
                         </Typography>
                       </td>
                       <td className={className}>
-                        <Typography
-                          
-                          href="#"
-                          className="text-xs font-semibold text-blue-gray-600"
-                        >
-                          <form onSubmit={(e) => submit(e, id)} method="get">
-                              <button type="submit" ><span><i className="material-icons delete">&#xE5C9;</i></span></button>
-                          </form>
-                        </Typography>
+                      <Link to='/dashboard/prueba'>
+                         <i className="material-icons delete">&#xE5C9;</i>
+                      </Link>
+                      
                       </td>
                     </tr>
                   );

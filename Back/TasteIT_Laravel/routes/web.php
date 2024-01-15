@@ -37,6 +37,7 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/profile', function () {return Inertia::render('Dashboard/layouts/dashboard', []);});
     Route::get('/tables', function () {return Inertia::render('Dashboard/layouts/dashboard', []);});
     Route::get('/notifications', function () {return Inertia::render('Dashboard/layouts/dashboard', []);});
+    Route::get('/prueba', [UserController::class, 'index']);
 
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index'); 
