@@ -29,7 +29,18 @@ class RecipeController extends Controller
      */
     public function store(StoreRecipeRequest $request)
     {
-        //
+        $recipe = new Recipe;
+
+        $recipe->title = $request->title;
+        $recipe->duration_mins = $request->duration_mins;
+        $recipe->difficulty = $request->difficulty;
+        $recipe->description = $request->description;
+        //$recipe->image = $request->image;
+        //$recipe->ingredients = $request->ingredients;
+
+        $recipe->save();
+
+        return redirect('index');
     }
 
     /**

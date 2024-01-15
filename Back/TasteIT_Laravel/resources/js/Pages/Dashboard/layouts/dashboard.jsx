@@ -35,7 +35,15 @@ export function Dashboard({ auth }) {
         >
           <Cog6ToothIcon className="h-5 w-5" />
         </IconButton>
-        <PostRecipe/>
+        <Routes>
+          {routes.map(
+            ({ layout, pages }) =>
+              layout === "dashboard" &&
+              pages.map(({ path, element }) => (
+                <Route exact path={path} element={element} />
+              ))
+          )}
+        </Routes>
         <div className="text-blue-gray-600">
           <Footer />
         </div>
