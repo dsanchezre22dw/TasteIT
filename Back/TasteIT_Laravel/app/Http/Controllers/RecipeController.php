@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipe;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
-use App\Models\Recipe;
 
 class RecipeController extends Controller
 {
@@ -27,7 +28,7 @@ class RecipeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRecipeRequest $request)
+    public function store(Request $request)
     {
         $recipe = new Recipe;
 
@@ -35,12 +36,26 @@ class RecipeController extends Controller
         $recipe->duration_mins = $request->duration_mins;
         $recipe->difficulty = $request->difficulty;
         $recipe->description = $request->description;
-        //$recipe->image = $request->image;
         //$recipe->ingredients = $request->ingredients;
+        $recipe->user_id = $request->user_id;
 
         $recipe->save();
+/*
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+    
+            // Guardar la imagen en la carpeta 'public/img'
+            $path = $file->store('public/img');
 
-        return redirect('index');
+            $recipe->image = $path;
+    
+            return response()->json(['message' => 'Imagen subida con éxito', 'path' => $path]);
+        }
+    
+        return response()->json(['error' => 'No se proporcionó ninguna imagen'], 400);
+        */
+    
+        return redirect('/');
     }
 
     /**

@@ -56,6 +56,7 @@ export default function ImageUploader({data, setData}) {
 
             
             console.log('Archivo seleccionado:', file);
+            console.log(file.name);
         }
     }
     return (

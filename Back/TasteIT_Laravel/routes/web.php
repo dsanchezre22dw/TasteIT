@@ -78,6 +78,6 @@ Route::post('/upload', function (Request $request) {
     }
 
     return response()->json(['error' => 'No se proporcionó ninguna imagen'], 400);
-});
+})->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

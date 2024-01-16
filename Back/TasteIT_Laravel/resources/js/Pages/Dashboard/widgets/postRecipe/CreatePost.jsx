@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import ImageUploader from "./ImageUploader";
 import { useForm } from "@inertiajs/react";
+import { Button } from "@material-tailwind/react";
 
-export default function CreatePost() {
+export default function CreatePost( {auth} ) {
     const { data, setData, post, processing, errors, reset } = useForm({
         title: '',
         duration_mins: '',
@@ -10,6 +11,7 @@ export default function CreatePost() {
         ingredients: '',
         description: '',
         image: '',
+        user_id: auth.user.id
     });
 
 
@@ -19,9 +21,10 @@ export default function CreatePost() {
         post('/dashboard/postrecipe');
         reset();
       };
+
     return (
         <div>
-            <form onSubmit={submit}>
+            <form onSubmit={submit} name="createPost">
                 <div className="flex flex-wrap">
                     <ImageUploader data={data} setData={setData}/>
 
@@ -59,8 +62,9 @@ export default function CreatePost() {
                     <p className="w-[133px] mb-3">How to Prepare:</p>
                     <textarea name="description" id="" className="w-full" rows="10" placeholder="How to prepare the recipe..." defaultValue={data.description} onChange={(e) => setData('description', e.target.value)}></textarea>
                 </div>
-
-                <button type="submit">Create</button>
+                <Button variant="gradient" className="ml-5" onClick={submit}>
+                    Create
+                </Button>
             </form>
         </div>
     )
