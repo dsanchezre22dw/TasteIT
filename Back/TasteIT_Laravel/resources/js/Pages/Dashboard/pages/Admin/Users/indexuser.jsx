@@ -9,20 +9,22 @@ import {
   Progress,
 } from "@material-tailwind/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { authorsTableData, projectsTableData } from "../../data";
-import '../../../../../css/users.css';
+import { authorsTableData, projectsTableData } from "../../../data";
+import '../../../../../../css/users.css';
 import { Head, useForm } from '@inertiajs/react';
 import { Link, NavLink } from "react-router-dom";
+import { Inertia } from '@inertiajs/inertia-react';
 
-export function Users({ users }) {  
-  const { data, setData, get, post, processing, errors, reset } = useForm({
-});
+export function UsersIndex({ users }) {  
+  const { data, setData, get, deleteData, processing, errors, reset } = useForm({});
 
-  const submit = (e, id) => {
-    e.preventDefault();
-    get('prueba');
+  const form = useForm({});
+
+  const handleDelete = (userId) => {
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      form.delete(`/dashboard/users/delete/${userId}`);
+    }
   };
-
 
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -96,26 +98,19 @@ export function Users({ users }) {
                         />
                       </td>
                       <td className={className}>
-                        <Typography
-                          as="a"
-                          href="#"
-                          className="text-xs font-semibold text-blue-gray-600"
-                        >
-                          <i className="material-icons settings">&#xE8B8;</i>
-                        </Typography>
+                        <Link to={`/dashboard/users/edit/${id}`}>
+                        <i className="material-icons settings">&#xE8B8;</i>
+                        </Link>
                       </td>
                       <td className={className}>
-                      <Link to='/dashboard/prueba'>
-                         <i className="material-icons delete">&#xE5C9;</i>
-                      </Link>
-                      
+                        <button type="button" onClick={() => handleDelete(id)}>
+                          <span><i className="material-icons delete">&#xE5C9;</i></span>
+                        </button>
                       </td>
                     </tr>
                   );
                 }
               )}
-
-
 
               
             </tbody>
@@ -126,4 +121,4 @@ export function Users({ users }) {
   );
 }
 
-export default Users;
+export default UsersIndex;

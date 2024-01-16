@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 import { ProfileInfoCard, MessageCard } from "../../widgets/cards";
 import { platformSettingsData, conversationsData, projectsData } from "../../data";
 
-export function Profile() {
+export function Profile( {auth} ) {
   return (
     <>
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">

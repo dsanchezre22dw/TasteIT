@@ -55,16 +55,36 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $user = \App\Models\User::findOrFail($id);
+
+        $request->validate([
+            'firstname' => 'required|string|max:50',
+            'surname' => 'nullable|string|max:100',
+            'username' => 'required|string|max:50|unique:'.User::class,
+            'email' => 'required|lowercase|email|max:100|unique:'.User::class,
+            'password' => ['required', 'confirmed', 'min:8', Password::min(8)->mixedCase()->numbers()],
+        ]);
+
+        $user->username = $request->input('username');
+        $user->firstname = $request->input('firstname');
+        $user->surname = $request->input('surname');
+        $user->email = $request->input('email');
+        $user->password = $request->input('password');
+
+        $user->save();
+
+        return redirect()->back()->with('success', ['type' => 'warning', 'message' => 'User ' . "'" . $previousUsername . "'" . ' updated successfully']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->back();
     }
 }

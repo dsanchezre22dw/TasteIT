@@ -40,7 +40,7 @@ export function Dashboard({ auth, users }) {
             ({ layout, pages }) =>
               layout === "dashboard" &&
               pages.map(({ path, element }) => (
-                <Route exact key={path} path={path} element={React.cloneElement(element, { users })} />
+                <Route exact key={path} path={path} element={React.cloneElement(element, { users , auth})} />
               ))
           )}
         </Routes>

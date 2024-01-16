@@ -7,7 +7,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Login({ status, canResetPassword }) {
+export default function LoginLaravel({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',

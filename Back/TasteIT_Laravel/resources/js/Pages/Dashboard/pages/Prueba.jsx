@@ -1,8 +1,12 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import { useParams } from 'react-router-dom';
 
-export default function Prueba({ auth }) {
+export default function Prueba({  }) {
+
+    const { userId } = useParams();
+
     return (
-        <p>{auth.user.firstname}</p>
+        <p>{userId}</p>
     );
 }

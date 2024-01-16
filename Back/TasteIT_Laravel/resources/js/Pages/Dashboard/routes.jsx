@@ -8,7 +8,8 @@ import {
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Tables, Notifications } from "./pages/dashboard";
 import { SignIn, SignUp } from "./pages/auth";
-import Users from "./pages/dashboard/users";
+import UsersIndex from "./pages/Admin/Users/indexuser";
+import UsersEdit from "./pages/Admin/Users/edituser";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -52,7 +53,7 @@ export const routes = [
         name: "users",
         path: `/dashboard/users`,
         route: "/users",
-        element: <Users />,
+        element: <UsersIndex />,
       }
     ],
   },
@@ -63,10 +64,10 @@ export const routes = [
       {
         icon: <ServerStackIcon {...icon} />,
 
-        name: "sign in",
-        path: `/dashboard/prueba`,
-        route: "/prueba",
-        element: <Home />,
+        name: "users edit",
+        path: `/dashboard/users/edit/:userId`,
+        route: "/users/edit",
+        element: <UsersEdit />,
 
       },
     ],
