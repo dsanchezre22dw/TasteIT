@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreRecipeRequest;
@@ -39,23 +40,21 @@ class RecipeController extends Controller
         //$recipe->ingredients = $request->ingredients;
         $recipe->user_id = $request->user_id;
 
-        $recipe->save();
-/*
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
+        
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
     
             // Guardar la imagen en la carpeta 'public/img'
             $path = $file->store('public/img');
 
             $recipe->image = $path;
-    
-            return response()->json(['message' => 'Imagen subida con éxito', 'path' => $path]);
+
+            $recipe->save();
         }
     
-        return response()->json(['error' => 'No se proporcionó ninguna imagen'], 400);
-        */
-    
-        return redirect('/');
+        return redirect('http://127.0.0.1:8000/dashboard/profile');
+
     }
 
     /**

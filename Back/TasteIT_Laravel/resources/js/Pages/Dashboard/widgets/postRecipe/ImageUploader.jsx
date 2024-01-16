@@ -33,18 +33,6 @@ export default function ImageUploader({data, setData}) {
             const formData = new FormData();
             formData.append('file', file);
 
-            fetch('http://localhost:8000/upload', {
-            method: 'POST',
-            body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-            console.log(data); // Manejar la respuesta del servidor si es necesario
-            })
-            .catch(error => {
-            console.error('Error al enviar la imagen:', error);
-            });
-
             // Muestra la imagen seleccionada
             imagePreview.src = imageUrl;
             imagePreview.style.display = 'block';
@@ -57,12 +45,14 @@ export default function ImageUploader({data, setData}) {
             
             console.log('Archivo seleccionado:', file);
             console.log(file.name);
+            setData('image',file);
+
         }
     }
     return (
         <span id="image-uploader" className="m-6">
 
-            <input type="file" id="upload-input" accept="image/*" name="image" />
+            <input type="file" id="upload-input" accept="image/*" name="image" defaultValue={data.image}/>
             
             <svg id="upload-icon" className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>

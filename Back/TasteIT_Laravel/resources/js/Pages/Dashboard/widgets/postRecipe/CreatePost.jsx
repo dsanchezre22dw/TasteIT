@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import ImageUploader from "./ImageUploader";
+import AddIngredients from "./AddIngredients";
 import { useForm } from "@inertiajs/react";
 import { Button } from "@material-tailwind/react";
 
@@ -8,7 +9,7 @@ export default function CreatePost( {auth} ) {
         title: '',
         duration_mins: '',
         difficulty: '',
-        ingredients: '',
+        ingredients: [],
         description: '',
         image: '',
         user_id: auth.user.id
@@ -36,7 +37,7 @@ export default function CreatePost( {auth} ) {
                         </div>
 
                         <div className="flex  m-6">
-                            <p className="w-[133px]">description Time:</p>
+                            <p className="w-[133px]">Prepare Time:</p>
                             <input type="number" className="w-[250px]" name="duration_mins" placeholder="Minutes" defaultValue={data.duration_mins}  onChange={(e) => setData('duration_mins', e.target.value)}/>
                         </div>
 
@@ -50,10 +51,7 @@ export default function CreatePost( {auth} ) {
                             </select>
                         </div>
 
-                        <div className="flex  m-6">
-                            <p className="w-[133px]">Ingredients:</p>
-                            <input type="text" className="w-[250px]" name="ingredients" placeholder="Ingredients" />
-                        </div>
+                        <AddIngredients />
 
                     </span>
                 </div>

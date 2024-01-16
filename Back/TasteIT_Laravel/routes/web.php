@@ -38,7 +38,7 @@ Route::get('/dashboard/{any}', function ($any) {
         // Renderizar la vista para otras rutas
         return Redirect::route('dashboard');
     }
-})->name('prueba');
+});
 
 
 
