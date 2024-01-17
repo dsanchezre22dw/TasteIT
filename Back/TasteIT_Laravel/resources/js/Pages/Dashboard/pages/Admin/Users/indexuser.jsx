@@ -38,7 +38,7 @@ export function UsersIndex({ users }) {
 
 
         <div className="ml-auto mr-10">
-          <Link to={`/dashboard/profile`}>
+          <Link to={'/dashboard/users/add'}>
             <Button variant="gradient">Add User</Button>
           </Link>
         </div>
@@ -107,7 +107,7 @@ export function UsersIndex({ users }) {
                       </td>
                       <td className={className}>
                         <Link to={`/dashboard/users/edit/${id}`}>
-                        <i className="material-icons settings">&#xE8B8;</i>
+                          <i className="material-icons settings">&#xE8B8;</i>
                         </Link>
                       </td>
                       <td className={className}>

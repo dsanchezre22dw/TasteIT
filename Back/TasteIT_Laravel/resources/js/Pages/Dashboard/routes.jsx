@@ -10,6 +10,7 @@ import { Home, Profile, Tables, Notifications } from "./pages/dashboard";
 import { SignIn, SignUp } from "./pages/auth";
 import UsersIndex from "./pages/Admin/Users/indexuser";
 import UsersEdit from "./pages/Admin/Users/edituser";
+import UsersAdd from "./pages/Admin/Users/adduser";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -70,7 +71,16 @@ export const routes = [
         element: <UsersEdit />,
 
       },
+      {
+        icon: <ServerStackIcon {...icon} />,
+
+        name: "users add",
+        path: `/dashboard/users/add`,
+        route: "/users/add",
+        element: <UsersAdd />,
+      }
     ],
+
   },
   {
     title: "auth pages",

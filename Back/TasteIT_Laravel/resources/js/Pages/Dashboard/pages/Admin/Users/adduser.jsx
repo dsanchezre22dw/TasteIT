@@ -32,7 +32,7 @@ import {
   } from "../../../context";
 
 
-export default function UsersEdit() {
+export default function UsersAdd() {
     
     const [controller, dispatch] = useMaterialTailwindController();
     const { openConfigurator, sidenavColor, sidenavType, fixedNavbar } =
@@ -55,14 +55,13 @@ export default function UsersEdit() {
         password: '',
         password_confirmation: '',
         usertype: '',
-        enabled: true,
+        enabled: null,
     });
 
     const [errorMessages, setErrorMessages] = useState({
         firstname: '',
         surname: '',
         password: '',
-        // Otros campos que necesiten validación
     });
 
     useEffect(() => {
@@ -142,7 +141,7 @@ export default function UsersEdit() {
         errors_exist += validatePassword();
 
         if (errors_exist === ""){
-            post(`/dashboard/users/edit/${userId}`);
+            post('/dashboard/users/add');
         }
 
     };
@@ -226,7 +225,7 @@ export default function UsersEdit() {
 
                 <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
                     <Typography variant="h6" color="white">
-                        Edit User
+                        Add User
                     </Typography>
                 </CardHeader>
 
