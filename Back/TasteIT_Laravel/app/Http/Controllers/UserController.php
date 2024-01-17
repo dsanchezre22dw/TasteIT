@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -47,9 +49,12 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $user = \App\Models\User::findOrFail($id);
+        return Inertia::render('Dashboard/layouts/dashboard', [
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -65,6 +70,9 @@ class UserController extends Controller
             'username' => 'required|string|max:50|unique:'.User::class,
             'email' => 'required|lowercase|email|max:100|unique:'.User::class,
             'password' => ['required', 'confirmed', 'min:8', Password::min(8)->mixedCase()->numbers()],
+            'enabled' => 'required|boolean',
+            'usertype' => 'required|in:admin,standard,chef',
+
         ]);
 
         $user->username = $request->input('username');
@@ -72,10 +80,11 @@ class UserController extends Controller
         $user->surname = $request->input('surname');
         $user->email = $request->input('email');
         $user->password = $request->input('password');
+        $user->type = $request->input('usertype');
+        $user->enabled = $request->input('enabled');
 
         $user->save();
 
-        return redirect()->back()->with('success', ['type' => 'warning', 'message' => 'User ' . "'" . $previousUsername . "'" . ' updated successfully']);
     }
 
     /**

@@ -7,6 +7,7 @@ import {
   Chip,
   Tooltip,
   Progress,
+  Button
 } from "@material-tailwind/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { authorsTableData, projectsTableData } from "../../../data";
@@ -16,7 +17,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Inertia } from '@inertiajs/inertia-react';
 
 export function UsersIndex({ users }) {  
-  const { data, setData, get, deleteData, processing, errors, reset } = useForm({});
+  const { data, setData, get, processing, errors, reset } = useForm({});
 
   const form = useForm({});
 
@@ -29,13 +30,20 @@ export function UsersIndex({ users }) {
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
       <Card>
-        <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
+        <CardHeader variant="gradient" color="gray" className="mb-8 p-6 flex items-center justify-between">
           <Typography variant="h6" color="white">
             Users Table
           </Typography>
         </CardHeader>
-    
 
+
+        <div className="ml-auto mr-10">
+          <Link to={`/dashboard/profile`}>
+            <Button variant="gradient">Add User</Button>
+          </Link>
+        </div>
+
+  
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
             <thead>
