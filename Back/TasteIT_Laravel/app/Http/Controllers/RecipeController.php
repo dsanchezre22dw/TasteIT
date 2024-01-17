@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Recipe;
+use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
@@ -37,11 +38,8 @@ class RecipeController extends Controller
         $recipe->duration_mins = $request->duration_mins;
         $recipe->difficulty = $request->difficulty;
         $recipe->description = $request->description;
-        //$recipe->ingredients = $request->ingredients;
         $recipe->user_id = $request->user_id;
-
         
-
         if ($request->hasFile('image')) {
             $file = $request->file('image');
     
@@ -51,6 +49,12 @@ class RecipeController extends Controller
             $recipe->image = $path;
 
             $recipe->save();
+        }
+
+        foreach ($request->amount as $ingredient => $amount) {
+            $ing = Ingredient::where('name','like',$ingredient)->first();
+
+            $recipe->ingredients()->attach($ing, ['amount' => $amount]);
         }
     
         return redirect('http://127.0.0.1:8000/dashboard/profile');

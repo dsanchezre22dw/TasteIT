@@ -9,7 +9,7 @@ export default function CreatePost( {auth} ) {
         title: '',
         duration_mins: '',
         difficulty: '',
-        ingredients: [],
+        amount: {},
         description: '',
         image: '',
         user_id: auth.user.id
@@ -51,7 +51,7 @@ export default function CreatePost( {auth} ) {
                             </select>
                         </div>
 
-                        <AddIngredients />
+                        <AddIngredients setData={setData} data={data}/>
 
                     </span>
                 </div>
