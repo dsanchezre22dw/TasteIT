@@ -199,9 +199,7 @@ export function Profile({auth}) {
                               alt={name}
                               size="xs"
                               variant="circular"
-                              className={`cursor-pointer border-2 border-white ${
-                                key === 0 ? "" : "-ml-2.5"
-                              }`}
+                              className={`cursor-pointer border-2 border-white`}
                             />
                           </Tooltip>
                         ))}

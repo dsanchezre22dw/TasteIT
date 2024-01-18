@@ -12,7 +12,8 @@ import { SignIn, SignUp } from "./pages/auth";
 import UsersIndex from "./pages/Admin/Users/indexuser";
 import UsersEdit from "./pages/Admin/Users/edituser";
 import UsersAdd from "./pages/Admin/Users/adduser";
-import PostRecipe from "./pages/dashboard/postrecipe";
+import PostRecipe from "./pages/Standard/Recipe/postrecipe";
+import { RecipesIndex } from "./pages/Standard/Recipe/indexrecipe";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -22,7 +23,7 @@ export const routes = [
   {
     layout: "dashboard",
     show: "yes",
-    admin: "yes",
+    admin: "no",
     pages: [
       {
         icon: <HomeIcon {...icon} />,
@@ -85,6 +86,20 @@ export const routes = [
       }
     ],
 
+  },
+  {
+    layout: "dashboard",
+    show: "yes",
+    admin: "no",
+    pages: [
+      {
+        icon: <AcademicCapIcon {...icon} />,
+        name: "recipes",
+        path: `/dashboard/recipes`,
+        route: "/recipes",
+        element: <RecipesIndex />,
+      },
+    ],
   },
   {
     layout: "dashboard",

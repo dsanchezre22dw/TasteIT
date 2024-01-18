@@ -68,28 +68,6 @@ Route::get('/dashboard', function () {
         'users' => $users,
     ]);
 
-
-    /*
-    if (Gate::allows('access-admin')){
-        return Inertia::render('Dashboard/layouts/dashboard', [
-            'users' => $users,
-        ]);
-        //return Inertia::render('Dashboard/pages/Admin/Admin', []);
-    
-
-    if (Gate::allows('access-standard')){
-        return Inertia::render('Dashboard/Standard/Standard', [
-            'users' => $users,
-        ]);
-    }
-
-    if (Gate::allows('access-chef')){
-        return Inertia::render('Dashboard/Chef/Chef', [
-            'users' => $users,
-        ]);
-    }
-    */
-
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
