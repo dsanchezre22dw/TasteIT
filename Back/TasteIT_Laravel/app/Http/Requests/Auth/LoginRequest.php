@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests\Auth;
+use App\Models\User;
 
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
@@ -40,17 +41,33 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
-
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+    
+        // Tries to authenticate the user
+        if (! Auth::attempt($this->credentialsWithEnabled(), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
-
+    
+            $errorMessage = $this->isDisabledUser()
+                ? trans('auth.not_enabled')
+                : trans('auth.failed');
+    
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => $errorMessage,
             ]);
         }
-
+    
         RateLimiter::clear($this->throttleKey());
     }
+
+    protected function credentialsWithEnabled(): array
+    {
+        return array_merge($this->only('email', 'password'), ['enabled' => true]);
+    }
+
+    protected function isDisabledUser(): bool
+    {
+        return User::where('email', $this->email)->exists() && ! User::where('email', $this->email)->first()->enabled;
+    }
+
 
     /**
      * Ensure the login request is not rate limited.

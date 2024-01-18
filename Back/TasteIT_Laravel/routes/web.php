@@ -6,6 +6,8 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,31 +31,45 @@ Route::get('/', function () {
     return Redirect::route('dashboard');
 })->name('index');
 
-Route::get('/dashboard/{any}', function ($any) {
-    if (in_array($any, ['home', 'profile', 'tables', 'notifications'])) {
-        // Redirigir a 'dashboard' para rutas específicas
-        return Inertia::render('Dashboard/layouts/dashboard', []);
 
-    } else {
-        // Renderizar la vista para otras rutas
-        return Redirect::route('dashboard');
-    }
+
+Route::prefix('dashboard')->group(function () {
+    Route::get('/home', function () {return Inertia::render('Dashboard/layouts/dashboard', []);});
+    Route::get('/profile', function () {return Inertia::render('Dashboard/layouts/dashboard', []);});
+    Route::get('/tables', function () {return Inertia::render('Dashboard/layouts/dashboard', []);});
+    Route::get('/notifications', function () {return Inertia::render('Dashboard/layouts/dashboard', []);});
+    Route::get('/prueba', [UserController::class, 'index']);
+
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('users.index'); 
+        Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy'); 
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit'); 
+        Route::post('/edit/{id}', [UserController::class, 'update'])->name('users.update'); 
+        Route::post('/add', [UserController::class, 'store'])->name('users.add'); 
+    });
+
 });
 
-
-
 Route::get('/dashboard', function () {
+    $users = User::all();
+
     if (Gate::allows('access-admin')){
-        return Inertia::render('Dashboard/layouts/dashboard', []);
+        return Inertia::render('Dashboard/layouts/dashboard', [
+            'users' => $users,
+        ]);
         //return Inertia::render('Dashboard/pages/Admin/Admin', []);
     }
 
     if (Gate::allows('access-standard')){
-        return Inertia::render('Dashboard/Standard/Standard', []);
+        return Inertia::render('Dashboard/Standard/Standard', [
+            'users' => $users,
+        ]);
     }
 
     if (Gate::allows('access-chef')){
-        return Inertia::render('Dashboard/Chef/Chef', []);
+        return Inertia::render('Dashboard/Chef/Chef', [
+            'users' => $users,
+        ]);
     }
 
 })->middleware(['auth', 'verified'])->name('dashboard');

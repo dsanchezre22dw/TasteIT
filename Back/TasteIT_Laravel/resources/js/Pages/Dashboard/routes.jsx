@@ -9,6 +9,9 @@ import {
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Tables, Notifications } from "./pages/dashboard";
 import { SignIn, SignUp } from "./pages/auth";
+import UsersIndex from "./pages/Admin/Users/indexuser";
+import UsersEdit from "./pages/Admin/Users/edituser";
+import UsersAdd from "./pages/Admin/Users/adduser";
 import PostRecipe from "./pages/dashboard/postrecipe";
 
 const icon = {
@@ -18,6 +21,8 @@ const icon = {
 export const routes = [
   {
     layout: "dashboard",
+    show: "yes",
+    admin: "yes",
     pages: [
       {
         icon: <HomeIcon {...icon} />,
@@ -48,6 +53,13 @@ export const routes = [
         element: <Notifications />,
       },
       {
+        icon: <InformationCircleIcon {...icon} />,
+        name: "users",
+        path: `/dashboard/users`,
+        route: "/users",
+        element: <UsersIndex />,
+      },
+      {
         icon: <AcademicCapIcon {...icon} />,
         name: "Post Recipe",
         path: `/dashboard/postrecipe`,
@@ -55,6 +67,31 @@ export const routes = [
         element: <PostRecipe />,
       },
     ],
+  },
+  {
+    layout: "dashboard",
+    show: 'yes',
+    admin: "yes",
+    pages: [
+      {
+        icon: <ServerStackIcon {...icon} />,
+
+        name: "users edit",
+        path: `/dashboard/users/edit/:userId`,
+        route: "/users/edit",
+        element: <UsersEdit />,
+
+      },
+      {
+        icon: <ServerStackIcon {...icon} />,
+
+        name: "users add",
+        path: `/dashboard/users/add`,
+        route: "/users/add",
+        element: <UsersAdd />,
+      }
+    ],
+
   },
   {
     title: "auth pages",

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { IconButton } from "@material-tailwind/react";
@@ -12,7 +13,7 @@ import { useMaterialTailwindController, setOpenConfigurator } from "../context";
 import PostRecipe from "../pages/dashboard/postrecipe";
 import React from "react";
 
-export function Dashboard({ auth }) {
+export function Dashboard({ auth, users }) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
 
@@ -23,6 +24,7 @@ export function Dashboard({ auth }) {
         brandImg={
           sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png"
         }
+        user={auth.user}
       />
       <div className="p-4 xl:ml-80">
         <DashboardNavbar auth={auth}/>
@@ -41,7 +43,7 @@ export function Dashboard({ auth }) {
             ({ layout, pages }) =>
               layout === "dashboard" &&
               pages.map(({ path, element }) => (
-                <Route exact path={path} element={React.cloneElement(element, { auth })}/>
+                <Route exact key={path} path={path} element={React.cloneElement(element, { users , auth})} />
               ))
           )}
         </Routes>
