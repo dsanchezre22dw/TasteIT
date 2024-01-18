@@ -9,6 +9,8 @@ import {
 } from "../widgets/layout";
 import routes from "../routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "../context";
+import PostRecipe from "../pages/dashboard/postrecipe";
+import React from "react";
 
 export function Dashboard({ auth }) {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -39,7 +41,7 @@ export function Dashboard({ auth }) {
             ({ layout, pages }) =>
               layout === "dashboard" &&
               pages.map(({ path, element }) => (
-                <Route exact path={path} element={element} />
+                <Route exact path={path} element={React.cloneElement(element, { auth })}/>
               ))
           )}
         </Routes>

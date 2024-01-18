@@ -5,9 +5,11 @@ import {
   InformationCircleIcon,
   ServerStackIcon,
   RectangleStackIcon,
+  AcademicCapIcon,
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Tables, Notifications } from "./pages/dashboard";
 import { SignIn, SignUp } from "./pages/auth";
+import PostRecipe from "./pages/dashboard/postrecipe";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -44,6 +46,13 @@ export const routes = [
         path: `/dashboard/notifications`,
         route: "/notifications",
         element: <Notifications />,
+      },
+      {
+        icon: <AcademicCapIcon {...icon} />,
+        name: "Post Recipe",
+        path: `/dashboard/postrecipe`,
+        route: "/postrecipe",
+        element: <PostRecipe />,
       },
     ],
   },

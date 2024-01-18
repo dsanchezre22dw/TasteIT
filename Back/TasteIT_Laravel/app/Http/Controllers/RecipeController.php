@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Recipe;
+use App\Models\Ingredient;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
-use App\Models\Recipe;
 
 class RecipeController extends Controller
 {
@@ -27,9 +30,35 @@ class RecipeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRecipeRequest $request)
+    public function store(Request $request)
     {
-        //
+        $recipe = new Recipe;
+
+        $recipe->title = $request->title;
+        $recipe->duration_mins = $request->duration_mins;
+        $recipe->difficulty = $request->difficulty;
+        $recipe->description = $request->description;
+        $recipe->user_id = $request->user_id;
+        
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+    
+            // Guardar la imagen en la carpeta 'public/img'
+            $path = $file->store('public/img');
+
+            $recipe->image = $path;
+
+            $recipe->save();
+        }
+
+        foreach ($request->amount as $ingredient => $amount) {
+            $ing = Ingredient::where('name','like',$ingredient)->first();
+
+            $recipe->ingredients()->attach($ing, ['amount' => $amount]);
+        }
+    
+        return redirect('http://127.0.0.1:8000/dashboard/profile');
+
     }
 
     /**

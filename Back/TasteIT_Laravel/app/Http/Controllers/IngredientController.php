@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingredient;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
-use App\Models\Ingredient;
 
 class IngredientController extends Controller
 {
@@ -62,5 +63,19 @@ class IngredientController extends Controller
     public function destroy(Ingredient $ingredient)
     {
         //
+    }
+
+    public function getSuggestions(Request $request)
+    {
+        $searchTerm = $request->input('term');
+        // Aquí deberías implementar la lógica para obtener sugerencias de ingredientes según el término de búsqueda.
+        // Puedes obtener la lista de ingredientes desde tu base de datos o cualquier otra fuente.
+        $ingredients = Ingredient::where('name','like',$searchTerm.'%')->get('name');
+        $suggestions = [];
+        foreach ($ingredients as $key => $value) {
+            $suggestions[] = $value->name;
+        }
+
+        return response()->json(['suggestions' => $suggestions]);
     }
 }
