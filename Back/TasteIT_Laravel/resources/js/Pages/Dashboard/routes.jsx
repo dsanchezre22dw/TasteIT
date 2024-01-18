@@ -59,18 +59,11 @@ export const routes = [
         route: "/users",
         element: <UsersIndex />,
       },
-      {
-        icon: <AcademicCapIcon {...icon} />,
-        name: "Post Recipe",
-        path: `/dashboard/postrecipe`,
-        route: "/postrecipe",
-        element: <PostRecipe />,
-      },
     ],
   },
   {
     layout: "dashboard",
-    show: 'yes',
+    show: 'no',
     admin: "yes",
     pages: [
       {
@@ -92,6 +85,20 @@ export const routes = [
       }
     ],
 
+  },
+  {
+    layout: "dashboard",
+    show: "yes",
+    admin: "no",
+    pages: [
+      {
+        icon: <AcademicCapIcon {...icon} />,
+        name: "recipes add",
+        path: `/dashboard/recipes/add`,
+        route: "/recipes/add",
+        element: <PostRecipe />,
+      },
+    ],
   },
   {
     title: "auth pages",

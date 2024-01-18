@@ -44,8 +44,18 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index'); 
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy'); 
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit'); 
-        Route::post('/edit/{id}', [UserController::class, 'update'])->name('users.update'); 
+        Route::post('/edit/{id}', [UserController::class, 'update'])->name('users.update');
+        Route::get('/add', [UserController::class, 'show'])->name('users.show');  
         Route::post('/add', [UserController::class, 'store'])->name('users.add'); 
+    });
+
+    Route::prefix('recipes')->group(function () {
+        Route::get('/', [RecipeController::class, 'index'])->name('recipes.index'); 
+        Route::delete('/delete/{id}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); 
+        Route::get('/edit/{id}', [RecipeController::class, 'edit'])->name('recipes.edit'); 
+        Route::post('/edit/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
+        Route::get('/add', [RecipeController::class, 'show'])->name('recipes.show');  
+        Route::post('/add', [RecipeController::class, 'store'])->name('recipes.add'); 
     });
 
 });
@@ -53,12 +63,19 @@ Route::prefix('dashboard')->group(function () {
 Route::get('/dashboard', function () {
     $users = User::all();
 
+
+    return Inertia::render('Dashboard/layouts/dashboard', [
+        'users' => $users,
+    ]);
+
+
+    /*
     if (Gate::allows('access-admin')){
         return Inertia::render('Dashboard/layouts/dashboard', [
             'users' => $users,
         ]);
         //return Inertia::render('Dashboard/pages/Admin/Admin', []);
-    }
+    
 
     if (Gate::allows('access-standard')){
         return Inertia::render('Dashboard/Standard/Standard', [
@@ -71,6 +88,7 @@ Route::get('/dashboard', function () {
             'users' => $users,
         ]);
     }
+    */
 
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -80,8 +98,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-Route::post('/dashboard/postrecipe', [RecipeController::class, 'store'])->middleware(['auth', 'verified'])->name('post.store');
 
 Route::post('/upload', function (Request $request) {
     if ($request->hasFile('file')) {

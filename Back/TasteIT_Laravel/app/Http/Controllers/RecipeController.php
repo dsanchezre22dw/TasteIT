@@ -16,7 +16,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Dashboard/layouts/dashboard');
     }
 
     /**
@@ -66,7 +66,7 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        //
+        return Inertia::render('Dashboard/layouts/dashboard');
     }
 
     /**

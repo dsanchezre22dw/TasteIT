@@ -63,8 +63,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
-    }
+        $users = User::all();
+        return Inertia::render('Dashboard/layouts/dashboard', [
+            'users' => $users,
+        ]);    }
 
     /**
      * Show the form for editing the specified resource.
@@ -72,8 +74,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = \App\Models\User::findOrFail($id);
+        $users = User::all();
         return Inertia::render('Dashboard/layouts/dashboard', [
             'user' => $user,
+            'users' => $users,
         ]);
     }
 
