@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -80,5 +81,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/dashboard/postrecipe', [RecipeController::class, 'store'])->middleware(['auth', 'verified'])->name('post.store');
+
+Route::post('/upload', function (Request $request) {
+    if ($request->hasFile('file')) {
+        $file = $request->file('file');
+
+        // Guardar la imagen en la carpeta 'public/img'
+        $path = $file->store('public/img');
+
+        return response()->json(['message' => 'Imagen subida con éxito', 'path' => $path]);
+    }
+
+    return response()->json(['error' => 'No se proporcionó ninguna imagen'], 400);
+})->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

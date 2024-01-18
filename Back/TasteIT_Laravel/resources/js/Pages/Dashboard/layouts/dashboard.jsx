@@ -10,6 +10,8 @@ import {
 } from "../widgets/layout";
 import routes from "../routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "../context";
+import PostRecipe from "../pages/dashboard/postrecipe";
+import React from "react";
 
 export function Dashboard({ auth, users }) {
   const [controller, dispatch] = useMaterialTailwindController();

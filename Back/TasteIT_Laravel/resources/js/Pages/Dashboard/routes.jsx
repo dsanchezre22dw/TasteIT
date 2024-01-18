@@ -5,12 +5,14 @@ import {
   InformationCircleIcon,
   ServerStackIcon,
   RectangleStackIcon,
+  AcademicCapIcon,
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Tables, Notifications } from "./pages/dashboard";
 import { SignIn, SignUp } from "./pages/auth";
 import UsersIndex from "./pages/Admin/Users/indexuser";
 import UsersEdit from "./pages/Admin/Users/edituser";
 import UsersAdd from "./pages/Admin/Users/adduser";
+import PostRecipe from "./pages/dashboard/postrecipe";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -56,7 +58,14 @@ export const routes = [
         path: `/dashboard/users`,
         route: "/users",
         element: <UsersIndex />,
-      }
+      },
+      {
+        icon: <AcademicCapIcon {...icon} />,
+        name: "Post Recipe",
+        path: `/dashboard/postrecipe`,
+        route: "/postrecipe",
+        element: <PostRecipe />,
+      },
     ],
   },
   {

@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 import { ProfileInfoCard, MessageCard } from "../../widgets/cards";
 import { platformSettingsData, conversationsData, projectsData } from "../../data";
 
-export function Profile( {auth} ) {
+export function Profile({auth}) {
   return (
     <>
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
@@ -41,7 +41,7 @@ export function Profile( {auth} ) {
               />
               <div>
                 <Typography variant="h5" color="blue-gray" className="mb-1">
-                  Richard Davis
+                  {auth.user.firstname}
                 </Typography>
                 <Typography
                   variant="small"
