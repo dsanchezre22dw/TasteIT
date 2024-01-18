@@ -19,7 +19,7 @@ export default function CreatePost( {auth} ) {
     const submit = (e) => {
         e.preventDefault();
 
-        post('/dashboard/postrecipe');
+        post(route('recipes.add'));
         reset();
       };
 

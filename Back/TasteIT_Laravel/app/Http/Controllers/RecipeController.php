@@ -57,7 +57,7 @@ class RecipeController extends Controller
             $recipe->ingredients()->attach($ing, ['amount' => $amount]);
         }
     
-        return redirect('http://127.0.0.1:8000/dashboard/profile');
+        return redirect('http://127.0.0.1:8000/dashboard');
 
     }
 
