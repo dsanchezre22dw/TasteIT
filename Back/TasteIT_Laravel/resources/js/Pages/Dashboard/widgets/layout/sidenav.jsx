@@ -9,7 +9,7 @@ import {
 } from "@material-tailwind/react";
 import { useMaterialTailwindController, setOpenSidenav } from "../../context";
 
-export function Sidenav({ brandImg, brandName, routes }) {
+export function Sidenav({ brandImg, brandName, routes, user }) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavColor, sidenavType, openSidenav } = controller;
   const sidenavTypes = {
@@ -48,7 +48,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
       </div>
       <div className="m-4">
         {routes
-        .filter(({ show }) => show === 'yes')
+          .filter(({ show, admin }) => show === 'yes' && (user.type === 'admin' ? admin === 'yes' : admin === 'no'))
         .map(({ layout, title, pages }, key) => (
           <ul key={key} className="mb-4 flex flex-col gap-1">
             {title && (

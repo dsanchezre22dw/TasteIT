@@ -20,6 +20,7 @@ export const routes = [
   {
     layout: "dashboard",
     show: "yes",
+    admin: "yes",
     pages: [
       {
         icon: <HomeIcon {...icon} />,
@@ -61,6 +62,7 @@ export const routes = [
   {
     layout: "dashboard",
     show: 'yes',
+    admin: "yes",
     pages: [
       {
         icon: <ServerStackIcon {...icon} />,

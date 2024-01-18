@@ -54,8 +54,7 @@ class UserController extends Controller
             'user_id' => $user->id,
         ]);
 
-        $user->fridge()->associate($fridge);
-        $user->save();
+        $user->fridge()->save($fridge);
 
     }
 
