@@ -19,13 +19,12 @@ export default function CreatePost( {auth} ) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('recipes.add'));
-        reset();
+        post('/dashboard/recipes/add');
       };
 
     return (
         <div>
-            <form onSubmit={submit} name="createPost">
+            <form onSubmit={submit} name="createPost" encType="multipart/form-data">
                 <div className="flex flex-wrap">
                     <ImageUploader data={data} setData={setData}/>
 

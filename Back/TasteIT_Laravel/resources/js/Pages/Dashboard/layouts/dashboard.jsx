@@ -10,9 +10,9 @@ import {
 } from "../widgets/layout";
 import routes from "../routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "../context";
-import PostRecipe from "../pages/dashboard/postrecipe";
+import PostRecipe from "../pages/Standard/Recipe/postrecipe";
 
-export function Dashboard({ auth, users }) {
+export function Dashboard({ auth, users, recipes }) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
 
@@ -24,6 +24,7 @@ export function Dashboard({ auth, users }) {
           sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png"
         }
         user={auth.user}
+        brandName='TasteIT'
       />
       <div className="p-4 xl:ml-80">
         <DashboardNavbar auth={auth}/>
@@ -42,7 +43,7 @@ export function Dashboard({ auth, users }) {
             ({ layout, pages }) =>
               layout === "dashboard" &&
               pages.map(({ path, element }) => (
-                <Route exact key={path} path={path} element={React.cloneElement(element, { users , auth})} />
+                <Route exact key={path} path={path} element={React.cloneElement(element, { auth , users , recipes})} />
               ))
           )}
         </Routes>

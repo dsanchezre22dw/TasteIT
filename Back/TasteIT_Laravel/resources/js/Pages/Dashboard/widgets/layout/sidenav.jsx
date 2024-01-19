@@ -49,7 +49,7 @@ export function Sidenav({ brandImg, brandName, routes, user }) {
       <div className="m-4">
         {routes
           .filter(({ show, admin }) => show === 'yes' && (user.type === 'admin' ? admin === 'yes' : admin === 'no'))
-        .map(({ layout, title, pages }, key) => (
+          .map(({ layout, title, pages }, key) => (
           <ul key={key} className="mb-4 flex flex-col gap-1">
             {title && (
               <li className="mx-3.5 mt-4 mb-2">

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Fridge;
+use App\Models\Recipe;
 use App\Models\Shopping_list;
 use Inertia\Inertia;
 use Illuminate\Validation\Rules\Password;
@@ -19,9 +20,20 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::with(['saves'])->get();
+        $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
+    
+        $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
+            $avgValoration = $recipe->valorations->avg('pivot.valoration');
+            $avgValoration = number_format($avgValoration, 2);
+            $recipe->avg_valoration = $avgValoration;
+    
+            return $recipe;
+        });
+
         return Inertia::render('Dashboard/layouts/dashboard', [
             'users' => $users,
+            'recipes' => $recipesWithTypesAndAvgValorations,
         ]);
     }
 

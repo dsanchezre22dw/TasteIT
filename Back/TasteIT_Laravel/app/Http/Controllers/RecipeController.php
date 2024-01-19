@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Recipe;
 use App\Models\Ingredient;
+use App\Models\Valoration;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
 
@@ -16,9 +18,23 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Dashboard/layouts/dashboard');
+        $users = User::with(['saves'])->get();
+        $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
+    
+        $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
+            $avgValoration = $recipe->valorations->avg('pivot.valoration');
+            $avgValoration = number_format($avgValoration, 2);
+            $recipe->avg_valoration = $avgValoration;
+    
+            return $recipe;
+        });
+    
+        return Inertia::render('Dashboard/layouts/dashboard', [
+            'users' => $users,
+            'recipes' => $recipesWithTypesAndAvgValorations,
+        ]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -42,11 +58,11 @@ class RecipeController extends Controller
         
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-    
-            // Guardar la imagen en la carpeta 'public/img'
-            $path = $file->store('public/img');
 
-            $recipe->image = $path;
+            // Guardar la imagen en la carpeta 'public/img'
+            $path = $file->storeAs('/assets/img/recipes', $file->getClientOriginalName());
+
+            $recipe->image = "/".$path;
 
             $recipe->save();
         }
@@ -56,9 +72,8 @@ class RecipeController extends Controller
 
             $recipe->ingredients()->attach($ing, ['amount' => $amount]);
         }
-    
-        return redirect('http://127.0.0.1:8000/dashboard');
 
+        return redirect()->route('recipes.index');
     }
 
     /**
