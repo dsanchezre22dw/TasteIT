@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'firstName' => $this->faker->firstName(),
             'surname' => $this->faker->lastName(),
             'email' => $this->faker->email(),
-            'password' => '1234567890',
+            'password' => 'changeme1A',
             'enabled' => true,
         ];
     }

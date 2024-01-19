@@ -24,7 +24,7 @@ export default function CreatePost( {auth} ) {
 
     return (
         <div>
-            <form onSubmit={submit} name="createPost">
+            <form onSubmit={submit} name="createPost" encType="multipart/form-data">
                 <div className="flex flex-wrap">
                     <ImageUploader data={data} setData={setData}/>
 

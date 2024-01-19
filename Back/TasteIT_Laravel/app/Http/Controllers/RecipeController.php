@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Recipe;
 use App\Models\Ingredient;
+use App\Models\Valoration;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\StoreRecipeRequest;
@@ -17,11 +18,21 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $recipes = Recipe::all();
+        $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
+    
+        $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
+            $avgValoration = $recipe->valorations->avg('pivot.valoration');
+            $avgValoration = number_format($avgValoration, 2);
+            $recipe->avg_valoration = $avgValoration;
+    
+            return $recipe;
+        });
+    
         return Inertia::render('Dashboard/layouts/dashboard', [
-            'recipes' => $recipes,
-        ]);    }
-
+            'recipes' => $recipesWithTypesAndAvgValorations,
+        ]);
+    }
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -45,9 +56,9 @@ class RecipeController extends Controller
         
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-    
+
             // Guardar la imagen en la carpeta 'public/img'
-            $path = $file->store('public/img');
+            $path = $file->storeAs('public/assets', $file->getClientOriginalName());
 
             $recipe->image = $path;
 

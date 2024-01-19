@@ -24,6 +24,7 @@ export function Dashboard({ auth, users, recipes }) {
           sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png"
         }
         user={auth.user}
+        brandName='TasteIT'
       />
       <div className="p-4 xl:ml-80">
         <DashboardNavbar auth={auth}/>

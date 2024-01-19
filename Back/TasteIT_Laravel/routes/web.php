@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
+use App\Models\Recipe;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,10 +63,21 @@ Route::prefix('dashboard')->group(function () {
 
 Route::get('/dashboard', function () {
     $users = User::all();
+    $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
+    
+    $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
+        $avgValoration = $recipe->valorations->avg('pivot.valoration');
+        $avgValoration = number_format($avgValoration, 2);
+        $recipe->avg_valoration = $avgValoration;
+
+        return $recipe;
+    });
 
 
     return Inertia::render('Dashboard/layouts/dashboard', [
         'users' => $users,
+        'recipes' => $recipesWithTypesAndAvgValorations,
+
     ]);
 
 })->middleware(['auth', 'verified'])->name('dashboard');

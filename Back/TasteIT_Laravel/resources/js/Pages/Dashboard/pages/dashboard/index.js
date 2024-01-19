@@ -1,4 +1,4 @@
 export * from "./home";
-export * from "./profile";
+export * from "../Standard/Profile/profile";
 export * from "./tables";
 export * from "./notifications";
