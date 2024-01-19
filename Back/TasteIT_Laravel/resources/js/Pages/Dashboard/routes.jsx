@@ -85,11 +85,18 @@ export const routes = [
         route: "/recipes",
         element: <RecipesIndex />,
       },
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "profile",
+        path: `/dashboard/profile`,
+        route: "/profile",
+        element: <Profile />,
+      },
     ],
   },
   {
     layout: "dashboard",
-    show: "yes",
+    show: "no",
     admin: "no",
     pages: [
       {

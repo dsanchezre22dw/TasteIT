@@ -18,6 +18,7 @@ import {
   ChatBubbleLeftEllipsisIcon,
   Cog6ToothIcon,
   PencilIcon,
+  TrashIcon
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { ProfileInfoCard, MessageCard } from "../../../widgets/cards";
@@ -25,7 +26,7 @@ import { platformSettingsData, conversationsData, projectsData } from "../../../
 import StarIcon from "../../../../../../../resources/js/Components/StarIcon";
 import ClockIcon from "../../../../../../../resources/js/Components/ClockIcon";
 
-export function RecipesIndex({recipes}) { 
+export function RecipesIndex({auth, recipes}) { 
 
   const renderRecipes = recipes.map(
     ({ title, description, duration_mins, difficulty, avg_valoration, recipe_types, image}) => {
@@ -77,7 +78,7 @@ export function RecipesIndex({recipes}) {
 
             <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
               {recipe_types.map((type, index) => (
-                <span key={`${type.id}-${index}`} className="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-indigo-400 border border-indigo-400">Indigo</span>
+                <span key={`${type.id}-${index}`} className="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-indigo-400 border border-indigo-400">{type.name}</span>
               ))}
             </div>
           </CardBody>
@@ -132,7 +133,13 @@ export function RecipesIndex({recipes}) {
               className="font-normal text-blue-gray-500"
             >
               Recipes uploaded by all users
+
+              <Link to={'/dashboard/recipes/add'} className="ml-10">
+                <Button variant="gradient">Add Recipe</Button>
+              </Link>
             </Typography>
+
+
             <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
               {renderRecipes}
             </div>

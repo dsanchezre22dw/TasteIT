@@ -18,6 +18,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
+        $users = User::with(['saves'])->get();
         $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
     
         $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
@@ -29,6 +30,7 @@ class RecipeController extends Controller
         });
     
         return Inertia::render('Dashboard/layouts/dashboard', [
+            'users' => $users,
             'recipes' => $recipesWithTypesAndAvgValorations,
         ]);
     }
@@ -58,9 +60,9 @@ class RecipeController extends Controller
             $file = $request->file('image');
 
             // Guardar la imagen en la carpeta 'public/img'
-            $path = $file->storeAs('public/assets', $file->getClientOriginalName());
+            $path = $file->storeAs('/assets/img/recipes', $file->getClientOriginalName());
 
-            $recipe->image = $path;
+            $recipe->image = "/".$path;
 
             $recipe->save();
         }
@@ -71,6 +73,7 @@ class RecipeController extends Controller
             $recipe->ingredients()->attach($ing, ['amount' => $amount]);
         }
 
+        return redirect()->route('recipes.index');
     }
 
     /**

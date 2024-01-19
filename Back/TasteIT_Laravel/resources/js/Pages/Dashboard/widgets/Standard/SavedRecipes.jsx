@@ -19,85 +19,118 @@ import {
   Cog6ToothIcon,
   PencilIcon,
 } from "@heroicons/react/24/solid";
+import {
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { ProfileInfoCard, MessageCard } from "../../widgets/cards";
+import { ProfileInfoCard, MessageCard } from "../cards";
 import { platformSettingsData, conversationsData, projectsData } from "../../data";
+import ClockIcon from "@/Components/ClockIcon";
+import StarIcon from "@/Components/StarIcon";
 
 
+export function SavedRecipes({ recipes, user, users }) {
 
-export function SavedRecipes({ auth }) {
+  const renderRecipes = users
+  .filter(u => u.id === user.id) 
+  .flatMap(({ saves }) => saves) 
+  .map(
+    ({ title, description, duration_mins, difficulty, avg_valoration, recipe_types, image}) => {
+      let difficultyColor, difficultyText;
+  
+      if (difficulty === "beginner") {
+        difficultyColor = "green";
+        difficultyText = "Beginner";
+      } else if (difficulty === "medium") {
+        difficultyColor = "yellow";
+        difficultyText = "Medium";
+      } else if (difficulty === "expert") {
+        difficultyColor = "red";
+        difficultyText = "Expert";
+      }
+  
+      return (
+        <Card key={title} color="transparent" shadow={false} className="border border-blue-gray-200 rounded-xl">
+
+          <CardHeader
+            floated={false}
+            color="gray"
+            className="mx-0 mt-0 mb-4 h-64 xl:h-40"
+          >
+            <img
+              src={image}
+              alt={title}
+              className="h-full w-full object-cover"
+            />
+          </CardHeader>
+
+          <CardBody className="py-0 px-1">
+
+            <Typography
+              variant="h5"
+              color="blue-gray"
+              className="mt-1 mb-2"
+            >
+              {title}
+            </Typography>
+
+            <div className="mt-3 flex items-center justify-between py-0 px-1">
+              <div className="flex">
+                <span className={`bg-${difficultyColor}-100 text-${difficultyColor}-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-${difficultyColor}-900 dark:text-${difficultyColor}-300`}>{difficultyText}</span>
+              </div>  
+              <div className="flex"><ClockIcon count={1}/>{duration_mins}min</div>
+              <div className="flex"><StarIcon count={1}/>{avg_valoration}</div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+ 
+            </div>
+          </CardBody>
+          <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
+            <Link to={route}>
+              <Button variant="outlined" size="sm" className="ml-3 mb-3">
+                view recipe
+                  <i className="text-yellow-500 fas fa-star"></i>
+              </Button>
+            </Link> 
+
+            <div>
+              <Tooltip content="Edit Recipe">
+                <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500 mb-3 mr-1"/>
+              </Tooltip>
+            </div>
+            <div>
+              <Tooltip content="Delete Recipe">
+                <TrashIcon className="h-5 w-5 text-red-500 cursor-pointer mb-3" />
+              </Tooltip>
+            </div>
+            <div>
+            </div>
+          </CardFooter>
+        </Card>
+      );
+    }
+  );
+  
 
 
   return (
-    <div className="gird-cols-1 mb-12 grid gap-12 px-4 lg:grid-cols-2 xl:grid-cols-3">
-      <div>
-        <Typography variant="h6" color="blue-gray" className="mb-3">
-          Platform Settings
+    <>
+      <div className="px-4 pb-4">
+        <Typography variant="h6" color="blue-gray" className="mb-2">
+          Recipes
         </Typography>
-        <div className="flex flex-col gap-12">
-          {platformSettingsData.map(({ title, options }) => (
-            <div key={title}>
-              <Typography className="mb-4 block text-xs font-semibold uppercase text-blue-gray-500">
-                {title}
-              </Typography>
-              <div className="flex flex-col gap-6">
-                {options.map(({ checked, label }) => (
-                  <Switch
-                    key={label}
-                    id={label}
-                    label={label}
-                    defaultChecked={checked}
-                    labelProps={{
-                      className: "text-sm font-normal text-blue-gray-500",
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
+        <Typography
+          variant="small"
+          className="font-normal text-blue-gray-500"
+        >
+          Recipes uploaded by all users
+        </Typography>
+        <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
+          {renderRecipes}
         </div>
-      </div>
-      <ProfileInfoCard
-        title="Profile Information"
-        description="Hi, I'm Alec Thompson, Decisions: If you can't decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
-        details={{
-          "first name": "Alec M. Thompson",
-          mobile: "(44) 123 1234 123",
-          email: "alecthompson@mail.com",
-          location: "USA",
-          social: (
-            <div className="flex items-center gap-4">
-              <i className="fa-brands fa-facebook text-blue-700" />
-              <i className="fa-brands fa-twitter text-blue-400" />
-              <i className="fa-brands fa-instagram text-purple-500" />
-            </div>
-          ),
-        }}
-        action={
-          <Tooltip content="Edit Profile">
-            <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" />
-          </Tooltip>
-        }
-      />
-      <div>
-        <Typography variant="h6" color="blue-gray" className="mb-3">
-          Platform Settings
-        </Typography>
-        <ul className="flex flex-col gap-6">
-          {conversationsData.map((props) => (
-            <MessageCard
-              key={props.name}
-              {...props}
-              action={
-                <Button variant="text" size="sm">
-                  reply
-                </Button>
-              }
-            />
-          ))}
-        </ul>
-      </div>
-    </div>
+      </div>             
+    </>
   );
 }
 

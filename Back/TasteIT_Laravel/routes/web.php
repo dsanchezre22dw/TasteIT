@@ -35,10 +35,10 @@ Route::get('/', function () {
 
 
 Route::prefix('dashboard')->group(function () {
-    Route::get('/home', function () {return Inertia::render('Dashboard/layouts/dashboard', []);});
-    Route::get('/profile', function () {return Inertia::render('Dashboard/layouts/dashboard', []);});
-    Route::get('/tables', function () {return Inertia::render('Dashboard/layouts/dashboard', []);});
-    Route::get('/notifications', function () {return Inertia::render('Dashboard/layouts/dashboard', []);});
+    Route::get('/home', [UserController::class, 'index']);
+    Route::get('/profile', [UserController::class, 'index']);
+    Route::get('/tables', [UserController::class, 'index']);
+    Route::get('/notifications', [UserController::class, 'index']);
     Route::get('/prueba', [UserController::class, 'index']);
 
     Route::prefix('users')->group(function () {

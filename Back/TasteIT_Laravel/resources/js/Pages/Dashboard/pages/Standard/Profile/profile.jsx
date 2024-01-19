@@ -28,7 +28,7 @@ import MyRecipes from "../../../widgets/Standard/MyRecipes";
 import SavedRecipes from "../../../widgets/Standard/SavedRecipes";
 import EditUserInformation from "../../../widgets/Standard/EditUserInformation";
 
-export function Profile({auth, recipes}) {
+export function Profile({auth, recipes, users}) {
   const [activeTab, setActiveTab] = useState("info");
 
   
@@ -86,7 +86,7 @@ export function Profile({auth, recipes}) {
 
           {activeTab === "info" && <UserInformation user={auth.user} setActiveTab={setActiveTab}/>}
           {activeTab === "mine" && <MyRecipes user={auth.user} recipes={recipes}/>}
-          {activeTab === "saved" && <SavedRecipes />}
+          {activeTab === "saved" && <SavedRecipes user={auth.user} recipes={recipes} users={users}/>}
           {activeTab === "settings" && <UserSettings user={auth.user}/>}
           {activeTab === "edit" && <EditUserInformation user={auth.user}/>}
 
