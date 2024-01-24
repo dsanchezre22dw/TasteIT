@@ -32,7 +32,7 @@ export default function AddedIngredient(props) {
     
 
     return (
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
             <p className="w-[100px]">{props.ingredientName}</p>
 
             <div class="relative flex items-center max-w-[8rem]">

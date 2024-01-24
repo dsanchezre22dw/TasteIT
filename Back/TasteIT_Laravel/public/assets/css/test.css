@@ -35,3 +35,19 @@
 #image-uploader input {
     display: none;
 }
+
+#search{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    border-radius: 0 0 10px 10px;
+    padding: 3px;
+}
+
+#searchInput:focus + ul{
+    display: block;
+}
+
+#search:hover{
+    display: block;
+}
