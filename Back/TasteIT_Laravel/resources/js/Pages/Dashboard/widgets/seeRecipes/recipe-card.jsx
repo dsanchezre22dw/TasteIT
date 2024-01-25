@@ -50,10 +50,10 @@ function RecipeCard({ recipe, route, auth }) {
         <img src={image} alt={title} className="h-full w-full object-cover" />
       </CardHeader>
       <CardBody className="py-0 px-1">
-        <Typography variant="h5" color="blue-gray" className="mt-1 mb-2">
+        <Typography variant="h5" color="blue-gray" className="mt-1 mb-2 ml-2">
           {title}
         </Typography>
-        <div className="mt-3 flex items-center justify-between py-0 px-1">
+        <div className="mt-3 flex flex-wrap items-center justify-between py-0 px-1">
           <div className="flex">
             <span className={`bg-${difficultyColor}-100 text-${difficultyColor}-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-${difficultyColor}-900 dark:text-${difficultyColor}-300`}>
               {difficultyText}
@@ -68,7 +68,7 @@ function RecipeCard({ recipe, route, auth }) {
             {avg_valoration}
           </div>
         </div>
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-6 flex flex-wrap gap-4 justify-center">
             {recipe_types.map((type, index) => (
                 <RecipeType key={type.id} id={type.id} name={type.name} index={index} />
             ))}
@@ -82,10 +82,10 @@ function RecipeCard({ recipe, route, auth }) {
           </Button>
         </Link>
         {auth.user.type === "admin"  && (
-          <div>
+          <div class="flex gap-8">
             <div>
               <Tooltip content="Edit Recipe">
-                <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500 mb-3 mr-1" />
+                <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500 mt-[2.2px]" />
               </Tooltip>
             </div>
             <div>

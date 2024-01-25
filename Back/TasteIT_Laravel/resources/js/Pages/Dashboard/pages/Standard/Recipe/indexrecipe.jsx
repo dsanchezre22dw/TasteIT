@@ -47,13 +47,16 @@ export function RecipesIndex({auth, recipes}) {
             >
               Recipes uploaded by all users
 
-              <Link to={'/dashboard/recipes/add'} className="ml-10">
-                <Button variant="gradient">Add Recipe</Button>
-              </Link>
+              <div class="float-right -mt-6">
+                <Link to={'/dashboard/recipes/add'} className="ml-10">
+                  <Button variant="gradient">Add Recipe</Button>
+                </Link>
+              </div>
+
             </Typography>
 
 
-            <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+            <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               {recipes.map((recipe) => (
                 <RecipeCard key={recipe.title} auth={auth} recipe={recipe} />
               ))}
