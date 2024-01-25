@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Shopping_list;
+use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Recipe;
 use Illuminate\Http\Request;
+use App\Models\Shopping_list;
+use Illuminate\Support\Facades\Auth;
 
 class ShoppingListController extends Controller
 {
@@ -12,7 +16,24 @@ class ShoppingListController extends Controller
      */
     public function index()
     {
-        //
+        $shopping_list = Auth::user()->shopping_list;
+        $shopping_list->ingredients;
+        $users = User::with(['saves'])->get();
+        $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
+    
+        $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
+            $avgValoration = $recipe->valorations->avg('pivot.valoration');
+            $avgValoration = number_format($avgValoration, 2);
+            $recipe->avg_valoration = $avgValoration;
+    
+            return $recipe;
+        });
+    
+        return Inertia::render('Dashboard/layouts/dashboard', [
+            'shoppingList' => $shopping_list,
+            'users' => $users,
+            'recipes' => $recipesWithTypesAndAvgValorations,
+        ]);
     }
 
     /**

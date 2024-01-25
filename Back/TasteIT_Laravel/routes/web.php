@@ -1,14 +1,15 @@
 <?php
 
+use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Recipe;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UserController;
-use App\Models\User;
-use App\Models\Recipe;
+use App\Http\Controllers\ShoppingListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,10 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/edit/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
         Route::get('/add', [RecipeController::class, 'show'])->name('recipes.show');  
         Route::post('/add', [RecipeController::class, 'store'])->name('recipes.add'); 
+    });
+
+    Route::prefix('shopping')->group(function (){
+        Route::get('/', [ShoppingListController::class,'index']);
     });
 
 });
