@@ -1,10 +1,11 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { useForm } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
+import { setupPasswordValidation, validateFirstName, validateSurname, validatePassword } from '../../../../../public/assets/js/validationUtils'
 
 export default function UpdatePasswordForm({ className = '' }) {
     const passwordInput = useRef();
@@ -15,6 +16,14 @@ export default function UpdatePasswordForm({ className = '' }) {
         password: '',
         password_confirmation: '',
     });
+
+    useEffect(() => {
+        setupPasswordValidation();
+
+        return () => {
+            reset('password', 'password_confirmation');
+        };
+    }, []);
 
     const updatePassword = (e) => {
         e.preventDefault();
@@ -77,6 +86,13 @@ export default function UpdatePasswordForm({ className = '' }) {
                     />
 
                     <InputError message={errors.password} className="mt-2" />
+                </div>
+
+                <div id="message">
+                    <p id="letter" className="invalid">A <b>lowercase</b> letter</p>
+                    <p id="capital" className="invalid">A <b>capital uppercase</b> letter</p>
+                    <p id="number" className="invalid">A <b>number</b></p>
+                    <p id="length" className="invalid">Minimum <b>8 characters</b></p>
                 </div>
 
                 <div>
