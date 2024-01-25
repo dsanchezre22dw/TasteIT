@@ -50,7 +50,7 @@ export default function ImageUploader({data, setData}) {
         }
     }
     return (
-        <span id="image-uploader" className="m-6">
+        <span id="image-uploader" className="m-6 w-96 md:w-[500px] h-96 md:h-[500px]">
 
             <input type="file" id="upload-input" accept="image/*" name="image" defaultValue={data.image}/>
             

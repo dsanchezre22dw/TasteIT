@@ -1,6 +1,4 @@
 #image-uploader {
-    width: 500px;
-    height: 500px;
     border-radius: 10px;
     border: 2px dashed #ccc;
     display: flex;
@@ -34,4 +32,20 @@
 
 #image-uploader input {
     display: none;
+}
+
+#search{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    border-radius: 0 0 10px 10px;
+    padding: 3px;
+}
+
+#searchInput:focus + ul{
+    display: block;
+}
+
+#search:hover{
+    display: block;
 }

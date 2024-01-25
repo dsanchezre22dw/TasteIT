@@ -70,7 +70,7 @@ class IngredientController extends Controller
         $searchTerm = $request->input('term');
         // Aquí deberías implementar la lógica para obtener sugerencias de ingredientes según el término de búsqueda.
         // Puedes obtener la lista de ingredientes desde tu base de datos o cualquier otra fuente.
-        $ingredients = Ingredient::where('name','like',$searchTerm.'%')->get('name');
+        $ingredients = Ingredient::where('name','like','%'.$searchTerm.'%')->get('name');
         $suggestions = [];
         foreach ($ingredients as $key => $value) {
             $suggestions[] = $value->name;
