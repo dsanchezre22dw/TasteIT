@@ -15,6 +15,7 @@ import '../../../../../../css/users.css';
 import { Head, useForm } from '@inertiajs/react';
 import { Link, NavLink } from "react-router-dom";
 import { Inertia } from '@inertiajs/inertia-react';
+import UserTableRow from "@/Pages/Dashboard/widgets/seeUsers/usertablerow";
 
 export function UsersIndex({ users }) {  
   const { data, setData, get, processing, errors, reset } = useForm({});
@@ -64,63 +65,10 @@ export function UsersIndex({ users }) {
               </tr>
             </thead>
             <tbody>
-              {users.map(
-                ({ id, username, email, type, enabled }, key) => {
-                  const className = `py-3 px-5 ${
-                    key === users.length - 1
-                      ? ""
-                      : "border-b border-blue-gray-50"
-                  }`;
+            {users.map((user, key) => (
+              <UserTableRow key={key} {...user} handleDelete={handleDelete} />
+            ))}
 
-                  return (
-                    <tr key={username}>
-                      <td className={className}>
-                        <div className="flex items-center gap-4">
-                          <Avatar src="/img/team-2.jpeg" alt={username} size="sm" variant="rounded" />
-                          <div>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-semibold"
-                            >
-                              {username}
-                            </Typography>
-                            <Typography className="text-xs font-normal text-blue-gray-500">
-                              {email}
-                            </Typography>
-                          </div>
-                        </div>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {type}
-                        </Typography>
-  
-                      </td>
-                      <td className={className}>
-                        <Chip
-                          variant="gradient"
-                          color={enabled ? "green" : "blue-gray"}
-                          value={enabled ? "enabled" : "disabled"}
-                          className="py-0.5 px-2 text-[11px] font-medium w-fit"
-                        />
-                      </td>
-                      <td className={className}>
-                        <Link to={`/dashboard/users/edit/${id}`}>
-                          <i className="material-icons settings">&#xE8B8;</i>
-                        </Link>
-                      </td>
-                      <td className={className}>
-                        <button type="button" onClick={() => handleDelete(id)}>
-                          <span><i className="material-icons delete">&#xE5C9;</i></span>
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
-
-              
             </tbody>
           </table>
         </CardBody>
