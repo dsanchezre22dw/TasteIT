@@ -17,6 +17,7 @@ import MainTitle from "@/Components/MainTitle";
 
 
 export default function ShoppingList({auth, shoppingList}){
+    
     return(
         <>
         <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">

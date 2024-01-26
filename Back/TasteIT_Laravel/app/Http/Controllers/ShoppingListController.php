@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Recipe;
+use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use App\Models\Shopping_list;
 use Illuminate\Support\Facades\Auth;
@@ -49,7 +50,15 @@ class ShoppingListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $shopping_list = $user->shopping_list;
+        $shopping_list->ingredients()->detach();
+        foreach ($request->amount as $ingredientName => $amount) {
+            $ingredient = Ingredient::where('name','like',$ingredientName)->first();
+            $shopping_list->ingredients()->attach($ingredient,['amount' => $amount]);
+        }
+
+        return redirect()->back();
     }
 
     /**

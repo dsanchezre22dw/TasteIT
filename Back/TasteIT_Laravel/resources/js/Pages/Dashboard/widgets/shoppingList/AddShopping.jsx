@@ -6,18 +6,17 @@ export default function AddShopping({auth, shoppingList}) {
 
     const { data, setData, post, processing, errors, reset } = useForm({
         amount: {},
-        user_id: auth.user.id
     });
     const submit = (e) => {
         e.preventDefault();
 
-        post('/dashboard/shopping/add');
+        post('/dashboard/shopping/update');
       };
 
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
-    const [selectedIngredients, setSelectedIngredients] = useState(shoppingList.ingredients);
-console.log(shoppingList.ingredients)
+    const [selectedIngredients, setSelectedIngredients] = useState([]);
+
     useEffect(() => {
         
         const fetchSuggestions = async () => {
@@ -25,7 +24,6 @@ console.log(shoppingList.ingredients)
         console.log(response.data.suggestions);
         
         setSuggestions(response.data.suggestions);
-        
         };
         if (searchTerm.trim() === '') {
             // Limpiar sugerencias si el término de búsqueda está vacío
@@ -37,21 +35,33 @@ console.log(shoppingList.ingredients)
         
     }, [searchTerm]);
 
+    useEffect(() => {
+        let obj = {};
+        let array =[];
+        shoppingList.ingredients.forEach(element => {
+            obj[element.name] = element.pivot.amount;
+            array.push(element.name);
+        });
+        console.log('a', obj);
+        setData('amount', obj);
+        setSelectedIngredients(array);
+    },[])
+
     const handleSelectIngredient = (ingredient) => {
 
         setSelectedIngredients([...selectedIngredients, ingredient]);
         setSearchTerm(''); // Limpiar el término de búsqueda después de seleccionar un ingrediente
-
+console.log(selectedIngredients)
     };
 
     const filteredSuggestions = suggestions
-    .filter((ingredient) => !selectedIngredients.name.includes(ingredient))
+    .filter((ingredient) => !selectedIngredients.includes(ingredient))
     .slice(0, 10); // Limitar la cantidad de sugerencias a mostrar
 
 
     return (
         <div className='m-6'>
-            <form action="">
+            <form onSubmit={submit} name="shoppingList" encType="multipart/form-data">
         <input type="text" placeholder="🔍 Search for an ingredient" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} id='searchInput' className='rounded-full w-full'/>
         <ul id='search' className='w-[69%] sm:w-[74%] md:w-[80%] lg:w-[85%] bg-gray-100 ml-4'>
             {filteredSuggestions.map((ingredient) => (
@@ -74,8 +84,8 @@ console.log(shoppingList.ingredients)
             ))}
             </div>
         </div>
-        <Button>
-            Bought
+        <Button onClick={submit}>
+            Save
         </Button>
         </form>
         </div>
