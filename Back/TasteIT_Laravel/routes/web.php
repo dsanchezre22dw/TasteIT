@@ -66,6 +66,12 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/clear', [ShoppingListController::class,'update']);
     });
 
+    Route::prefix('fridge')->group(function (){
+        Route::get('/', [ShoppingListController::class,'index']);
+        Route::post('/update', [ShoppingListController::class,'store']);
+        Route::post('/clear', [ShoppingListController::class,'update']);
+    });
+
 });
 
 Route::get('/dashboard', function () {

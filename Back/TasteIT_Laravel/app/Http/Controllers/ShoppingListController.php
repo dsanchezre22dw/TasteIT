@@ -19,6 +19,10 @@ class ShoppingListController extends Controller
     {
         $shopping_list = Auth::user()->shopping_list;
         $shopping_list->ingredients;
+
+        $fridge = Auth::user()->fridge;
+        $fridge->ingredients;
+
         $users = User::with(['saves'])->get();
         $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
     
@@ -32,6 +36,7 @@ class ShoppingListController extends Controller
     
         return Inertia::render('Dashboard/layouts/dashboard', [
             'shoppingList' => $shopping_list,
+            'fridge' => $fridge,
             'users' => $users,
             'recipes' => $recipesWithTypesAndAvgValorations,
         ]);
@@ -51,11 +56,11 @@ class ShoppingListController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $shopping_list = $user->shopping_list;
-        $shopping_list->ingredients()->detach();
+        $fridge = $user->fridge;
+        $fridge->ingredients()->detach();
         foreach ($request->amount as $ingredientName => $amount) {
             $ingredient = Ingredient::where('name','like',$ingredientName)->first();
-            $shopping_list->ingredients()->attach($ingredient,['amount' => $amount]);
+            $fridge->ingredients()->attach($ingredient,['amount' => $amount]);
         }
 
         return redirect()->back();

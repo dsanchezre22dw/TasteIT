@@ -12,7 +12,24 @@ class FridgeController extends Controller
      */
     public function index()
     {
-        //
+        $shopping_list = Auth::user()->shopping_list;
+        $shopping_list->ingredients;
+        $users = User::with(['saves'])->get();
+        $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
+    
+        $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
+            $avgValoration = $recipe->valorations->avg('pivot.valoration');
+            $avgValoration = number_format($avgValoration, 2);
+            $recipe->avg_valoration = $avgValoration;
+    
+            return $recipe;
+        });
+    
+        return Inertia::render('Dashboard/layouts/dashboard', [
+            'shoppingList' => $shopping_list,
+            'users' => $users,
+            'recipes' => $recipesWithTypesAndAvgValorations,
+        ]);
     }
 
     /**
@@ -28,7 +45,15 @@ class FridgeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $shopping_list = $user->shopping_list;
+        $shopping_list->ingredients()->detach();
+        foreach ($request->amount as $ingredientName => $amount) {
+            $ingredient = Ingredient::where('name','like',$ingredientName)->first();
+            $shopping_list->ingredients()->attach($ingredient,['amount' => $amount]);
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -52,7 +77,15 @@ class FridgeController extends Controller
      */
     public function update(Request $request, Fridge $fridge)
     {
-        //
+        $user = Auth::user();
+        $shopping_list = $user->shopping_list;
+        
+        foreach ($request->checked as $key => $name) {
+            $ingredient = Ingredient::where('name','like',$name)->first();
+            $shopping_list->ingredients()->detach($ingredient);
+        }
+
+        return redirect()->back();
     }
 
     /**
