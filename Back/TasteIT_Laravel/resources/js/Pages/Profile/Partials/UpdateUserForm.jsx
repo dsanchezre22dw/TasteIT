@@ -36,10 +36,6 @@ export default function UpdateUserForm({ className = '', user}) {
         // Otros campos que necesiten validación
     });
 
-    useEffect(() => {
-
-    }, []);
-
     const submit = (e) => {
         e.preventDefault();
         var errors_exist = "";
@@ -56,7 +52,7 @@ export default function UpdateUserForm({ className = '', user}) {
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12 w-[50%] mx-auto">
 
-        <form name="form_register" onSubmit={submit}>
+        <form name="form_register" onSubmit={submit} className="space-y-4">
             <div style={{ display: 'flex' }}>
 
                 <div style={{ flex: 1}}>
@@ -74,6 +70,8 @@ export default function UpdateUserForm({ className = '', user}) {
                     />
 
                     <InputError message={errorMessages.firstname} className="mt-2" />
+                    <InputError message={errors.firstname} className="mt-2" />
+
                 </div>
 
                 <div style={{ flex: 1, marginLeft: '10px'}}>
@@ -89,12 +87,14 @@ export default function UpdateUserForm({ className = '', user}) {
                         maxLength='100'
                     />
 
-                    <InputError message={errors.firstname} className="mt-2" />
+                    <InputError message={errorMessages.surname} className="mt-2" />
+                    <InputError message={errors.surname} className="mt-2" />
+
                 </div>
 
             </div>
 
-            <div className="mt-4" style={{ display: 'flex'}}>
+            <div style={{ display: 'flex'}}>
 
                 <div style={{ flex: 2}}>
                     <InputLabel htmlFor="username" value="Username*" />
@@ -143,7 +143,7 @@ export default function UpdateUserForm({ className = '', user}) {
 
             </div>
 
-            <div className="mt-4">
+            <div>
 
                 <InputLabel htmlFor="email" value="Email*" />
 

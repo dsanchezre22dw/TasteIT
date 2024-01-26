@@ -82,7 +82,7 @@ export function validateFirstName(data, setErrorMessages){
 }
 
 export function validateSurname(data, setErrorMessages){
-    if (data.surname === "" || allLetter(data.surname)){
+    if (data.surname === null || data.surname === "" || allLetter(data.surname)){
         setErrorMessages((prevErrors) => ({
             ...prevErrors,
             surname: '',
@@ -94,7 +94,6 @@ export function validateSurname(data, setErrorMessages){
             ...prevErrors,
             surname: 'Field surname can only contain letters',
         }));
-
         return "yes"
     }
 }

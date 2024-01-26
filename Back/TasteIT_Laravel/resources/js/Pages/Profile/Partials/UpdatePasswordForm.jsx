@@ -17,6 +17,10 @@ export default function UpdatePasswordForm({ className = '' }) {
         password_confirmation: '',
     });
 
+    const [errorMessages, setErrorMessages] = useState({
+        password: '',
+    });
+
     useEffect(() => {
         setupPasswordValidation();
 
@@ -27,26 +31,17 @@ export default function UpdatePasswordForm({ className = '' }) {
 
     const updatePassword = (e) => {
         e.preventDefault();
+        var errors_exist = "";
 
-        put(route('password.update'), {
-            preserveScroll: true,
-            onSuccess: () => reset(),
-            onError: (errors) => {
-                if (errors.password) {
-                    reset('password', 'password_confirmation');
-                    passwordInput.current.focus();
-                }
+        errors_exist += validatePassword(data, setErrorMessages);
 
-                if (errors.current_password) {
-                    reset('current_password');
-                    currentPasswordInput.current.focus();
-                }
-            },
-        });
+        if (errors_exist === ""){
+            put(route('password.update'));
+        }
     };
 
     return (
-        <section className={className}>
+        <div className="mt-12 mb-8 flex flex-col gap-12 w-[50%] mx-auto">
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Update Password</h2>
 
@@ -55,7 +50,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </p>
             </header>
 
-            <form onSubmit={updatePassword} className="mt-6 space-y-6">
+            <form onSubmit={updatePassword} className="space-y-4 -mt-6">
                 <div>
                     <InputLabel htmlFor="current_password" value="Current Password" />
 
@@ -107,6 +102,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                         autoComplete="new-password"
                     />
 
+                    <InputError message={errorMessages.password} className="mt-2" />
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
 
@@ -124,6 +120,6 @@ export default function UpdatePasswordForm({ className = '' }) {
                     </Transition>
                 </div>
             </form>
-        </section>
+        </div>
     );
 }

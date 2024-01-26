@@ -66,7 +66,12 @@ class UserController extends Controller
             'user_id' => $user->id,
         ]);
 
+        $shopping_list = Shopping_list::create([
+            'user_id' => $user->id,
+        ]);
+
         $user->fridge()->save($fridge);
+        $user->shopping_list()->save($shopping_list);
 
     }
 
