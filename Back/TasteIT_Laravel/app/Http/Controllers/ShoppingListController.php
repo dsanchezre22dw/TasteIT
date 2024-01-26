@@ -80,9 +80,17 @@ class ShoppingListController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Shopping_list $shopping_list)
+    public function update(Request $request)
     {
-        //
+        $user = Auth::user();
+        $shopping_list = $user->shopping_list;
+        
+        foreach ($request->checked as $key => $name) {
+            $ingredient = Ingredient::where('name','like',$name)->first();
+            $shopping_list->ingredients()->detach($ingredient);
+        }
+
+        return redirect()->back();
     }
 
     /**

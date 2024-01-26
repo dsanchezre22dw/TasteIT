@@ -7,11 +7,19 @@ export default function AddShopping({auth, shoppingList}) {
     const { data, setData, post, processing, errors, reset } = useForm({
         amount: {},
     });
+    const { data: dataC , setData: setDataC, post: postC } = useForm({
+        checked: [],
+    });
     const submit = (e) => {
         e.preventDefault();
 
         post('/dashboard/shopping/update');
-      };
+    };
+    const clear = (e) => {
+        e.preventDefault();
+
+        postC('/dashboard/shopping/clear');
+    };
 
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
@@ -80,12 +88,15 @@ console.log(selectedIngredients)
                 </div>
             {selectedIngredients.map((ingredient) => (
                 
-                <Addedshopping ingredientName={ingredient} selectedIngredients={selectedIngredients} setSelectedIngredients={setSelectedIngredients} setData={setData} data={data}/>
+                <Addedshopping ingredientName={ingredient} selectedIngredients={selectedIngredients} setSelectedIngredients={setSelectedIngredients} setData={setData} data={data} setDataC={setDataC} dataC={dataC}/>
             ))}
             </div>
         </div>
-        <Button onClick={submit}>
+        <Button variant="gradient" className="ml-5" onClick={submit}>
             Save
+        </Button>
+        <Button variant="gradient" className="ml-5" onClick={clear}>
+            Clear
         </Button>
         </form>
         </div>
