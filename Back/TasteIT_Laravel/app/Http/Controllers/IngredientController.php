@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Recipe;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreIngredientRequest;
@@ -14,7 +17,23 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::with(['saves'])->get();
+        $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
+        $ingredients = Ingredient::all();
+    
+        $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
+            $avgValoration = $recipe->valorations->avg('pivot.valoration');
+            $avgValoration = number_format($avgValoration, 2);
+            $recipe->avg_valoration = $avgValoration;
+    
+            return $recipe;
+        });
+
+        return Inertia::render('Dashboard/layouts/dashboard', [
+            'ingredients' => $ingredients,
+            'users' => $users,
+            'recipes' => $recipesWithTypesAndAvgValorations,
+        ]);
     }
 
     /**
@@ -28,9 +47,13 @@ class IngredientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreIngredientRequest $request)
+    public function store(Request $request)
     {
-        //
+        $ingredient = new Ingredient;
+        $ingredient->name = $request->name;
+        $ingredient->save();
+
+        return redirect()->back();
     }
 
     /**

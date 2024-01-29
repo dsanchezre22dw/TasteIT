@@ -10,6 +10,7 @@ use App\Http\Controllers\FridgeController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\ShoppingListController;
 
 /*
@@ -71,6 +72,12 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/', [FridgeController::class,'index']);
         Route::post('/update', [FridgeController::class,'store']);
         Route::post('/clear', [FridgeController::class,'update']);
+    });
+
+    Route::prefix('ingredients')->group(function (){
+        Route::get('/', [IngredientController::class,'index']);
+        Route::post('/create', [IngredientController::class,'store']);
+        Route::post('/clear', [IngredientController::class,'update']);
     });
 
 });

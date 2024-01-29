@@ -18,6 +18,7 @@ import { RecipesIndex } from "./pages/Standard/Recipe/indexrecipe";
 import Profile from "./pages/Standard/Profile/profile";
 import ShoppingList from "./pages/Standard/ShoppingList/shoppinglist";
 import Fridge from "./pages/Standard/Fridge/fridge";
+import CreateIngredients from "./pages/Admin/Ingredients/CreateIngredients";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -49,6 +50,13 @@ export const routes = [
         path: `/dashboard/recipes`,
         route: "/recipes",
         element: <RecipesIndex />,
+      },
+      {
+        icon: <AcademicCapIcon {...icon} />,
+        name: "ingredients",
+        path: `/dashboard/ingredients`,
+        route: "/ingredients",
+        element: <CreateIngredients />,
       },
     ],
   },
