@@ -46,14 +46,14 @@ export function RecipesIndex({auth, recipes}) {
               className="font-normal text-blue-gray-500"
             >
               Recipes uploaded by all users
-
-              <div class="float-right -mt-6">
-                <Link to={'/dashboard/recipes/add'} className="ml-10">
-                  <Button variant="gradient">Add Recipe</Button>
-                </Link>
-              </div>
-
             </Typography>
+
+            <div className="float-right -mt-12">
+              <Link to={'/dashboard/recipes/add'} className="ml-10">
+                <Button variant="gradient">Add Recipe</Button>
+              </Link>
+            </div>
+
 
 
             <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
