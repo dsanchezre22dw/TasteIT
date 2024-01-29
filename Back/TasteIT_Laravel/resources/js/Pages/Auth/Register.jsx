@@ -5,6 +5,7 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { setupPasswordValidation, validateFirstName, validateSurname, validatePassword } from '../../../../public/assets/js/validationUtils'
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -20,71 +21,11 @@ export default function Register() {
         firstname: '',
         surname: '',
         password: '',
-        // Otros campos que necesiten validación
     });
 
     useEffect(() => {
-        var myInput = document.getElementById("password");
-        var letter = document.getElementById("letter");
-        var capital = document.getElementById("capital");
-        var number = document.getElementById("number");
-        var length = document.getElementById("length");
-      
-        // When the user clicks on the password field, show the message box
-        myInput.onfocus = function() {
-          document.getElementById("message").style.display = "block";
-        }
-      
-        // When the user clicks outside of the password field, hide the message box
-        myInput.onblur = function() {
-          document.getElementById("message").style.display = "none";
-        }
-      
-        // When the user starts to type something inside the password field
-        myInput.onkeyup = function() {
-          // Validate lowercase letters
-          var lowerCaseLetters = /[a-z]/g;
-          if(myInput.value.match(lowerCaseLetters)) {  
-            letter.classList.remove("invalid");
-            letter.classList.add("valid");
-          } else {
-            letter.classList.remove("valid");
-            letter.classList.add("invalid");
-          }
-          
-          // Validate capital letters
-          var upperCaseLetters = /[A-Z]/g;
-          if(myInput.value.match(upperCaseLetters)) {  
-            capital.classList.remove("invalid");
-            capital.classList.add("valid");
-          } else {
-            capital.classList.remove("valid");
-            capital.classList.add("invalid");
-          }
-      
-          // Validate numbers
-          var numbers = /[0-9]/g;
-          if(myInput.value.match(numbers)) {  
-            number.classList.remove("invalid");
-            number.classList.add("valid");
-          } else {
-            number.classList.remove("valid");
-            number.classList.add("invalid");
-          }
-          
-          // Validate length
-          if(myInput.value.length >= 8) {
-            length.classList.remove("invalid");
-            length.classList.add("valid");
-          } else {
-            length.classList.remove("valid");
-            length.classList.add("invalid");
-          }
-        }
-      
-    }, []);
+        setupPasswordValidation();
 
-    useEffect(() => {
         return () => {
             reset('password', 'password_confirmation');
         };
@@ -95,85 +36,15 @@ export default function Register() {
 
         var errors_exist = "";
 
-        errors_exist += validateFirstName();
-        errors_exist += validateSurname();
-        errors_exist += validatePassword();
+        errors_exist += validateFirstName(data, setErrorMessages);
+        errors_exist += validateSurname(data, setErrorMessages);
+        errors_exist += validatePassword(data, setErrorMessages);
 
         if (errors_exist === ""){
             post(route('register'));
         }
 
     };
-
-    function validateFirstName(){
-        if (!(allLetter(data.firstname))){
-            setErrorMessages((prevErrors) => ({
-                ...prevErrors,
-                firstname: 'Field firstname can only contain letters',
-            }));
-
-            return "yes";
-
-        }else{
-
-            setErrorMessages((prevErrors) => ({
-                ...prevErrors,
-                firstname: '',
-            }));
-
-            return "";
-        }
-    }
-
-    function validateSurname(){
-        if (data.surname === "" || allLetter(data.surname)){
-            setErrorMessages((prevErrors) => ({
-                ...prevErrors,
-                surname: '',
-            }));
-
-            return "";
-        }else{
-            setErrorMessages((prevErrors) => ({
-                ...prevErrors,
-                surname: 'Field surname can only contain letters',
-            }));
-
-            return "yes"
-        }
-    }
-
-    function validatePassword(){
-        if (data.password !== data.password_confirmation){
-            setErrorMessages((prevErrors) => ({
-                ...prevErrors,
-                password: 'The passwords are not the same',
-            }));
-
-            return "yes";
-
-        }else{
-
-            setErrorMessages((prevErrors) => ({
-                ...prevErrors,
-                password: '',
-            }));
-
-            return "";
-        }
-    }
-
-
-    function allLetter(inputtxt){
-
-        var letters = /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ]+$/;
-
-        if (inputtxt.match(letters)){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
     return (
 

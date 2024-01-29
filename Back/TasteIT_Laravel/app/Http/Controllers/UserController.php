@@ -66,7 +66,12 @@ class UserController extends Controller
             'user_id' => $user->id,
         ]);
 
+        $shopping_list = Shopping_list::create([
+            'user_id' => $user->id,
+        ]);
+
         $user->fridge()->save($fridge);
+        $user->shopping_list()->save($shopping_list);
 
     }
 
@@ -105,7 +110,6 @@ class UserController extends Controller
             'surname' => 'nullable|string|max:100',
             'username' => 'required|string|max:50|unique:'.User::class,
             'email' => 'required|lowercase|email|max:100|unique:'.User::class,
-            'password' => ['required', 'confirmed', 'min:8', Password::min(8)->mixedCase()->numbers()],
             'enabled' => 'required|boolean',
             'usertype' => 'required|in:admin,standard,chef',
         ]);
@@ -114,7 +118,6 @@ class UserController extends Controller
         $user->firstname = $request->input('firstname');
         $user->surname = $request->input('surname');
         $user->email = $request->input('email');
-        $user->password = $request->input('password');
         $user->type = $request->input('usertype');
         $user->enabled = $request->input('enabled');
 

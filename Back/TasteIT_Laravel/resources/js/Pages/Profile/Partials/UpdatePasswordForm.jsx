@@ -1,10 +1,11 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { useForm } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
+import { setupPasswordValidation, validateFirstName, validateSurname, validatePassword } from '../../../../../public/assets/js/validationUtils'
 
 export default function UpdatePasswordForm({ className = '' }) {
     const passwordInput = useRef();
@@ -16,28 +17,31 @@ export default function UpdatePasswordForm({ className = '' }) {
         password_confirmation: '',
     });
 
+    const [errorMessages, setErrorMessages] = useState({
+        password: '',
+    });
+
+    useEffect(() => {
+        setupPasswordValidation();
+
+        return () => {
+            reset('password', 'password_confirmation');
+        };
+    }, []);
+
     const updatePassword = (e) => {
         e.preventDefault();
+        var errors_exist = "";
 
-        put(route('password.update'), {
-            preserveScroll: true,
-            onSuccess: () => reset(),
-            onError: (errors) => {
-                if (errors.password) {
-                    reset('password', 'password_confirmation');
-                    passwordInput.current.focus();
-                }
+        errors_exist += validatePassword(data, setErrorMessages);
 
-                if (errors.current_password) {
-                    reset('current_password');
-                    currentPasswordInput.current.focus();
-                }
-            },
-        });
+        if (errors_exist === ""){
+            put(route('password.update'));
+        }
     };
 
     return (
-        <section className={className}>
+        <div className="mt-12 mb-8 flex flex-col gap-12 w-[50%] mx-auto">
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Update Password</h2>
 
@@ -46,7 +50,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </p>
             </header>
 
-            <form onSubmit={updatePassword} className="mt-6 space-y-6">
+            <form onSubmit={updatePassword} className="space-y-4 -mt-6">
                 <div>
                     <InputLabel htmlFor="current_password" value="Current Password" />
 
@@ -79,6 +83,13 @@ export default function UpdatePasswordForm({ className = '' }) {
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
+                <div id="message">
+                    <p id="letter" className="invalid">A <b>lowercase</b> letter</p>
+                    <p id="capital" className="invalid">A <b>capital uppercase</b> letter</p>
+                    <p id="number" className="invalid">A <b>number</b></p>
+                    <p id="length" className="invalid">Minimum <b>8 characters</b></p>
+                </div>
+
                 <div>
                     <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
 
@@ -91,6 +102,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                         autoComplete="new-password"
                     />
 
+                    <InputError message={errorMessages.password} className="mt-2" />
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
 
@@ -108,6 +120,6 @@ export default function UpdatePasswordForm({ className = '' }) {
                     </Transition>
                 </div>
             </form>
-        </section>
+        </div>
     );
 }

@@ -1,16 +1,19 @@
 import { forwardRef, useRef } from 'react';
 
-export default forwardRef(function ToggleSwitch({ type = 'checkbox', className = '', ...props }, ref) {
-    const input = ref ? ref : useRef();
-
+const ToggleSwitch = forwardRef(({ type = 'checkbox', className = '', ...props }, ref) => {
+    const inputRef = ref ? ref : useRef();
 
     return (
         <label className={`switch ${className}`}>
-          <input
-            {...props}
-            type={type}
-          />
-          <span className="slider round"></span>
+            <input
+                
+                {...props}
+                type={type}
+                ref={inputRef}
+            />
+            <span className="slider round"></span>
         </label>
-      );
+    );
 });
+
+export default ToggleSwitch;
