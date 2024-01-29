@@ -81,7 +81,6 @@ console.log(selectedIngredients)
         <div className='mt-3'>
             <div>
                 <div className="flex justify-between items-center">
-                    <span></span>
                     <p className="w-[100px] text-black">Ingredient</p>
                     <p className="w-[70px] text-black">Amount</p>
                     <span></span>
@@ -94,9 +93,6 @@ console.log(selectedIngredients)
         </div>
         <Button variant="gradient" className="ml-5" onClick={submit}>
             Save
-        </Button>
-        <Button variant="gradient" className="ml-5" onClick={clear}>
-            Clear
         </Button>
         </form>
         </div>

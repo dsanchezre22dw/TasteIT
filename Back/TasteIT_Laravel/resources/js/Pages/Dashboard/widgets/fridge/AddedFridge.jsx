@@ -52,22 +52,10 @@ export default function AddedFridge(props) {
         
     })
 
-    const handleCheck = () => {
-        let array = props.dataC.checked;
-        let ingrediente = props.ingredientName;
-        if (document.shoppingList[ingrediente].checked) {
-            array.push(ingrediente);
-        } else {
-            array.splice(array.indexOf(ingrediente),1)
-        }
-        props.setDataC('checked', array);
-        console.log('checked',array)
-    }
 
     
     return (
         <div className="flex justify-between items-center">
-            <input type="checkbox" name={props.ingredientName} id="" onChange={handleCheck}/>
             <p className="w-[100px]">{props.ingredientName}</p>
 
             <div class="relative flex items-center max-w-[8rem]">

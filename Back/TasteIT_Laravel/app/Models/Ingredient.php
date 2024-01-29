@@ -18,7 +18,7 @@ class Ingredient extends Model
     }
 
     public function fridges() {
-        return $this->belongsToMany('App\Models\Fridge');
+        return $this->belongsToMany('App\Models\Fridge')->withPivot('amount');
     }
 
     public function shopping_lists() {

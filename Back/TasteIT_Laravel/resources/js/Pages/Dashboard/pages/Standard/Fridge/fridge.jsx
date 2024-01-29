@@ -17,8 +17,6 @@ import MainTitle from "@/Components/MainTitle";
 
 
 export default function fridge({auth, fridge}){
-
-    console.log(fridge)
     
     return(
         <>
