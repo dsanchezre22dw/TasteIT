@@ -41,10 +41,10 @@ export default function AddIngredients({data, setData}){
     return (
         <div className='m-6'>
         <p className="w-[133px]">Ingredients:</p>
-        <input type="text" placeholder="Write a ingredient" defaultValue={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-        <ul id='search'>
+        <input type="text" placeholder="Write a ingredient" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} id='searchInput' />
+        <ul id='search' className='w-[200px] bg-gray-100'>
             {filteredSuggestions.map((ingredient) => (
-            <li key={ingredient} onClick={() => handleSelectIngredient(ingredient)}>
+            <li key={ingredient} onClick={() => handleSelectIngredient(ingredient)} className='hover:bg-gray-300 p-2'>
                 {ingredient}
             </li>
             ))}
@@ -52,7 +52,7 @@ export default function AddIngredients({data, setData}){
         <div className='mt-3'>
             <h2>Selected ingredients:</h2>
             <div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                     <p className="w-[100px] text-black">Ingredient</p>
                     <p className="w-[70px] text-black">Amount</p>
                     <span></span>

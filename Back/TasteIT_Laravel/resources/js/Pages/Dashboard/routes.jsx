@@ -6,6 +6,7 @@ import {
   ServerStackIcon,
   RectangleStackIcon,
   AcademicCapIcon,
+  ShoppingCartIcon,
 } from "@heroicons/react/24/solid";
 import { Home, Tables, Notifications } from "./pages/dashboard";
 import { SignIn, SignUp } from "./pages/auth";
@@ -15,6 +16,8 @@ import UsersAdd from "./pages/Admin/Users/adduser";
 import PostRecipe from "./pages/Standard/Recipe/postrecipe";
 import { RecipesIndex } from "./pages/Standard/Recipe/indexrecipe";
 import Profile from "./pages/Standard/Profile/profile";
+import ShoppingList from "./pages/Standard/ShoppingList/shoppinglist";
+
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -91,6 +94,13 @@ export const routes = [
         path: `/dashboard/profile`,
         route: "/profile",
         element: <Profile />,
+      },
+      {
+        icon: <ShoppingCartIcon {...icon} />,
+        name: "shopping",
+        path: `/dashboard/shopping`,
+        route: "/shopping",
+        element: <ShoppingList />,
       },
     ],
   },
