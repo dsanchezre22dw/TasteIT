@@ -22,6 +22,7 @@ import RecipeType from './recipetype-card';
 
 function RecipeCard({ recipe, route, auth }) {
   const {
+    id,
     title,
     description,
     duration_mins,
@@ -75,7 +76,7 @@ function RecipeCard({ recipe, route, auth }) {
         </div>
       </CardBody>
       <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
-        <Link to={route}>
+        <Link to={`/dashboard/recipes/${id}`}>
           <Button variant="outlined" size="sm" className="ml-3 mb-3">
             view recipe
             <i className="text-yellow-500 fas fa-star" />

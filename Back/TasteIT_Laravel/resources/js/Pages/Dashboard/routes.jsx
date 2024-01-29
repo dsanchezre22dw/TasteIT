@@ -116,6 +116,15 @@ export const routes = [
         route: "/recipes/add",
         element: <PostRecipe />,
       },
+      {
+        icon: <ServerStackIcon {...icon} />,
+
+        name: "recipes see",
+        path: `/dashboard/recipes/:recipeId`,
+        route: "/recipes",
+        element: <UsersEdit />,
+
+      },
     ],
   },
 ];
