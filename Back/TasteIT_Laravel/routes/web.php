@@ -33,8 +33,6 @@ Route::get('/', function () {
     return Redirect::route('dashboard');
 })->name('index');
 
-
-
 Route::prefix('dashboard')->group(function () {
     Route::get('/home', [UserController::class, 'index']);
     Route::get('/profile', [UserController::class, 'index']);

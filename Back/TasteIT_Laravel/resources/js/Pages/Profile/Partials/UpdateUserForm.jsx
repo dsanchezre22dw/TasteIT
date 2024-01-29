@@ -13,8 +13,6 @@ import { setupPasswordValidation, validateFirstName, validateSurname, validatePa
 
 export default function UpdateUserForm({ className = '', user}) {
 
-    const { userId } = useParams();
-
     const options = [
         { value: 'admin', label: 'Admin' },
         { value: 'standard', label: 'Standard' },
@@ -22,6 +20,7 @@ export default function UpdateUserForm({ className = '', user}) {
     ];
 
     const { data, setData, post, processing, errors, reset, recentlySuccessful} = useForm({
+        id: user.id,
         firstname: user.firstname,
         surname: user.surname,
         username: user.username,
@@ -44,7 +43,7 @@ export default function UpdateUserForm({ className = '', user}) {
         errors_exist += validateSurname(data, setErrorMessages);
 
         if (errors_exist === ""){
-            post(`/dashboard/users/edit/${userId}`);
+            post(`/dashboard/users/edit/${data.id}`);
         }
 
     };

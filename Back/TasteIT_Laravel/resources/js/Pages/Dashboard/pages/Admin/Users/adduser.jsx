@@ -26,9 +26,7 @@ import { setupPasswordValidation, validateFirstName, validateSurname, validatePa
 
 
 export default function UsersAdd() {
-
-    const { userId } = useParams();
-
+    
     const options = [
         { value: 'admin', label: 'Admin' },
         { value: 'standard', label: 'Standard' },

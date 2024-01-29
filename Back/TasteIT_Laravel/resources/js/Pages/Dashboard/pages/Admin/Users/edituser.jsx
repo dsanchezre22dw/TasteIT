@@ -29,7 +29,11 @@ import { Transition } from '@headlessui/react';
 
 
 
-export default function UsersEdit({ user }) {
+export default function UsersEdit({ users }) {
+
+    const { userId } = useParams();
+
+    const user = users.find(user => user.id === parseInt(userId));
 
     return (
 
