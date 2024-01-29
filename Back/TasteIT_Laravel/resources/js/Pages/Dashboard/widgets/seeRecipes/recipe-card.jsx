@@ -82,7 +82,7 @@ function RecipeCard({ recipe, route, auth }) {
           </Button>
         </Link>
         {auth.user.type === "admin"  && (
-          <div class="flex gap-8">
+          <div className="flex gap-8">
             <div>
               <Tooltip content="Edit Recipe">
                 <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500 mt-[2.2px]" />
