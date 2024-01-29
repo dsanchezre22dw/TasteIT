@@ -17,6 +17,8 @@ import MainTitle from "@/Components/MainTitle";
 
 
 export default function fridge({auth, fridge}){
+
+    console.log(fridge)
     
     return(
         <>
@@ -25,7 +27,7 @@ export default function fridge({auth, fridge}){
         </div>
         <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100">
             <CardBody className="p-4">
-            <MainTitle title="Your Shopping List" />
+            <MainTitle title="Your Fridge" />
             <AddFridge auth={auth} fridge={fridge} />
             </CardBody>
         </Card>

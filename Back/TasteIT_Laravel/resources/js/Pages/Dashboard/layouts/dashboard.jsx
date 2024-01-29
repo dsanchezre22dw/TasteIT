@@ -12,7 +12,7 @@ import routes from "../routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "../context";
 import PostRecipe from "../pages/Standard/Recipe/postrecipe";
 
-export function Dashboard({ auth, users, recipes, shoppingList}) {
+export function Dashboard({ auth, users, recipes, shoppingList, fridge}) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
 
@@ -43,7 +43,7 @@ export function Dashboard({ auth, users, recipes, shoppingList}) {
             ({ layout, pages }) =>
               layout === "dashboard" &&
               pages.map(({ path, element }) => (
-                <Route exact key={path} path={path} element={React.cloneElement(element, { auth , users , recipes , shoppingList})} />
+                <Route exact key={path} path={path} element={React.cloneElement(element, { auth , users , recipes , shoppingList, fridge})} />
               ))
           )}
         </Routes>

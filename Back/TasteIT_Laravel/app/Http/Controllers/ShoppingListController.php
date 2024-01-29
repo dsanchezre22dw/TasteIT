@@ -56,11 +56,11 @@ class ShoppingListController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $fridge = $user->fridge;
-        $fridge->ingredients()->detach();
+        $shopping_list = $user->shopping_list;
+        $shopping_list->ingredients()->detach();
         foreach ($request->amount as $ingredientName => $amount) {
             $ingredient = Ingredient::where('name','like',$ingredientName)->first();
-            $fridge->ingredients()->attach($ingredient,['amount' => $amount]);
+            $shopping_list->ingredients()->attach($ingredient,['amount' => $amount]);
         }
 
         return redirect()->back();

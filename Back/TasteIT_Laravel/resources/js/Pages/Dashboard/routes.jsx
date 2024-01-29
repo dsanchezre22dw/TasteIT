@@ -17,6 +17,7 @@ import PostRecipe from "./pages/Standard/Recipe/postrecipe";
 import { RecipesIndex } from "./pages/Standard/Recipe/indexrecipe";
 import Profile from "./pages/Standard/Profile/profile";
 import ShoppingList from "./pages/Standard/ShoppingList/shoppinglist";
+import Fridge from "./pages/Standard/Fridge/fridge";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -101,6 +102,13 @@ export const routes = [
         path: `/dashboard/shopping`,
         route: "/shopping",
         element: <ShoppingList />,
+      },
+      {
+        icon: <ShoppingCartIcon {...icon} />,
+        name: "fridge",
+        path: `/dashboard/fridge`,
+        route: "/fridge",
+        element: <Fridge />,
       },
     ],
   },
