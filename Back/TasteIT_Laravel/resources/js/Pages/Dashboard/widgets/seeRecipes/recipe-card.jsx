@@ -30,6 +30,7 @@ function RecipeCard({ recipe, route, auth }) {
     avg_valoration,
     recipe_types,
     image,
+    ingredients,
   } = recipe;
 
   let difficultyColor, difficultyText;
@@ -74,6 +75,7 @@ function RecipeCard({ recipe, route, auth }) {
                 <RecipeType key={type.id} id={type.id} name={type.name} index={index} />
             ))}
         </div>
+
       </CardBody>
       <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
         <Link to={`/dashboard/recipes/${id}`}>

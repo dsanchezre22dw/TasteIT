@@ -19,7 +19,7 @@ class RecipeController extends Controller
     public function index()
     {
         $users = User::with(['saves'])->get();
-        $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
+        $recipes = Recipe::with(['recipe_types', 'valorations', 'ingredients', 'user'])->get();
     
         $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
             $avgValoration = $recipe->valorations->avg('pivot.valoration');

@@ -15,6 +15,7 @@ import UsersEdit from "./pages/Admin/Users/edituser";
 import UsersAdd from "./pages/Admin/Users/adduser";
 import PostRecipe from "./pages/Standard/Recipe/postrecipe";
 import { RecipesIndex } from "./pages/Standard/Recipe/indexrecipe";
+import SeeRecipe from "./pages/Standard/Recipe/seerecipe";
 import Profile from "./pages/Standard/Profile/profile";
 import ShoppingList from "./pages/Standard/ShoppingList/shoppinglist";
 
@@ -122,7 +123,7 @@ export const routes = [
         name: "recipes see",
         path: `/dashboard/recipes/:recipeId`,
         route: "/recipes",
-        element: <UsersEdit />,
+        element: <SeeRecipe />,
 
       },
     ],
