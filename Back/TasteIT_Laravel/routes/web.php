@@ -77,7 +77,12 @@ Route::prefix('dashboard')->group(function () {
     Route::prefix('ingredients')->group(function (){
         Route::get('/', [IngredientController::class,'index']);
         Route::post('/create', [IngredientController::class,'store']);
-        Route::post('/clear', [IngredientController::class,'update']);
+    });
+
+    Route::prefix('ingredient')->group(function (){
+        Route::get('/', [IngredientController::class,'index']);
+        Route::post('/create', [IngredientController::class,'store']);
+
     });
 
 });

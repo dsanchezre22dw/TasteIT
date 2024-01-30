@@ -18,7 +18,8 @@ import { RecipesIndex } from "./pages/Standard/Recipe/indexrecipe";
 import Profile from "./pages/Standard/Profile/profile";
 import ShoppingList from "./pages/Standard/ShoppingList/shoppinglist";
 import Fridge from "./pages/Standard/Fridge/fridge";
-import CreateIngredients from "./pages/Admin/Ingredients/CreateIngredients";
+import CreateIngredients from "./pages/Standard/Ingredients/CreateIngredients";
+import AcceptIngredient from "./pages/Admin/Ingredients/AcceptIngredient";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -56,7 +57,7 @@ export const routes = [
         name: "ingredients",
         path: `/dashboard/ingredients`,
         route: "/ingredients",
-        element: <CreateIngredients />,
+        element: <AcceptIngredient />,
       },
     ],
   },
@@ -81,7 +82,7 @@ export const routes = [
         path: `/dashboard/users/add`,
         route: "/users/add",
         element: <UsersAdd />,
-      }
+      },
     ],
 
   },
@@ -117,6 +118,13 @@ export const routes = [
         path: `/dashboard/fridge`,
         route: "/fridge",
         element: <Fridge />,
+      },
+      {
+        icon: <AcademicCapIcon {...icon} />,
+        name: "ingredient",
+        path: `/dashboard/ingredient`,
+        route: "/ingredient",
+        element: <CreateIngredients />,
       },
     ],
   },
