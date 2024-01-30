@@ -1,4 +1,5 @@
 import React from 'react';
+import { Head, useForm } from '@inertiajs/react';
 import { Link } from 'react-router-dom';
 import {
   Card,
@@ -29,6 +30,7 @@ function RecipeCard({ recipe, route, auth }) {
     difficulty,
     avg_valoration,
     recipe_types,
+    user,
     image,
     ingredients,
   } = recipe;
@@ -45,6 +47,14 @@ function RecipeCard({ recipe, route, auth }) {
     difficultyColor = 'red';
     difficultyText = 'Expert';
   }
+
+  const form = useForm({});
+
+  const handleDelete = (recipeId) => {
+    if (window.confirm('Are you sure you want to delete this recipe?')) {
+      form.delete(`/dashboard/recipes/delete/${recipeId}`);
+    }
+  };
 
   return (
     <Card key={title} color="transparent" shadow={false} className="border border-blue-gray-200 rounded-xl">
@@ -72,7 +82,7 @@ function RecipeCard({ recipe, route, auth }) {
         </div>
         <div className="mt-6 flex flex-wrap gap-4 justify-center">
             {recipe_types.map((type, index) => (
-                <RecipeType key={type.id} id={type.id} name={type.name} index={index} />
+                <RecipeType key={`${type.id}_${index}`} id={type.id} name={type.name} index={index} />
             ))}
         </div>
 
@@ -84,7 +94,7 @@ function RecipeCard({ recipe, route, auth }) {
             <i className="text-yellow-500 fas fa-star" />
           </Button>
         </Link>
-        {auth.user.type === "admin"  && (
+        {auth.user.type === "admin"  || auth.user.id === user.id && (
           <div className="flex gap-8">
             <div>
               <Tooltip content="Edit Recipe">
@@ -92,9 +102,11 @@ function RecipeCard({ recipe, route, auth }) {
               </Tooltip>
             </div>
             <div>
-              <Tooltip content="Delete Recipe">
-                <TrashIcon className="h-5 w-5 text-red-500 cursor-pointer mb-3" />
-              </Tooltip>
+              <button type="button" onClick={() => handleDelete(id)}>
+                <Tooltip content="Delete Recipe">
+                  <TrashIcon className="h-5 w-5 text-red-500 cursor-pointer mb-3" />
+                </Tooltip>
+              </button>
             </div>
           </div>
         )}

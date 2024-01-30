@@ -57,6 +57,7 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/edit/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
         Route::get('/add', [RecipeController::class, 'show'])->name('recipes.show');  
         Route::post('/add', [RecipeController::class, 'store'])->name('recipes.add'); 
+        Route::post('/save', [RecipeController::class, 'save'])->name('recipes.save'); 
     });
 
     Route::prefix('shopping')->group(function (){

@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { Head, useForm } from '@inertiajs/react';
 import {
   Card,
   CardBody,
@@ -30,11 +32,19 @@ import ClockIcon from "../../../../../../../resources/js/Components/ClockIcon";
 import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
 import RecipeType from "@/Pages/Dashboard/widgets/seeRecipes/recipetype-card";
 
-export function SeeRecipe({recipes}) { 
+export function SeeRecipe({recipes, users, auth}) { 
 
   const { recipeId } = useParams();
 
   const recipe = recipes.find(recipe => recipe.id === parseInt(recipeId));
+  const user = users.find(user => user.id === parseInt(auth.user.id));
+
+  const savedRecipesIds = user.saves.map(saving => saving.id);
+
+  const { data, setData, post, processing, errors, reset, recentlySuccessful} = useForm({
+    saved: savedRecipesIds.includes(recipe.id),
+    recipe_id: recipe.id,
+  });
 
   let difficultyColor, difficultyText;
 
@@ -48,7 +58,13 @@ export function SeeRecipe({recipes}) {
     difficultyColor = 'red';
     difficultyText = 'Expert';
   }
-  
+
+  const save = () => {
+    event.preventDefault();
+    setData("saved", !data.saved);
+    post('/dashboard/recipes/save');
+  };
+
   return (
     <>
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
@@ -63,26 +79,39 @@ export function SeeRecipe({recipes}) {
               <img src={recipe.image} alt={recipe.title} className="border rounded-lg" />
             </div>
 
-            <div>
+            <div className="w-7/12">
 
-              <div className="mt-8">
+              <div className="mt-8 flex justify-between">
                 <Typography
                   variant="h1"
                 >
                   {recipe.title}
                 </Typography>
+
+
+
+                {recipe.user.id !== auth.user.id && (
+                  <div className="flex items-center">
+                    <a href="#">
+                      <img
+                        src={data.saved ? "/assets/img/saved.png" : "/assets/img/unsaved.png"}
+                        alt="Guardar/No guardar"
+                        width={35}
+                        onClick={save}
+                      />
+                    </a>
+                  </div>
+                )}
+
+  
               </div>
 
               <div className="flex gap-2">
-                <Typography
-                  variant="p"
-                >
-                  {recipe.user.username}
-                </Typography>
+                {recipe.user.username}
 
                 {recipe.user.type === "chef"  && (
                   <div style={{ backgroundColor: 'blue', padding: '3px', display: 'inline-block', borderRadius: '50%' }}>
-                    <img src="/assets/chef-hat.svg" alt="Descripción opcional"/>
+                    <img src="/assets/img/chef-hat.svg" alt="Descripción opcional"/>
                   </div>
                 )}
               </div>
@@ -105,9 +134,9 @@ export function SeeRecipe({recipes}) {
                 </span>
               </div>
 
-              <div className="mt-6 flex flex-wrap gap-4 justify-center">
+              <div className="mt-6 flex flex-wrap gap-4">
                   {recipe.recipe_types.map((type, index) => (
-                      <RecipeType key={type.id} id={type.id} name={type.name} index={index} />
+                      <RecipeType key={`${type.id}_${index}`} id={type.id} name={type.name} index={index} />
                   ))}
               </div>
 
@@ -127,15 +156,10 @@ export function SeeRecipe({recipes}) {
             <div className="grid grid-cols-4">
               {recipe.ingredients.map((ingredient) => (
                 
-                  <div className="flex ml-1">
+                  <div className="flex ml-1" key={ingredient.id}>
                     <ShoppingCartIcon className="w-5"></ShoppingCartIcon>
 
-                    <Typography
-                      variant="p"
-                      key={ingredient.id}
-                      >
-                       {ingredient.pivot.amount}g {ingredient.name}
-                    </Typography>
+                    {ingredient.pivot.amount}g {ingredient.name}
 
                   </div>
                 
@@ -153,11 +177,7 @@ export function SeeRecipe({recipes}) {
               How to prepare
             </Typography>
 
-            <Typography
-              variant="p"
-            >
-              {recipe.description}
-            </Typography>
+            {recipe.description}
 
           </div>
 

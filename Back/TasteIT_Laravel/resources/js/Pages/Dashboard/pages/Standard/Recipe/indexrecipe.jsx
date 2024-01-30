@@ -26,8 +26,14 @@ import { platformSettingsData, conversationsData, projectsData } from "../../../
 import StarIcon from "../../../../../../../resources/js/Components/StarIcon";
 import ClockIcon from "../../../../../../../resources/js/Components/ClockIcon";
 import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
+import RecipesSection from "./recipessection";
 
 export function RecipesIndex({auth, recipes}) { 
+
+  const renderRecipes = recipes
+    .map((recipe) => (
+      <RecipeCard key={recipe.id} auth={auth} recipe={recipe} />
+  ));
   
   return (
     <>
@@ -37,31 +43,7 @@ export function RecipesIndex({auth, recipes}) {
       </div>
       <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100 rounded-xl">
         <CardBody className="p-4">
-          <div className="px-4 pb-4">
-            <Typography variant="h6" color="blue-gray" className="mb-2">
-              Recipes
-            </Typography>
-            <Typography
-              variant="small"
-              className="font-normal text-blue-gray-500"
-            >
-              Recipes uploaded by all users
-            </Typography>
-
-            <div className="float-right -mt-12">
-              <Link to={'/dashboard/recipes/add'} className="ml-10">
-                <Button variant="gradient">Add Recipe</Button>
-              </Link>
-            </div>
-
-
-
-            <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-              {recipes.map((recipe) => (
-                <RecipeCard key={recipe.title} auth={auth} recipe={recipe} />
-              ))}
-            </div>
-          </div>
+          <RecipesSection recipesToShow={renderRecipes}></RecipesSection>   
         </CardBody>
       </Card>
     </>

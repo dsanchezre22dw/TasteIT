@@ -85,8 +85,8 @@ export function Profile({auth, recipes, users}) {
           </div>
 
           {activeTab === "info" && <UserInformation user={auth.user} setActiveTab={setActiveTab}/>}
-          {activeTab === "mine" && <MyRecipes user={auth.user} recipes={recipes}/>}
-          {activeTab === "saved" && <SavedRecipes user={auth.user} recipes={recipes} users={users}/>}
+          {activeTab === "mine" && <MyRecipes auth={auth} user={auth.user} recipes={recipes}/>}
+          {activeTab === "saved" && <SavedRecipes auth={auth} user={auth.user} recipes={recipes} users={users}/>}
           {activeTab === "settings" && <UserSettings user={auth.user}/>}
           {activeTab === "edit" && <EditUserInformation user={auth.user}/>}
 

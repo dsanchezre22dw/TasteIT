@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Recipe;
 use App\Models\Ingredient;
 use App\Models\Valoration;
 use Illuminate\Http\Request;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
+
 
 class RecipeController extends Controller
 {
@@ -76,6 +78,19 @@ class RecipeController extends Controller
         return redirect()->route('recipes.index');
     }
 
+    public function save(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!$request->saved){
+            $user->saves()->attach($request->recipe_id);
+        }else{
+            $user->saves()->detach($request->recipe_id);
+        }
+
+        $user->save();
+    }
+
     /**
      * Display the specified resource.
      */
@@ -103,8 +118,10 @@ class RecipeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Recipe $recipe)
+    public function destroy($id)
     {
-        //
+        $recipe = Recipe::findOrFail($id);
+        $recipe->delete();
+        return redirect()->back();
     }
 }
