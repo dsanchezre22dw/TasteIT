@@ -6,6 +6,7 @@ use App\Models\Recipe;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FridgeController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -62,6 +63,12 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/', [ShoppingListController::class,'index']);
         Route::post('/update', [ShoppingListController::class,'store']);
         Route::post('/clear', [ShoppingListController::class,'update']);
+    });
+
+    Route::prefix('fridge')->group(function (){
+        Route::get('/', [FridgeController::class,'index']);
+        Route::post('/update', [FridgeController::class,'store']);
+        Route::post('/clear', [FridgeController::class,'update']);
     });
 
 });
