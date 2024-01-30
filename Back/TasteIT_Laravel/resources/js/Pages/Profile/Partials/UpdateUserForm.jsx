@@ -25,8 +25,8 @@ export default function UpdateUserForm({ className = '', user}) {
         surname: user.surname,
         username: user.username,
         email: user.email,
-        usertype: options[0].value,
-        enabled: true,
+        usertype: user.type,
+        enabled: user.enabled,
     });
 
     const [errorMessages, setErrorMessages] = useState({
@@ -121,6 +121,7 @@ export default function UpdateUserForm({ className = '', user}) {
                         className="mt-1 block w-full"
                         options={options} 
                         onChange={(e) => setData('usertype', e.target.value)}
+                        select={user.type}
                     />
 
                     <InputError message={errors.usertype} className="mt-2" />
@@ -134,6 +135,7 @@ export default function UpdateUserForm({ className = '', user}) {
                         name="enabled"
                         className="mt-2" 
                         onChange={(e) => setData('enabled', e.target.checked)}
+                        defaultChecked={user.enabled}
                     />
 
                     <InputError message={errors.enabled} className="mt-2" />

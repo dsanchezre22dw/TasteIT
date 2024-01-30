@@ -20,7 +20,7 @@ export default function CreatePost( {auth} ) {
         e.preventDefault();
 
         post('/dashboard/recipes/add');
-      };
+    };
 
     return (
         <div>

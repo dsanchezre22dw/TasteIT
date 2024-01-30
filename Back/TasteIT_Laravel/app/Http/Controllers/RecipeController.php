@@ -102,9 +102,14 @@ class RecipeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Recipe $recipe)
+    public function edit($id)
     {
-        //
+        $recipe = \App\Models\Recipe::findOrFail($id);
+        $recipes = Recipe::all();
+        return Inertia::render('Dashboard/layouts/dashboard', [
+            'recipe' => $recipe,
+            'recipes' => $recipes,
+        ]);
     }
 
     /**

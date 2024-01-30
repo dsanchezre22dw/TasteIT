@@ -29,7 +29,7 @@ import { Transition } from '@headlessui/react';
 
 
 
-export default function UsersEdit({ users }) {
+export default function UsersEdit({ auth, users }) {
 
     const { userId } = useParams();
 
@@ -40,7 +40,6 @@ export default function UsersEdit({ users }) {
         <div className="mt-12 mb-8 flex flex-col gap-12">
 
             <Card>
-
                 <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
                     <Typography variant="h6" color="white">
                         Edit User<br></br>
@@ -53,7 +52,6 @@ export default function UsersEdit({ users }) {
                 </CardBody>
             </Card>
         </div>
-
 
     );
 }

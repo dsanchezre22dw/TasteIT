@@ -97,9 +97,11 @@ function RecipeCard({ recipe, route, auth }) {
         {auth.user.type === "admin"  || auth.user.id === user.id && (
           <div className="flex gap-8">
             <div>
-              <Tooltip content="Edit Recipe">
-                <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500 mt-[2.2px]" />
-              </Tooltip>
+              <Link to={`/dashboard/recipes/edit/${id}`}>
+                <Tooltip content="Edit Recipe">
+                  <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500 mt-[2.2px]" />
+                </Tooltip>        
+              </Link>
             </div>
             <div>
               <button type="button" onClick={() => handleDelete(id)}>
