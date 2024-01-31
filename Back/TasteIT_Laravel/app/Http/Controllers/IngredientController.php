@@ -121,9 +121,13 @@ class IngredientController extends Controller
         // Puedes obtener la lista de ingredientes desde tu base de datos o cualquier otra fuente.
         $ingredients = Ingredient::where('name','like','%'.$searchTerm.'%')->where('enabled',true)->get('name');
         $suggestions = [];
-        foreach ($ingredients as $key => $value) {
-            $suggestions[] = $value->name;
-        }
+
+        $ingredients = $ingredients->sortByDesc(function ($ingredient) use ($searchTerm) {
+            similar_text(strtolower($searchTerm), strtolower($ingredient->name), $similarity);
+            return $similarity;
+        });
+
+        $suggestions = $ingredients->pluck('name');
 
         return response()->json(['suggestions' => $suggestions]);
     }
