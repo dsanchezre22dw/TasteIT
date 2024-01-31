@@ -67,25 +67,51 @@ class IngredientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Ingredient $ingredient)
+    public function edit($ingredientId)
     {
-        //
+        $ingredient = Ingredient::findOrFail($ingredientId);
+        $ingredients = Ingredient::all();
+        return Inertia::render('Dashboard/layouts/dashboard', [
+            'ingredient' => $ingredient,
+            'ingredients' => $ingredients,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateIngredientRequest $request, Ingredient $ingredient)
+    public function update(Request $request, $id)
     {
-        //
+        $ingredient = Ingredient::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'enabled' => 'required|boolean',
+        ]);
+
+        $ingredient->name = $request->input('name');
+        $ingredient->enabled = $request->input('enabled');
+
+        $ingredient->save();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ingredient $ingredient)
+    public function destroy($ingredientId)
     {
-        //
+        Ingredient::destroy($ingredientId);
+
+        return redirect()->back();
+    }
+
+    public function accept($ingredientId)
+    {
+        $ingredient = Ingredient::findOrFail($ingredientId);
+        $ingredient->enabled = true;
+        $ingredient->save();
+
+        return redirect()->back();
     }
 
     public function getSuggestions(Request $request)

@@ -74,11 +74,17 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/clear', [FridgeController::class,'update']);
     });
 
+    //Ingredient admin
     Route::prefix('ingredients')->group(function (){
         Route::get('/', [IngredientController::class,'index']);
         Route::post('/create', [IngredientController::class,'store']);
+        Route::delete('/delete/{id}', [IngredientController::class, 'destroy'])->name('ingredients.destroy'); 
+        Route::get('/edit/{id}', [IngredientController::class, 'edit'])->name('ingredients.edit'); 
+        Route::post('/edit/{id}', [IngredientController::class, 'update'])->name('ingredients.update');
+        Route::post('/accept/{id}', [IngredientController::class, 'accept'])->name('ingredients.accept'); 
     });
 
+    //Ingredient standard
     Route::prefix('ingredient')->group(function (){
         Route::get('/', [IngredientController::class,'index']);
         Route::post('/create', [IngredientController::class,'store']);

@@ -20,6 +20,7 @@ import ShoppingList from "./pages/Standard/ShoppingList/shoppinglist";
 import Fridge from "./pages/Standard/Fridge/fridge";
 import CreateIngredients from "./pages/Standard/Ingredients/CreateIngredients";
 import AcceptIngredient from "./pages/Admin/Ingredients/AcceptIngredient";
+import IngredientsEdit from "./pages/Admin/Ingredients/IngredientsEdit";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -73,6 +74,15 @@ export const routes = [
         path: `/dashboard/users/edit/:userId`,
         route: "/users/edit",
         element: <UsersEdit />,
+
+      },
+      {
+        icon: <ServerStackIcon {...icon} />,
+
+        name: "ingredients edit",
+        path: `/dashboard/ingredients/edit/:ingredientId`,
+        route: "/ingredients/edit",
+        element: <IngredientsEdit />,
 
       },
       {

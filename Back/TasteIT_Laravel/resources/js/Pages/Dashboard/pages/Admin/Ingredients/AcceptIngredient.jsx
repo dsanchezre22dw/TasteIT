@@ -1,8 +1,8 @@
-import { Card, CardBody } from "@material-tailwind/react"
+import { Card, CardBody, Typography } from "@material-tailwind/react"
 import NewIngredient from "../../Standard/Ingredients/NewIngredient";
 import MainTitle from "@/Components/MainTitle";
-import IngredientListAccept from "./IngredientListAccept";
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
+import ExistingIngredientList from "./ExistingIngredientList";
 
 export default function AcceptIngredient({ingredients}) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -13,7 +13,6 @@ export default function AcceptIngredient({ingredients}) {
         
         const fetchSuggestions = async () => {
         const response = await axios.get(`/api/ingredients?term=${searchTerm}`);
-        console.log(response.data.suggestions);
         
         setSuggestions(response.data.suggestions);
         
@@ -47,7 +46,9 @@ export default function AcceptIngredient({ingredients}) {
         </div>
         <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100">
             <CardBody>
-                <MainTitle title="Search for existing ingredients" />
+                <Typography variant="h2">
+                    Search for existing ingredients
+                </Typography>
                 <input type="text" placeholder="Write a ingredient" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} id='searchInput' />
                 <ul id='search' className='w-[200px] bg-gray-100'>
                     {filteredSuggestions.map((ingredient) => (
@@ -58,27 +59,33 @@ export default function AcceptIngredient({ingredients}) {
                 </ul>
             </CardBody>
             <CardBody className="p-4">
-            <MainTitle title="Add new ingredient" />
+            <Typography variant="h2">
+                Add new ingredient
+            </Typography>
             <NewIngredient  />
             </CardBody>
             <CardBody className="p-4">
-            <MainTitle title="Requested ingredients" />
-            <div>
+            <Typography variant="h2" className="mt-20">
+                Requested ingredients
+            </Typography>
+            <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"> 
             {
                 ingredients.map((ingredient) => (
-                    ingredient.enabled?'':<IngredientListAccept key={ingredient.id} ingredient={ingredient}/>
+                    ingredient.enabled?'':<ExistingIngredientList key={ingredient.id} ingredient={ingredient}/>
                 ))  
             }
             </div>
 
-            <MainTitle title="All the ingredients" />
-            <div className="flex w-full flex-wrap">
-            {
-                ingredients.map((ingredient) => (
-                    <IngredientListAccept key={ingredient.id} ingredient={ingredient}/>
-                ))  
-            }
+            <Typography variant="h2" className="mt-20">
+                All the ingredients
+            </Typography>
+
+            <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              {ingredients.map((ingredient) => (
+                <ExistingIngredientList key={ingredient.id} ingredient={ingredient} />
+              ))}
             </div>
+
             </CardBody>
         </Card>
         
