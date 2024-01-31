@@ -135,8 +135,33 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function getSuggestions($term)
+    public function getSuggestions($searchTerm)
     {
-        $users = User::where('username','like','%'.$term.'%')->get();
+        // Obtain the list of users matching the search term
+        $users = User::where('username', 'like', '%' . $searchTerm . '%')->get();
+
+        // Obtain the list of recipes matching the search term
+        $recipes = Recipe::where('title', 'like', '%' . $searchTerm . '%')->get();
+
+        // Combine user and recipe results
+        $results = collect([]);
+
+        // Iterate through users, calculating relevance based on username match
+        foreach ($users as $user) {
+            similar_text(strtolower($searchTerm), strtolower($user->username), $similarity);
+            // Multiply relevance score for users by a factor higher than 1 to prioritize them
+            $results->push(['type' => 'user', 'name' => $user->username, 'relevance' => $similarity * 1,5]);
+        }
+
+        // Iterate through recipes, calculating relevance based on title match
+        foreach ($recipes as $recipe) {
+            similar_text(strtolower($searchTerm), strtolower($recipe->title), $similarity);
+            $results->push(['type' => 'recipe', 'name' => $recipe->title, 'relevance' => $similarity]);
+        }
+
+        // Sort results by relevance in descending order
+        $sortedResults = $results->sortByDesc('relevance')->values()->pluck('name');
+
+        return response()->json(['suggestions' => $sortedResults]);
     }
 }

@@ -91,6 +91,7 @@ export function DashboardNavbar({ auth }) {
               className="grid xl:hidden"
           >
               <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+              
           </IconButton>
           <Menu>
             <MenuHandler>
