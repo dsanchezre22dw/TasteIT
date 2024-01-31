@@ -57,6 +57,7 @@ export default function AddIngredients({data, setData}){
                     <p className="w-[70px] text-black">Amount</p>
                     <span></span>
                 </div>
+            
             {selectedIngredients.map((ingredient) => (
                 <AddedIngredient ingredientName={ingredient} selectedIngredients={selectedIngredients} setSelectedIngredients={setSelectedIngredients} setData={setData} data={data}/>
             ))}
