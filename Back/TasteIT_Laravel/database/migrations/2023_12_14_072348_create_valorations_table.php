@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('recipe_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
 
-            $table->enum('valoration',[1,2,3,4,5]);
+            $table->string('title',150)->nullable();
+            $table->enum('valoration',[1,2,3,4,5])->nullable();
             $table->string('description',1024)->nullable();
 
             $table->timestamps();

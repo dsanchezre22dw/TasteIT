@@ -28,6 +28,7 @@ import { setupPasswordValidation, validateFirstName, validateSurname, validatePa
 export default function UsersAdd() {
     
     const options = [
+        { value: 'selected', label: 'Select a Type' },
         { value: 'admin', label: 'Admin' },
         { value: 'standard', label: 'Standard' },
         { value: 'chef', label: 'Chef' },
@@ -40,7 +41,7 @@ export default function UsersAdd() {
         email: '',
         password: '',
         password_confirmation: '',
-        usertype: options[0].value,
+        usertype: "",
         enabled: false,
     });
 
@@ -161,6 +162,7 @@ export default function UsersAdd() {
                                         className="mt-1 block w-full"
                                         options={options} 
                                         onChange={(e) => setData('usertype', e.target.value)}
+                                        select="selected"
                                     />
 
                                     <InputError message={errors.usertype} className="mt-2" />

@@ -122,9 +122,10 @@ export function SeeRecipe({recipes, users, auth}) {
               </div>
 
 
-              <div className="flex">
-                <StarIcon count={1} />
+              <div className="flex ml-1">
                 {recipe.avg_valoration}
+                <StarIcon count={1} />
+                ({recipe.amount_valorations})
               </div>
 
 
@@ -178,6 +179,69 @@ export function SeeRecipe({recipes, users, auth}) {
             </Typography>
 
             {recipe.description}
+
+          </div>
+
+          <div>
+
+            <div>
+              <Typography
+                variant="h1"
+                className="my-4 mt-16"
+              >
+                Valorations
+              </Typography>
+
+              <div className="float-right -mt-12">
+
+
+                <Link to={'/dashboard/recipes/valorate'} className="ml-10">
+                  <Button variant="gradient">Make valoration</Button>
+                </Link>
+
+                </div>
+            </div>
+
+
+            <div className='flex flex-col gap-4'>
+
+              {recipe.valorations.map((user) => (
+
+                <div className="border rounded-lg bg-red-100 p-5" key={`${user.pivot.user_id}_${user.pivot.recipe_id}`}>
+
+                  <div className="flex items-center mb-2 gap-2">
+                    <Avatar src="/img/team-2.jpeg" size="sm" variant="rounded" />
+                    <Typography
+                      variant="h6"
+                    >
+                      {user.username}
+                    </Typography>
+                  </div>
+
+                  <div className='flex gap-1'>
+                    <StarIcon count={1} />
+                    {user.pivot.valoration}
+                    
+                  </div>
+
+                  <div>
+                    <Typography
+                      variant="h4"
+                    >
+                      {user.pivot.title}
+                    </Typography>
+                  </div>
+
+                  <div>
+                    {user.pivot.description}
+                  </div>
+                  
+                </div>
+
+                ))}
+
+            </div>
+      
 
           </div>
 

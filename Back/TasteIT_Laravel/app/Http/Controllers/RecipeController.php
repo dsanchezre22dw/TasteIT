@@ -26,7 +26,11 @@ class RecipeController extends Controller
         $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
             $avgValoration = $recipe->valorations->avg('pivot.valoration');
             $avgValoration = number_format($avgValoration, 2);
+
+            $amountValorations = $recipe->valorations->count();
+
             $recipe->avg_valoration = $avgValoration;
+            $recipe->amount_valorations = $amountValorations;
     
             return $recipe;
         });
@@ -90,6 +94,12 @@ class RecipeController extends Controller
 
         $user->save();
     }
+
+    public function showValorate(Request $request)
+    {
+        return Inertia::render('Dashboard/layouts/dashboard');
+    }
+
 
     /**
      * Display the specified resource.

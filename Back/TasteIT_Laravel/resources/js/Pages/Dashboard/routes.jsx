@@ -20,6 +20,7 @@ import Profile from "./pages/Standard/Profile/profile";
 import ShoppingList from "./pages/Standard/ShoppingList/shoppinglist";
 import Fridge from "./pages/Standard/Fridge/fridge";
 import RecipesEdit from "./pages/Standard/Recipe/editrecipe";
+import ValorateRecipe from "./pages/Standard/Recipe/valoraterecipe";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -142,6 +143,15 @@ export const routes = [
         path: `/dashboard/recipes/edit/:recipeId`,
         route: "/recipes/edit",
         element: <RecipesEdit />,
+
+      },
+      {
+        icon: <ServerStackIcon {...icon} />,
+
+        name: "recipes valorate",
+        path: `/dashboard/recipes/valorate`,
+        route: "/recipes/valorate",
+        element: <ValorateRecipe />,
 
       },
     ],

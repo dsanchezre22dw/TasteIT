@@ -4,13 +4,13 @@ import AddIngredients from "./AddIngredients";
 import { useForm } from "@inertiajs/react";
 import { Button } from "@material-tailwind/react";
 
-export default function CreatePost( {auth} ) {
+export default function CreatePost( {auth, recipe=""} ) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        title: '',
-        duration_mins: '',
-        difficulty: '',
+        title: recipe.title,
+        duration_mins: recipe.duration_mins,
+        difficulty: recipe.difficulty,
         amount: {},
-        description: '',
+        description: recipe.description,
         image: '',
         user_id: auth.user.id
     });
@@ -35,7 +35,7 @@ export default function CreatePost( {auth} ) {
                             <input type="text" className="w-[250px]" name="title" placeholder="Title" defaultValue={data.title} onChange={(e) => setData('title', e.target.value)}/>
                         </div>
 
-                        <div className="flex  m-6">
+                        <div className="flex m-6">
                             <p className="w-[133px]">Prepare Time:</p>
                             <input type="number" className="w-[250px]" name="duration_mins" placeholder="Minutes" defaultValue={data.duration_mins}  onChange={(e) => setData('duration_mins', e.target.value)}/>
                         </div>

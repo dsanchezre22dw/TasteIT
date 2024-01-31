@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom';
 import {
   Card,
   CardBody,
@@ -25,7 +26,7 @@ import MainTitle from "@/Components/MainTitle";
 import CreatePost from "../../../widgets/postRecipe/CreatePost";
 import "../../../../../../../public/assets/css/test.css"
 
-export function RecipesEdit({auth}) {
+export function RecipesEdit({auth, recipes}) {
 
   const { recipeId } = useParams();
 
@@ -39,7 +40,7 @@ export function RecipesEdit({auth}) {
       <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100">
         <CardBody className="p-4">
           <MainTitle title="Create a new recipe" />
-          <CreatePost auth={auth}/>
+          <CreatePost auth={auth} recipe={recipe}/>
         </CardBody>
       </Card>
     </>

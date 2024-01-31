@@ -23,9 +23,9 @@ import { ProfileInfoCard, MessageCard } from "../../../widgets/cards";
 import { platformSettingsData, conversationsData, projectsData } from "../../../data";
 import MainTitle from "@/Components/MainTitle";
 import CreatePost from "../../../widgets/postRecipe/CreatePost";
-import "../../../../../../../public/assets/css/test.css"
+import "../../../../../../../public/assets/css/starrating.css"
 
-export function PostRecipe({auth}) {
+export function ValorateRecipe({auth}) {
   return (
     <>
 
@@ -34,12 +34,33 @@ export function PostRecipe({auth}) {
         <Card>
           <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
               <Typography variant="h6" color="white">
-                  Post Recipe<br></br>
+                  Valorate Recipe<br></br>
               </Typography>
           </CardHeader>
 
           <CardBody className="p-4">
-            <CreatePost auth={auth}/>
+            <div class="card">
+              <h1>JavaScript Star Rating</h1>
+              <br />
+              <span onclick="gfg(1)"
+                class="star">★
+              </span>
+              <span onclick="gfg(2)"
+                class="star">★
+              </span>
+              <span onclick="gfg(3)"
+                class="star">★
+              </span>
+              <span onclick="gfg(4)"
+                class="star">★
+              </span>
+              <span onclick="gfg(5)"
+                class="star">★
+              </span>
+              <h3 id="output">
+                Rating is: 0/5
+              </h3>
+            </div>
           </CardBody>
         </Card>
 
@@ -48,4 +69,4 @@ export function PostRecipe({auth}) {
   );
 }
 
-export default PostRecipe;
+export default ValorateRecipe;

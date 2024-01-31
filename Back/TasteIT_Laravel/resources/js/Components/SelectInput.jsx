@@ -19,7 +19,7 @@ export default forwardRef(function SelectInput({ options = [], className = '', i
             ref={selectRef}
         >
             {options.map((option) => (
-                <option key={option.value} value={option.value} selected={option.value === select}>
+                <option key={option.value} value={option.value} selected={option.value === select} hidden={option.value === "selected"}>
                     {option.label}
                 </option>
             ))}
