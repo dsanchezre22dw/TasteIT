@@ -40,29 +40,29 @@ export default function AddIngredients({data, setData}){
 
     return (
         <div className='m-6'>
-        <p className="w-[133px]">Ingredients:</p>
-        <input type="text" placeholder="Write a ingredient" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} id='searchInput' />
-        <ul id='search' className='w-[200px] bg-gray-100'>
-            {filteredSuggestions.map((ingredient) => (
-            <li key={ingredient} onClick={() => handleSelectIngredient(ingredient)} className='hover:bg-gray-300 p-2'>
-                {ingredient}
-            </li>
-            ))}
-        </ul>
-        <div className='mt-3'>
-            <h2>Selected ingredients:</h2>
-            <div>
-                <div className="flex justify-between items-center">
-                    <p className="w-[100px] text-black">Ingredient</p>
-                    <p className="w-[70px] text-black">Amount</p>
-                    <span></span>
+            <p className="w-[133px]">Ingredients:</p>
+            <input type="text" placeholder="Write a ingredient" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} id='searchInput' />
+            <ul id='search' className='w-[200px] bg-gray-100'>
+                {filteredSuggestions.map((ingredient) => (
+                <li key={ingredient} onClick={() => handleSelectIngredient(ingredient)} className='hover:bg-gray-300 p-2'>
+                    {ingredient}
+                </li>
+                ))}
+            </ul>
+            <div className='mt-3'>
+                <h2>Selected ingredients:</h2>
+                <div>
+                    <div className="flex justify-between items-center">
+                        <p className="w-[100px] text-black">Ingredient</p>
+                        <p className="w-[70px] text-black">Amount</p>
+                        <span></span>
+                    </div>
+                
+                {selectedIngredients.map((ingredient) => (
+                    <AddedIngredient ingredientName={ingredient} selectedIngredients={selectedIngredients} setSelectedIngredients={setSelectedIngredients} setData={setData} data={data}/>
+                ))}
                 </div>
-            
-            {selectedIngredients.map((ingredient) => (
-                <AddedIngredient ingredientName={ingredient} selectedIngredients={selectedIngredients} setSelectedIngredients={setSelectedIngredients} setData={setData} data={data}/>
-            ))}
             </div>
-        </div>
         </div>
     );
 }

@@ -150,17 +150,19 @@ class UserController extends Controller
         foreach ($users as $user) {
             similar_text(strtolower($searchTerm), strtolower($user->username), $similarity);
             // Multiply relevance score for users by a factor higher than 1 to prioritize them
-            $results->push(['type' => 'user', 'name' => $user->username, 'img' => $user->profileImg, 'relevance' => $similarity * 1,5]);
+            $results->push(['id' => $user->id, 'type' => 'user', 'name' => $user->username, 'subtitle' => $user->firstname, 'img' => $user->profileImg, 'relevance' => $similarity * 1,5]);
         }
 
         // Iterate through recipes, calculating relevance based on title match
         foreach ($recipes as $recipe) {
             similar_text(strtolower($searchTerm), strtolower($recipe->title), $similarity);
-            $results->push(['type' => 'recipe', 'name' => $recipe->title, 'img' => $recipe->image,'relevance' => $similarity]);
+            $results->push(['id' => $recipe->id, 'type' => 'recipe', 'name' => $recipe->title, 'subtitle' => $recipe->user->username, 'img' => $recipe->image,'relevance' => $similarity]);
         }
 
         // Sort results by relevance in descending order
-        $sortedResults = $results->sortByDesc('relevance')->values()->pluck(['name', 'img']);
+        $sortedResults = $results->sortByDesc('relevance')->values()->map(function ($item) {
+            return ['id' => $item['id'], 'name' => $item['name'], 'subtitle' => $item['subtitle'], 'img' => $item['img'], 'type' => $item['type']];
+        });
 
         return response()->json(['suggestions' => $sortedResults]);
     }
