@@ -28,11 +28,11 @@ import ClockIcon from "../../../../../../../resources/js/Components/ClockIcon";
 import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
 import RecipesSection from "./recipessection";
 
-export function RecipesIndex({auth, recipes}) { 
+export function RecipesIndex({auth, recipes, users}) { 
 
   const renderRecipes = recipes
     .map((recipe) => (
-      <RecipeCard key={recipe.id} auth={auth} recipe={recipe} />
+      <RecipeCard key={recipe.id} auth={auth} recipe={recipe} users={users}/>
   ));
   
   return (

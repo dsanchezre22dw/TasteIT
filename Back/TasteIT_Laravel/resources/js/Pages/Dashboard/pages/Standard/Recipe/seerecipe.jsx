@@ -31,6 +31,8 @@ import StarIcon from "../../../../../../../resources/js/Components/StarIcon";
 import ClockIcon from "../../../../../../../resources/js/Components/ClockIcon";
 import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
 import RecipeType from "@/Pages/Dashboard/widgets/seeRecipes/recipetype-card";
+import ValorationCard from '@/Pages/Dashboard/widgets/valorateRecipe/valoration-card';
+import SaveRecipe from '@/Pages/Dashboard/widgets/saveRecipe/saveRecipe';
 
 export function SeeRecipe({recipes, users, auth}) { 
 
@@ -59,12 +61,6 @@ export function SeeRecipe({recipes, users, auth}) {
     difficultyText = 'Expert';
   }
 
-  const save = () => {
-    event.preventDefault();
-    setData("saved", !data.saved);
-    post('/dashboard/recipes/save');
-  };
-
   return (
     <>
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
@@ -88,19 +84,8 @@ export function SeeRecipe({recipes, users, auth}) {
                   {recipe.title}
                 </Typography>
 
-
-
                 {recipe.user.id !== auth.user.id && (
-                  <div className="flex items-center">
-                    <a href="#">
-                      <img
-                        src={data.saved ? "/assets/img/saved.png" : "/assets/img/unsaved.png"}
-                        alt="Guardar/No guardar"
-                        width={35}
-                        onClick={save}
-                      />
-                    </a>
-                  </div>
+                  <SaveRecipe data={data} setData={setData} post={post} width={35}/>
                 )}
 
   
@@ -195,7 +180,7 @@ export function SeeRecipe({recipes, users, auth}) {
               <div className="float-right -mt-12">
 
 
-                <Link to={'/dashboard/recipes/valorate'} className="ml-10">
+                <Link to={`/dashboard/recipes/valorate/${recipeId}`} className="ml-10">
                   <Button variant="gradient">Make valoration</Button>
                 </Link>
 
@@ -207,36 +192,7 @@ export function SeeRecipe({recipes, users, auth}) {
 
               {recipe.valorations.map((user) => (
 
-                <div className="border rounded-lg bg-red-100 p-5" key={`${user.pivot.user_id}_${user.pivot.recipe_id}`}>
-
-                  <div className="flex items-center mb-2 gap-2">
-                    <Avatar src="/img/team-2.jpeg" size="sm" variant="rounded" />
-                    <Typography
-                      variant="h6"
-                    >
-                      {user.username}
-                    </Typography>
-                  </div>
-
-                  <div className='flex gap-1'>
-                    <StarIcon count={1} />
-                    {user.pivot.valoration}
-                    
-                  </div>
-
-                  <div>
-                    <Typography
-                      variant="h4"
-                    >
-                      {user.pivot.title}
-                    </Typography>
-                  </div>
-
-                  <div>
-                    {user.pivot.description}
-                  </div>
-                  
-                </div>
+                <ValorationCard key={`${user.pivot.user_id}_${user.pivot.recipe_id}`} user={user}/>
 
                 ))}
 

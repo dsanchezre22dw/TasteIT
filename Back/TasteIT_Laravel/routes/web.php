@@ -37,7 +37,7 @@ Route::get('/', function () {
 
 Route::prefix('dashboard')->group(function () {
     Route::get('/home', [UserController::class, 'index']);
-    Route::get('/profile', [UserController::class, 'index']);
+    Route::get('/profile', [UserController::class, 'index'])->name('users.profile'); 
     Route::get('/tables', [UserController::class, 'index']);
     Route::get('/notifications', [UserController::class, 'index']);
     Route::get('/prueba', [UserController::class, 'index']);
@@ -59,7 +59,9 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/add', [RecipeController::class, 'show'])->name('recipes.show');  
         Route::post('/add', [RecipeController::class, 'store'])->name('recipes.add'); 
         Route::post('/save', [RecipeController::class, 'save'])->name('recipes.save'); 
-        Route::get('/valorate', [RecipeController::class, 'showValorate'])->name('recipes.showValorate'); 
+        Route::get('/valorate/{id}', [RecipeController::class, 'showValorate'])->name('recipes.showValorate');
+        Route::post('/valorate/{id}', [RecipeController::class, 'valorate'])->name('recipes.valorate'); 
+ 
     });
 
     Route::prefix('shopping')->group(function (){

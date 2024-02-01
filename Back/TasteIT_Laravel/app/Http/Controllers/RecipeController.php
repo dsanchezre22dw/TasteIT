@@ -93,11 +93,36 @@ class RecipeController extends Controller
         }
 
         $user->save();
+
+        return redirect()->route("users.profile");
     }
 
     public function showValorate(Request $request)
     {
         return Inertia::render('Dashboard/layouts/dashboard');
+    }
+
+
+    public function valorate(Request $request)
+    {
+
+        $request->validate([
+            'rating' => 'required|integer|between:1,5',
+            'title' => 'nullable|string|max:50',
+            'message' => 'nullable|string|max:250',
+        ],[
+
+            'rating.required' => 'Your punctuation cannot be 0 (at least 1)',
+        ]);
+        
+        $user = Auth::user();
+
+        if ($user->valorations()){
+            $user->valorations()->detach();
+        }
+
+        $user->valorations()->attach($request->recipe_id, ["valoration" => $request->rating, "title" => $request->title, "description" => $request->message]);  
+        $user->save(); 
     }
 
 

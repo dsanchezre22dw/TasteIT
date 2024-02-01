@@ -175,7 +175,7 @@ export const routes = [
         icon: <ServerStackIcon {...icon} />,
 
         name: "recipes valorate",
-        path: `/dashboard/recipes/valorate`,
+        path: `/dashboard/recipes/valorate/:recipeId`,
         route: "/recipes/valorate",
         element: <ValorateRecipe />,
 
