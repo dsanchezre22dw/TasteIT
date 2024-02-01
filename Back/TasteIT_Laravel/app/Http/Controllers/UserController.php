@@ -134,4 +134,9 @@ class UserController extends Controller
         $user->delete();
         return redirect()->back();
     }
+
+    public function getSuggestions($term)
+    {
+        $users = User::where('username','like','%'.$term.'%')->get();
+    }
 }
