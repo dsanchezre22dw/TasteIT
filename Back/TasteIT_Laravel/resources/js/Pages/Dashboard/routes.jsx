@@ -19,14 +19,11 @@ import SeeRecipe from "./pages/Standard/Recipe/seerecipe";
 import Profile from "./pages/Standard/Profile/profile";
 import ShoppingList from "./pages/Standard/ShoppingList/shoppinglist";
 import Fridge from "./pages/Standard/Fridge/fridge";
-<<<<<<< HEAD
 import RecipesEdit from "./pages/Standard/Recipe/editrecipe";
 import ValorateRecipe from "./pages/Standard/Recipe/valoraterecipe";
-=======
 import CreateIngredients from "./pages/Standard/Ingredients/CreateIngredients";
 import AcceptIngredient from "./pages/Admin/Ingredients/AcceptIngredient";
 import IngredientsEdit from "./pages/Admin/Ingredients/IngredientsEdit";
->>>>>>> fad31badaf70d2818106bad26928af80a23ceb2f
 
 const icon = {
   className: "w-5 h-5 text-inherit",
