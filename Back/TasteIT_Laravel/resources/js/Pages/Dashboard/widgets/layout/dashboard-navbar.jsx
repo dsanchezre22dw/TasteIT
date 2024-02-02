@@ -27,11 +27,69 @@ import {
   setOpenSidenav,
 } from "../../context";
 
+
+
+import '../../../../../../public/assets/css/test.css';
+import { useEffect, useState } from "react";
+import { useForm } from "@inertiajs/inertia-react";
+
 export function DashboardNavbar({ auth }) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
+  
+  const className = "py-3 px-5 border-b border-blue-gray-50";
+  const [suggestions, setSuggestions] = useState(null);
+
+  var http;
+  const form = useForm({});
+
+  useEffect (() => {
+
+      document.querySelector('.searchInput').addEventListener('focus', function() {
+      document.querySelector('.searchList').style.display = 'table';
+    });
+  
+    document.querySelector('.searchInput').addEventListener('blur',  function() {
+      setTimeout(function() {
+        document.querySelector('.searchList').style.display = 'none';
+      }, 200); // For working click
+    });
+  
+  })
+
+  function search(term){
+    if (!http) {
+      http = new XMLHttpRequest();
+    }
+
+    let url = 'http://localhost:8000/api/search/'+term;
+
+    http.open('get', url, true);
+
+    http.onreadystatechange = recoger;
+
+    http.send(null);
+    
+  }
+
+  function recoger(){
+    if (http.readyState == 4 && http.status == 200){
+
+      let suggestion = JSON.parse(http.responseText).suggestions;
+
+      suggestion = suggestion.slice(0, 5);
+
+      setSuggestions(suggestion);
+      console.log(suggestions)
+    }
+  }
+
+  function handleClick(suggestion) {
+    console.log(1)
+    window.location.href = `/dashboard/${suggestion.type}s/${suggestion.id}`;
+  }
 
   return (
     <Navbar
@@ -72,10 +130,42 @@ export function DashboardNavbar({ auth }) {
             {page}
           </Typography>
         </div>
-        <div className="flex items-center">
-          <div className="mr-auto md:mr-4 md:w-56">
-            <Input label="Search" />
+
+        <div className="flex items-center justify-end w-full">
+
+          <div className="mr-auto md:mr-4 w-full relative">
+            <Input label="Search" className=" md:w-56 focus:w-full duration-700 searchInput" onChange={(e) => search(e.target.value)}/>
+            <table className="bg-gray-100 w-full absolute z-10 hover:table searchList">
+              <tbody>
+                {suggestions && suggestions.map((suggestion, index) => (
+                  
+                    <tr key={index} className="hover:bg-gray-200" onClick={() => handleClick(suggestion)}>    
+                      <td className={className}>
+                        <div className="flex items-center gap-4">
+
+                        {suggestion.img? 
+                        <Avatar src={suggestion.img} size="sm" variant="rounded" /> 
+                        :
+                        <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />}
+                                                    
+                          <div>
+                            <Typography variant="small" color="blue-gray" className="font-semibold">
+                              {suggestion.name}
+                            </Typography>
+                            <Typography className="text-xs font-normal text-blue-gray-500">{suggestion.subtitle}</Typography>
+                          </div>
+                        </div>
+                      </td>
+                      <td className={className}>
+                        <Typography className="text-xs font-semibold text-blue-gray-600">{suggestion.type}</Typography>
+                      </td>          
+                    </tr>
+                    
+                ))}
+              </tbody>
+            </table>
           </div>
+
           <IconButton
             variant="text"
             color="blue-gray"
@@ -91,6 +181,7 @@ export function DashboardNavbar({ auth }) {
               className="grid xl:hidden"
           >
               <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+              
           </IconButton>
           <Menu>
             <MenuHandler>
