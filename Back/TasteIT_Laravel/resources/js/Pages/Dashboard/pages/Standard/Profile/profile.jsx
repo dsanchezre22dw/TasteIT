@@ -27,10 +27,10 @@ import UserSettings from "../../../widgets/Standard/UserSettings";
 import MyRecipes from "../../../widgets/Standard/MyRecipes";
 import SavedRecipes from "../../../widgets/Standard/SavedRecipes";
 import EditUserInformation from "../../../widgets/Standard/EditUserInformation";
+import { useEffect } from "react";
 
 export function Profile({auth, recipes, users}) {
   const [activeTab, setActiveTab] = useState("info");
-
   
   return (
     <>

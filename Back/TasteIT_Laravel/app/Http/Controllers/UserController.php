@@ -73,7 +73,6 @@ class UserController extends Controller
         $user->fridge()->save($fridge);
         $user->shopping_list()->save($shopping_list);
 
-        return redirect()->route('users.profile')->with('timestamp', now()->timestamp);
     }
 
     /**
