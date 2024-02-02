@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(IngredientSeeder::class);
         $this->call(Recipe_typeSeeder::class);
         $this->call(ValorationSeeder::class);
-        $this->call(CommentSeeder::class);
         $this->call(SaveSeeder::class);
         $this->call(RecipeRecipeTypeSeeder::class);
         $this->call(FridgeIngredientSeeder::class);
