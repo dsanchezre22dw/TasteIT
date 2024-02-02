@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useMaterialTailwindController, setOpenSidenav } from "../../context";
+import { Link as Prueba } from "@inertiajs/react";
 
 export function Sidenav({ brandImg, brandName, routes, user }) {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -91,6 +92,9 @@ export function Sidenav({ brandImg, brandName, routes, user }) {
                 </NavLink>
               </li>
             ))}
+          <Prueba href='/dashboard/prueba'>
+            <Button variant="gradient">PRUEBA</Button>
+          </Prueba>
           </ul>
         ))}
       </div>

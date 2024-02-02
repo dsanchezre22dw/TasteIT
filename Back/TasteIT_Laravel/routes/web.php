@@ -37,10 +37,10 @@ Route::get('/', function () {
 
 Route::prefix('dashboard')->group(function () {
     Route::get('/home', [UserController::class, 'index']);
-    Route::get('/profile', [UserController::class, 'index'])->name('users.profile'); 
+    Route::get('/profile', [UserController::class, 'prueba'])->name('users.profile'); 
     Route::get('/tables', [UserController::class, 'index']);
     Route::get('/notifications', [UserController::class, 'index']);
-    Route::get('/prueba', [UserController::class, 'index']);
+    Route::get('/prueba', [UserController::class, 'prueba']);
 
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index'); 

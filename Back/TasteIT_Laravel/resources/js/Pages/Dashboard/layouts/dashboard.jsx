@@ -14,7 +14,7 @@ import PostRecipe from "../pages/Standard/Recipe/postrecipe";
 import { useEffect } from 'react';
 import RecipesIndex from '../pages/Standard/Recipe/indexrecipe';
 
-export function Dashboard({ auth, users, user, recipes, shoppingList, fridge, ingredients, ingredient, variable}) {
+export function Dashboard({ auth, users, user, recipes, shoppingList, fridge, ingredients, ingredient}) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
 
@@ -40,15 +40,6 @@ export function Dashboard({ auth, users, user, recipes, shoppingList, fridge, in
         >
           <Cog6ToothIcon className="h-5 w-5" />
         </IconButton>
-        <Routes>
-          {routes.map(
-            ({ layout, pages }) =>
-              layout === "dashboard" &&
-              pages.map(({ path, element }) => (
-                <Route exact key={path} path={path} element={React.cloneElement(element, { auth , users , user, recipes , shoppingList, fridge, ingredients, ingredient})} />
-              ))
-          )}
-        </Routes>
         <div className="text-blue-gray-600">
           <Footer />
         </div>

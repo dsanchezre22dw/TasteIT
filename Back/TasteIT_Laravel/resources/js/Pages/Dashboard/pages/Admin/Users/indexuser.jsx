@@ -16,6 +16,7 @@ import { Head, useForm } from '@inertiajs/react';
 import { Link, NavLink } from "react-router-dom";
 import { Inertia } from '@inertiajs/inertia-react';
 import UserTableRow from "@/Pages/Dashboard/widgets/seeUsers/usertablerow";
+import { Link as Prueba } from "@inertiajs/react";
 
 export function UsersIndex({ users }) {  
   const { data, setData, get, processing, errors, reset } = useForm({});
@@ -42,6 +43,9 @@ export function UsersIndex({ users }) {
           <Link to={'/dashboard/users/add'}>
             <Button variant="gradient">Add User</Button>
           </Link>
+          <Prueba href='/dashboard/prueba'>
+            <Button variant="gradient">PRUEBA</Button>
+          </Prueba>
         </div>
 
   

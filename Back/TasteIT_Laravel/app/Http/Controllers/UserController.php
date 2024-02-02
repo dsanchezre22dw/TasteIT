@@ -139,4 +139,11 @@ class UserController extends Controller
     {
         $users = User::where('username','like','%'.$term.'%')->get();
     }
+
+    public function prueba()
+    {
+
+        return Inertia::render('Dashboard/pages/Prueba', [
+        ]);
+    }
 }
