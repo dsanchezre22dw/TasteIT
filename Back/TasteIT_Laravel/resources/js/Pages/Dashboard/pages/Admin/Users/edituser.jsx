@@ -29,14 +29,17 @@ import { Transition } from '@headlessui/react';
 
 
 
-export default function UsersEdit({ user }) {
+export default function UsersEdit({ auth, users }) {
+
+    const { userId } = useParams();
+
+    const user = users.find(user => user.id === parseInt(userId));
 
     return (
 
         <div className="mt-12 mb-8 flex flex-col gap-12">
 
             <Card>
-
                 <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
                     <Typography variant="h6" color="white">
                         Edit User<br></br>
@@ -49,7 +52,6 @@ export default function UsersEdit({ user }) {
                 </CardBody>
             </Card>
         </div>
-
 
     );
 }

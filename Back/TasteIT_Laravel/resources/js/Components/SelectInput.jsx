@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useRef } from 'react';
 
-export default forwardRef(function SelectInput({ options = [], className = '', isFocused = false, ...props }, ref) {
+export default forwardRef(function SelectInput({ options = [], className = '', isFocused = false, select='', ...props }, ref) {
     const selectRef = ref ? ref : useRef();
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export default forwardRef(function SelectInput({ options = [], className = '', i
             ref={selectRef}
         >
             {options.map((option) => (
-                <option key={option.value} value={option.value}>
+                <option key={option.value} value={option.value} selected={option.value === select} hidden={option.value === "selected"}>
                     {option.label}
                 </option>
             ))}

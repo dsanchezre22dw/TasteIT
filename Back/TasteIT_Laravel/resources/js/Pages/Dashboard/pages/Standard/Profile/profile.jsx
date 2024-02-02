@@ -27,10 +27,10 @@ import UserSettings from "../../../widgets/Standard/UserSettings";
 import MyRecipes from "../../../widgets/Standard/MyRecipes";
 import SavedRecipes from "../../../widgets/Standard/SavedRecipes";
 import EditUserInformation from "../../../widgets/Standard/EditUserInformation";
+import { useEffect } from "react";
 
 export function Profile({auth, recipes, users}) {
   const [activeTab, setActiveTab] = useState("info");
-
   
   return (
     <>
@@ -85,8 +85,8 @@ export function Profile({auth, recipes, users}) {
           </div>
 
           {activeTab === "info" && <UserInformation user={auth.user} setActiveTab={setActiveTab}/>}
-          {activeTab === "mine" && <MyRecipes user={auth.user} recipes={recipes}/>}
-          {activeTab === "saved" && <SavedRecipes user={auth.user} recipes={recipes} users={users}/>}
+          {activeTab === "mine" && <MyRecipes auth={auth} user={auth.user} recipes={recipes}/>}
+          {activeTab === "saved" && <SavedRecipes auth={auth} user={auth.user} recipes={recipes} users={users}/>}
           {activeTab === "settings" && <UserSettings user={auth.user}/>}
           {activeTab === "edit" && <EditUserInformation user={auth.user}/>}
 

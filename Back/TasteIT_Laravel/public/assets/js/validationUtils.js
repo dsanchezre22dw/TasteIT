@@ -118,6 +118,26 @@ export function validatePassword(data, setErrorMessages){
     }
 }
 
+export function validateStarRating(data, setErrorMessages){
+
+  if ( !([1, 2, 3, 4, 5].includes(parseInt(data.rating)))) {
+    setErrorMessages((prevErrors) => ({
+        ...prevErrors,
+        rating: 'Select at least 1 star, please',
+    }));
+
+    return "yes";
+  }else{
+
+      setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          rating: '',
+      }));
+
+      return "";
+  }
+}
+
 
 function allLetter(inputtxt){
 
@@ -128,4 +148,35 @@ function allLetter(inputtxt){
     }else{
         return false;
     }
+}
+
+export function setupStarRating(setData) {
+  let stars = document.getElementsByClassName("star");
+
+  for (let i = 0; i < stars.length; i++) {
+      stars[i].onclick = function(index) {
+          return function() {
+              gfg(index + 1);
+              setData('rating', index + 1);
+          }
+      }(i);
+  }
+}
+
+function gfg(n) {
+  let stars = document.getElementsByClassName("star");
+  remove();
+  for (let i = 0; i < n; i++) {
+      stars[i].classList.add("yellow");
+  }
+
+}
+
+// To remove the pre-applied styling
+function remove() {
+  let stars = document.getElementsByClassName("star");
+
+  for (let i = 0; i < 5; i++) {
+      stars[i].classList.remove("yellow");
+  }
 }

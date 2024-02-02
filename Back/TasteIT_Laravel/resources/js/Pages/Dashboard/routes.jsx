@@ -15,9 +15,12 @@ import UsersEdit from "./pages/Admin/Users/edituser";
 import UsersAdd from "./pages/Admin/Users/adduser";
 import PostRecipe from "./pages/Standard/Recipe/postrecipe";
 import { RecipesIndex } from "./pages/Standard/Recipe/indexrecipe";
+import SeeRecipe from "./pages/Standard/Recipe/seerecipe";
 import Profile from "./pages/Standard/Profile/profile";
 import ShoppingList from "./pages/Standard/ShoppingList/shoppinglist";
 import Fridge from "./pages/Standard/Fridge/fridge";
+import RecipesEdit from "./pages/Standard/Recipe/editrecipe";
+import ValorateRecipe from "./pages/Standard/Recipe/valoraterecipe";
 import CreateIngredients from "./pages/Standard/Ingredients/CreateIngredients";
 import AcceptIngredient from "./pages/Admin/Ingredients/AcceptIngredient";
 import IngredientsEdit from "./pages/Admin/Ingredients/IngredientsEdit";
@@ -149,6 +152,33 @@ export const routes = [
         path: `/dashboard/recipes/add`,
         route: "/recipes/add",
         element: <PostRecipe />,
+      },
+      {
+        icon: <ServerStackIcon {...icon} />,
+
+        name: "recipes see",
+        path: `/dashboard/recipes/:recipeId`,
+        route: "/recipes",
+        element: <SeeRecipe />,
+
+      },
+      {
+        icon: <ServerStackIcon {...icon} />,
+
+        name: "recipes edit",
+        path: `/dashboard/recipes/edit/:recipeId`,
+        route: "/recipes/edit",
+        element: <RecipesEdit />,
+
+      },
+      {
+        icon: <ServerStackIcon {...icon} />,
+
+        name: "recipes valorate",
+        path: `/dashboard/recipes/valorate/:recipeId`,
+        route: "/recipes/valorate",
+        element: <ValorateRecipe />,
+
       },
     ],
   },

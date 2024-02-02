@@ -29,12 +29,8 @@ class Recipe extends Model
         return $this->belongsToMany('App\Models\User','saves');
     }
 
-    public function comments() {
-        return $this->belongsToMany('App\Models\User','comments')->withPivot('comment');
-    }
-
     public function valorations() {
-        return $this->belongsToMany('App\Models\User','valorations')->withPivot('id','valoration','description');
+        return $this->belongsToMany('App\Models\User','valorations')->withPivot('id','title','valoration','description');
     }
 
     public function recipe_types() {

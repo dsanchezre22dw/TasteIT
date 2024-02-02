@@ -11,8 +11,10 @@ import {
 import routes from "../routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "../context";
 import PostRecipe from "../pages/Standard/Recipe/postrecipe";
+import { useEffect } from 'react';
+import RecipesIndex from '../pages/Standard/Recipe/indexrecipe';
 
-export function Dashboard({ auth, users, user, recipes, shoppingList, fridge, ingredients, ingredient}) {
+export function Dashboard({ auth, users, user, recipes, shoppingList, fridge, ingredients, ingredient, variable}) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
 

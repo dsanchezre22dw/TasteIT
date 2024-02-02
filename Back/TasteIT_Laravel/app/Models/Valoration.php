@@ -12,6 +12,7 @@ class Valoration extends Model
     protected $fillable = [
         'user_id',
         'recipe_id',
+        'title',
         'valoration',
         'description',
     ];

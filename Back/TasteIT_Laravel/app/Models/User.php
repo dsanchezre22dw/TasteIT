@@ -48,12 +48,8 @@ class User extends AuthenticatableUser implements MustVerifyEmail
         return $this->belongsToMany('App\Models\Recipe','saves');
     }
 
-    public function comments() {
-        return $this->belongsToMany('App\Models\Recipe','comments')->withPivot('comment');
-    }
-
     public function valorations() {
-        return $this->belongsToMany('App\Models\Recipe','valorations')->withPivot('id','valoration','description');
+        return $this->belongsToMany('App\Models\Recipe','valorations')->withPivot('id','title','valoration','description');
     }
 
     public function followers() {

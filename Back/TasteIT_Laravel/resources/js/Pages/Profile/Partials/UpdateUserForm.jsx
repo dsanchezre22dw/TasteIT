@@ -13,8 +13,6 @@ import { setupPasswordValidation, validateFirstName, validateSurname, validatePa
 
 export default function UpdateUserForm({ className = '', user}) {
 
-    const { userId } = useParams();
-
     const options = [
         { value: 'admin', label: 'Admin' },
         { value: 'standard', label: 'Standard' },
@@ -22,12 +20,13 @@ export default function UpdateUserForm({ className = '', user}) {
     ];
 
     const { data, setData, post, processing, errors, reset, recentlySuccessful} = useForm({
+        id: user.id,
         firstname: user.firstname,
         surname: user.surname,
         username: user.username,
         email: user.email,
-        usertype: options[0].value,
-        enabled: true,
+        usertype: user.type,
+        enabled: user.enabled,
     });
 
     const [errorMessages, setErrorMessages] = useState({
@@ -44,7 +43,7 @@ export default function UpdateUserForm({ className = '', user}) {
         errors_exist += validateSurname(data, setErrorMessages);
 
         if (errors_exist === ""){
-            post(`/dashboard/users/edit/${userId}`);
+            post(`/dashboard/users/edit/${data.id}`);
         }
 
     };
@@ -122,6 +121,7 @@ export default function UpdateUserForm({ className = '', user}) {
                         className="mt-1 block w-full"
                         options={options} 
                         onChange={(e) => setData('usertype', e.target.value)}
+                        select={user.type}
                     />
 
                     <InputError message={errors.usertype} className="mt-2" />
@@ -135,6 +135,7 @@ export default function UpdateUserForm({ className = '', user}) {
                         name="enabled"
                         className="mt-2" 
                         onChange={(e) => setData('enabled', e.target.checked)}
+                        defaultChecked={user.enabled}
                     />
 
                     <InputError message={errors.enabled} className="mt-2" />

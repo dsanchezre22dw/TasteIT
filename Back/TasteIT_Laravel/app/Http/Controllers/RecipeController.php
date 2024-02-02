@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Recipe;
 use App\Models\Ingredient;
 use App\Models\Valoration;
 use Illuminate\Http\Request;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
+
 
 class RecipeController extends Controller
 {
@@ -19,12 +21,16 @@ class RecipeController extends Controller
     public function index()
     {
         $users = User::with(['saves'])->get();
-        $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
+        $recipes = Recipe::with(['recipe_types', 'valorations', 'ingredients', 'user'])->get();
     
         $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
             $avgValoration = $recipe->valorations->avg('pivot.valoration');
             $avgValoration = number_format($avgValoration, 2);
+
+            $amountValorations = $recipe->valorations->count();
+
             $recipe->avg_valoration = $avgValoration;
+            $recipe->amount_valorations = $amountValorations;
     
             return $recipe;
         });
@@ -76,6 +82,50 @@ class RecipeController extends Controller
         return redirect()->route('recipes.index');
     }
 
+    public function save(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!$request->saved){
+            $user->saves()->attach($request->recipe_id);
+        }else{
+            $user->saves()->detach($request->recipe_id);
+        }
+
+        $user->save();
+
+        return redirect()->route("users.profile");
+    }
+
+    public function showValorate(Request $request)
+    {
+        return Inertia::render('Dashboard/layouts/dashboard');
+    }
+
+
+    public function valorate(Request $request)
+    {
+
+        $request->validate([
+            'rating' => 'required|integer|between:1,5',
+            'title' => 'nullable|string|max:50',
+            'message' => 'nullable|string|max:250',
+        ],[
+
+            'rating.required' => 'Your punctuation cannot be 0 (at least 1)',
+        ]);
+        
+        $user = Auth::user();
+
+        if ($user->valorations()){
+            $user->valorations()->detach();
+        }
+
+        $user->valorations()->attach($request->recipe_id, ["valoration" => $request->rating, "title" => $request->title, "description" => $request->message]);  
+        $user->save(); 
+    }
+
+
     /**
      * Display the specified resource.
      */
@@ -87,9 +137,14 @@ class RecipeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Recipe $recipe)
+    public function edit($id)
     {
-        //
+        $recipe = \App\Models\Recipe::findOrFail($id);
+        $recipes = Recipe::all();
+        return Inertia::render('Dashboard/layouts/dashboard', [
+            'recipe' => $recipe,
+            'recipes' => $recipes,
+        ]);
     }
 
     /**
@@ -103,8 +158,10 @@ class RecipeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Recipe $recipe)
+    public function destroy($id)
     {
-        //
+        $recipe = Recipe::findOrFail($id);
+        $recipe->delete();
+        return redirect()->back();
     }
 }
