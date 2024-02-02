@@ -21,6 +21,7 @@ class Fridge_ingredientFactory extends Factory
         return [
             'fridge_id' => Fridge::inRandomOrder()->first()->id,
             'ingredient_id' => Ingredient::inRandomOrder()->first()->id,
+            'amount' => $this->faker->numberBetween(1,200),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\IngredientController;
 
 /*
@@ -20,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/ingredients',[IngredientController::class, 'getSuggestions']);
+
+Route::get('/search/{term}',[UserController::class, 'getSuggestions']);
