@@ -137,8 +137,8 @@ class UserController extends Controller
 
     public function getSuggestions($searchTerm)
     {
-        // Obtain the list of users matching the search term
-        $users = User::where('username', 'like', '%' . $searchTerm . '%')->get();
+        // Obtain the list of users matching the search term and don't take admins
+        $users = User::where('username', 'like', '%' . $searchTerm . '%')->where('type', '!=', 'admin')->get();
 
         // Obtain the list of recipes matching the search term
         $recipes = Recipe::where('title', 'like', '%' . $searchTerm . '%')->get();
