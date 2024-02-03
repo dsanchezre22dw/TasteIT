@@ -1,6 +1,6 @@
 // UserTableRow.js
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "@inertiajs/react";
 import { Avatar, Typography, Chip } from "@material-tailwind/react";
 
 const UserTableRow = ({ id, username, email, type, enabled, handleDelete }) => {
@@ -31,7 +31,7 @@ const UserTableRow = ({ id, username, email, type, enabled, handleDelete }) => {
         />
       </td>
       <td className={className}>
-        <Link to={`/dashboard/users/edit/${id}`}>
+        <Link href={`/dashboard/users/edit/${id}`}>
           <i className="material-icons settings">&#xE8B8;</i>
         </Link>
       </td>

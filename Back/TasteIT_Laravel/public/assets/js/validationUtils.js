@@ -180,3 +180,20 @@ function remove() {
       stars[i].classList.remove("yellow");
   }
 }
+
+export function getDifficultyColorAndText(difficulty) {
+  let difficultyColor, difficultyText;
+
+  if (difficulty === 'beginner') {
+    difficultyColor = 'green';
+    difficultyText = 'Beginner';
+  } else if (difficulty === 'medium') {
+    difficultyColor = 'yellow';
+    difficultyText = 'Medium';
+  } else if (difficulty === 'expert') {
+    difficultyColor = 'red';
+    difficultyText = 'Expert';
+  }
+
+  return { difficultyColor, difficultyText };
+}

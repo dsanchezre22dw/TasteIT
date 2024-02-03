@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Fridge;
@@ -21,7 +22,16 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with(['saves'])->get();
-        $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
+
+
+        return Inertia::render('Dashboard/pages/Admin/Users/indexuser', [
+            'users' => $users,
+        ]);
+    }
+
+    public function profile()
+    {
+        $recipes = Recipe::with(['recipe_types', 'valorations', 'user'])->get();
     
         $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
             $avgValoration = $recipe->valorations->avg('pivot.valoration');
@@ -31,18 +41,23 @@ class UserController extends Controller
             return $recipe;
         });
 
-        return Inertia::render('Dashboard/layouts/dashboard', [
-            'users' => $users,
+        return Inertia::render('Dashboard/pages/Standard/Profile/profile', [
+            'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipes' => $recipesWithTypesAndAvgValorations,
         ]);
     }
 
+
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(User $user)
     {
-        //
+        $users = User::all();
+
+        return Inertia::render('Dashboard/pages/Admin/Users/adduser', [
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -75,15 +90,6 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        $users = User::all();
-        return Inertia::render('Dashboard/layouts/dashboard', [
-            'users' => $users,
-        ]);    }
 
     /**
      * Show the form for editing the specified resource.
@@ -91,10 +97,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = \App\Models\User::findOrFail($id);
-        $users = User::all();
-        return Inertia::render('Dashboard/layouts/dashboard', [
+        return Inertia::render('Dashboard/pages/Admin/Users/edituser', [
             'user' => $user,
-            'users' => $users,
         ]);
     }
 
@@ -108,8 +112,8 @@ class UserController extends Controller
         $request->validate([
             'firstname' => 'required|string|max:50',
             'surname' => 'nullable|string|max:100',
-            'username' => 'required|string|max:50|unique:'.User::class,
-            'email' => 'required|lowercase|email|max:100|unique:'.User::class,
+            'username' => 'required|string|max:50|unique:'.User::class.',username,'.$id,
+            'email' => 'required|lowercase|email|max:100|unique:'.User::class.',email,'.$id,
             'enabled' => 'required|boolean',
             'usertype' => 'required|in:admin,standard,chef',
         ]);
@@ -165,5 +169,12 @@ class UserController extends Controller
         });
 
         return response()->json(['suggestions' => $sortedResults]);
+    }
+
+    public function prueba()
+    {
+
+        return Inertia::render('Profile/Edit', [
+        ]);
     }
 }

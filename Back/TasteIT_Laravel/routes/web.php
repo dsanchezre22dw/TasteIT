@@ -37,27 +37,29 @@ Route::get('/', function () {
 
 Route::prefix('dashboard')->group(function () {
     Route::get('/home', [UserController::class, 'index']);
-    Route::get('/profile', [UserController::class, 'index'])->name('users.profile'); 
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile'); 
     Route::get('/tables', [UserController::class, 'index']);
     Route::get('/notifications', [UserController::class, 'index']);
-    Route::get('/prueba', [UserController::class, 'index']);
+    Route::get('/prueba', [UserController::class, 'prueba'])->name('prueba');
 
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index'); 
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy'); 
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit'); 
         Route::post('/edit/{id}', [UserController::class, 'update'])->name('users.update');
-        Route::get('/add', [UserController::class, 'show'])->name('users.show');  
-        Route::post('/add', [UserController::class, 'store'])->name('users.add'); 
+        Route::get('/create', [UserController::class, 'create'])->name('users.create');  
+        Route::post('/store', [UserController::class, 'store'])->name('users.store'); 
     });
 
     Route::prefix('recipes')->group(function () {
         Route::get('/', [RecipeController::class, 'index'])->name('recipes.index'); 
+        Route::get('/create', [RecipeController::class, 'create'])->name('recipes.create'); 
+        Route::get('/{id}', [RecipeController::class, 'show'])->name('recipes.show');
         Route::delete('/delete/{id}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); 
         Route::get('/edit/{id}', [RecipeController::class, 'edit'])->name('recipes.edit'); 
         Route::post('/edit/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
-        Route::get('/add', [RecipeController::class, 'show'])->name('recipes.show');  
-        Route::post('/add', [RecipeController::class, 'store'])->name('recipes.add'); 
+        Route::get('/prueba', [RecipeController::class, 'index'])->name('recipes.prueba');  
+        Route::post('/store', [RecipeController::class, 'store'])->name('recipes.store'); 
         Route::post('/save', [RecipeController::class, 'save'])->name('recipes.save'); 
         Route::get('/valorate/{id}', [RecipeController::class, 'showValorate'])->name('recipes.showValorate');
         Route::post('/valorate/{id}', [RecipeController::class, 'valorate'])->name('recipes.valorate'); 
@@ -65,20 +67,20 @@ Route::prefix('dashboard')->group(function () {
     });
 
     Route::prefix('shopping')->group(function (){
-        Route::get('/', [ShoppingListController::class,'index']);
+        Route::get('/', [ShoppingListController::class,'index'])->name('shopping.index'); 
         Route::post('/update', [ShoppingListController::class,'store']);
         Route::post('/clear', [ShoppingListController::class,'update']);
     });
 
     Route::prefix('fridge')->group(function (){
-        Route::get('/', [FridgeController::class,'index']);
+        Route::get('/', [FridgeController::class,'index'])->name('fridge.index'); 
         Route::post('/update', [FridgeController::class,'store']);
         Route::post('/clear', [FridgeController::class,'update']);
     });
 
     //Ingredient admin
     Route::prefix('ingredients')->group(function (){
-        Route::get('/', [IngredientController::class,'index']);
+        Route::get('/', [IngredientController::class,'index'])->name('ingredients.index'); 
         Route::post('/create', [IngredientController::class,'store']);
         Route::delete('/delete/{id}', [IngredientController::class, 'destroy'])->name('ingredients.destroy'); 
         Route::get('/edit/{id}', [IngredientController::class, 'edit'])->name('ingredients.edit'); 

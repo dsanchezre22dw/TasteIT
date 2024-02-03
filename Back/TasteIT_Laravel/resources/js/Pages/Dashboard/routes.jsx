@@ -32,153 +32,67 @@ const icon = {
 export const routes = [
   {
     layout: "dashboard",
-    show: "yes",
     admin: "yes",
     pages: [
       {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
-        path: `/dashboard/profile`,
-        route: "/profile",
-        element: <Profile />,
+        path: "/profile",
+        actual: "profile",
       },
       {
         icon: <InformationCircleIcon {...icon} />,
         name: "users",
-        path: `/dashboard/users`,
-        route: "/users",
-        element: <UsersIndex />,
+        path: "/users",
+        actual: "users.index",
       },
       {
         icon: <AcademicCapIcon {...icon} />,
         name: "recipes",
-        path: `/dashboard/recipes`,
-        route: "/recipes",
-        element: <RecipesIndex />,
+        path: "/recipes",
+        actual: "recipes.index",
       },
       {
         icon: <AcademicCapIcon {...icon} />,
         name: "ingredients",
-        path: `/dashboard/ingredients`,
-        route: "/ingredients",
-        element: <AcceptIngredient />,
+        path: "/ingredients",
+        actual: "ingredients.index",
       },
     ],
   },
   {
     layout: "dashboard",
-    show: 'no',
-    admin: "yes",
-    pages: [
-      {
-        icon: <ServerStackIcon {...icon} />,
-
-        name: "users edit",
-        path: `/dashboard/users/edit/:userId`,
-        route: "/users/edit",
-        element: <UsersEdit />,
-
-      },
-      {
-        icon: <ServerStackIcon {...icon} />,
-
-        name: "ingredients edit",
-        path: `/dashboard/ingredients/edit/:ingredientId`,
-        route: "/ingredients/edit",
-        element: <IngredientsEdit />,
-
-      },
-      {
-        icon: <ServerStackIcon {...icon} />,
-
-        name: "users add",
-        path: `/dashboard/users/add`,
-        route: "/users/add",
-        element: <UsersAdd />,
-      },
-    ],
-
-  },
-  {
-    layout: "dashboard",
-    show: "yes",
     admin: "no",
     pages: [
       {
         icon: <AcademicCapIcon {...icon} />,
         name: "recipes",
-        path: `/dashboard/recipes`,
-        route: "/recipes",
-        element: <RecipesIndex />,
+        path: "/recipes",
+        actual: "recipes.index",
       },
       {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
-        path: `/dashboard/profile`,
-        route: "/profile",
-        element: <Profile />,
+        path: "/profile",
+        actual: "profile",
       },
       {
         icon: <ShoppingCartIcon {...icon} />,
         name: "shopping",
-        path: `/dashboard/shopping`,
-        route: "/shopping",
-        element: <ShoppingList />,
+        path: "/shopping",
+        actual: "shopping.index",
       },
       {
         icon: <ShoppingCartIcon {...icon} />,
         name: "fridge",
-        path: `/dashboard/fridge`,
-        route: "/fridge",
-        element: <Fridge />,
+        path: "/fridge",
+        actual: "fridge.index",
       },
       {
         icon: <AcademicCapIcon {...icon} />,
         name: "ingredient",
-        path: `/dashboard/ingredient`,
-        route: "/ingredient",
-        element: <CreateIngredients />,
-      },
-    ],
-  },
-  {
-    layout: "dashboard",
-    show: "no",
-    admin: "no",
-    pages: [
-      {
-        icon: <AcademicCapIcon {...icon} />,
-        name: "recipes add",
-        path: `/dashboard/recipes/add`,
-        route: "/recipes/add",
-        element: <PostRecipe />,
-      },
-      {
-        icon: <ServerStackIcon {...icon} />,
-
-        name: "recipes see",
-        path: `/dashboard/recipes/:recipeId`,
-        route: "/recipes",
-        element: <SeeRecipe />,
-
-      },
-      {
-        icon: <ServerStackIcon {...icon} />,
-
-        name: "recipes edit",
-        path: `/dashboard/recipes/edit/:recipeId`,
-        route: "/recipes/edit",
-        element: <RecipesEdit />,
-
-      },
-      {
-        icon: <ServerStackIcon {...icon} />,
-
-        name: "recipes valorate",
-        path: `/dashboard/recipes/valorate/:recipeId`,
-        route: "/recipes/valorate",
-        element: <ValorateRecipe />,
-
+        path: "/ingredient",
+        actual: "ingredients.index",
       },
     ],
   },
