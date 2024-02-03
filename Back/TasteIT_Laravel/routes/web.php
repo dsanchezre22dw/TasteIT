@@ -37,7 +37,7 @@ Route::get('/', function () {
 
 Route::prefix('dashboard')->group(function () {
     Route::get('/home', [UserController::class, 'index']);
-    Route::get('/profile', [UserController::class, 'profile'])->name('users.profile'); 
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile'); 
     Route::get('/tables', [UserController::class, 'index']);
     Route::get('/notifications', [UserController::class, 'index']);
     Route::get('/prueba', [UserController::class, 'prueba'])->name('prueba');
@@ -67,20 +67,20 @@ Route::prefix('dashboard')->group(function () {
     });
 
     Route::prefix('shopping')->group(function (){
-        Route::get('/', [ShoppingListController::class,'index']);
+        Route::get('/', [ShoppingListController::class,'index'])->name('shopping.index'); 
         Route::post('/update', [ShoppingListController::class,'store']);
         Route::post('/clear', [ShoppingListController::class,'update']);
     });
 
     Route::prefix('fridge')->group(function (){
-        Route::get('/', [FridgeController::class,'index']);
+        Route::get('/', [FridgeController::class,'index'])->name('fridge.index'); 
         Route::post('/update', [FridgeController::class,'store']);
         Route::post('/clear', [FridgeController::class,'update']);
     });
 
     //Ingredient admin
     Route::prefix('ingredients')->group(function (){
-        Route::get('/', [IngredientController::class,'index']);
+        Route::get('/', [IngredientController::class,'index'])->name('ingredients.index'); 
         Route::post('/create', [IngredientController::class,'store']);
         Route::delete('/delete/{id}', [IngredientController::class, 'destroy'])->name('ingredients.destroy'); 
         Route::get('/edit/{id}', [IngredientController::class, 'edit'])->name('ingredients.edit'); 

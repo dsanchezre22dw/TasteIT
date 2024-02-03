@@ -32,137 +32,67 @@ const icon = {
 export const routes = [
   {
     layout: "dashboard",
-    show: "yes",
     admin: "yes",
     pages: [
       {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
-        path: `/dashboard/profile`,
-        link: "/profile",
+        path: "/profile",
+        actual: "profile",
       },
       {
         icon: <InformationCircleIcon {...icon} />,
         name: "users",
-        path: `/dashboard/users`,
-        link: "/users",
+        path: "/users",
+        actual: "users.index",
       },
       {
         icon: <AcademicCapIcon {...icon} />,
         name: "recipes",
-        path: `/dashboard/recipes`,
-        link: "/recipes",
+        path: "/recipes",
+        actual: "recipes.index",
       },
       {
         icon: <AcademicCapIcon {...icon} />,
         name: "ingredients",
-        path: `/dashboard/ingredients`,
-        link: "/ingredients",
+        path: "/ingredients",
+        actual: "ingredients.index",
       },
     ],
   },
   {
     layout: "dashboard",
-    show: 'no',
-    admin: "yes",
-    pages: [
-      {
-        icon: <ServerStackIcon {...icon} />,
-
-        name: "users edit",
-        path: `/dashboard/users/edit/:userId`,
-        link: "/users/edit",
-
-      },
-      {
-        icon: <ServerStackIcon {...icon} />,
-
-        name: "ingredients edit",
-        path: `/dashboard/ingredients/edit/:ingredientId`,
-        link: "/ingredients/edit",
-
-      },
-      {
-        icon: <ServerStackIcon {...icon} />,
-
-        name: "users add",
-        path: `/dashboard/users/add`,
-        link: "/users/add",
-      },
-    ],
-
-  },
-  {
-    layout: "dashboard",
-    show: "yes",
     admin: "no",
     pages: [
       {
         icon: <AcademicCapIcon {...icon} />,
         name: "recipes",
-        path: `/dashboard/recipes`,
-        link: "/recipes",
+        path: "/recipes",
+        actual: "recipes.index",
       },
       {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
-        path: `/dashboard/profile`,
-        link: "/profile",
+        path: "/profile",
+        actual: "profile",
       },
       {
         icon: <ShoppingCartIcon {...icon} />,
         name: "shopping",
-        path: `/dashboard/shopping`,
-        link: "/shopping",
+        path: "/shopping",
+        actual: "shopping.index",
       },
       {
         icon: <ShoppingCartIcon {...icon} />,
         name: "fridge",
-        path: `/dashboard/fridge`,
-        link: "/fridge",
+        path: "/fridge",
+        actual: "fridge.index",
       },
       {
         icon: <AcademicCapIcon {...icon} />,
         name: "ingredient",
-        path: `/dashboard/ingredient`,
-        link: "/ingredient",
-      },
-    ],
-  },
-  {
-    layout: "dashboard",
-    show: "no",
-    admin: "no",
-    pages: [
-      {
-        icon: <AcademicCapIcon {...icon} />,
-        name: "recipes add",
-        path: `/dashboard/recipes/store`,
-        link: "/recipes/store",
-      },
-      {
-        icon: <ServerStackIcon {...icon} />,
-
-        name: "recipes see",
-        path: `/dashboard/recipes/:recipeId`,
-        link: "/recipes",
-
-      },
-      {
-        icon: <ServerStackIcon {...icon} />,
-
-        name: "recipes edit",
-        path: `/dashboard/recipes/edit/:recipeId`,
-        link: "/recipes/edit",
-
-      },
-      {
-        icon: <ServerStackIcon {...icon} />,
-
-        name: "recipes valorate",
-        path: `/dashboard/recipes/valorate/:recipeId`,
-        link: "/recipes/valorate",
-
+        path: "/ingredient",
+        actual: "ingredients.index",
       },
     ],
   },

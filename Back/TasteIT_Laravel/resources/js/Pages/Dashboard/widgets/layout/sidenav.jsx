@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { Link, NavLink } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   Avatar,
@@ -8,7 +7,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useMaterialTailwindController, setOpenSidenav } from "../../context";
-import { Link as Prueba } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 
 export function Sidenav({ brandImg, brandName, routes, user }) {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -28,7 +27,7 @@ export function Sidenav({ brandImg, brandName, routes, user }) {
       <div
         className={`relative`}
       >
-        <Link to="/" className="py-6 px-8 text-center">
+        <Link href="/" className="py-6 px-8 text-center">
           <Typography
             variant="h6"
             color={sidenavType === "dark" ? "white" : "blue-gray"}
@@ -49,7 +48,7 @@ export function Sidenav({ brandImg, brandName, routes, user }) {
       </div>
       <div className="m-4">
         {routes
-          .filter(({ show, admin }) => show === 'yes' && (user.type === 'admin' ? admin === 'yes' : admin === 'no'))
+          .filter(({ admin }) => (user.type === 'admin' ? admin === 'yes' : admin === 'no'))
           .map(({ layout, title, pages }, key) => (
           <ul key={key} className="mb-4 flex flex-col gap-1">
             {title && (
@@ -63,15 +62,14 @@ export function Sidenav({ brandImg, brandName, routes, user }) {
                 </Typography>
               </li>
             )}
-            {pages.map(({ icon, name, link }) => (
+            {pages.map(({ icon, name, path, actual }) => (
               <li key={name}>
-                {/*<NavLink to={`/${layout}${path}`}>*/}
-                <Prueba href={`/${layout}${link}`}>
+                <Link href={`/${layout}${path}`}>
 
                     <Button
-                      variant={route().current('prueba') ? "gradient" : "text"}
+                      variant={route().current(actual) ? "gradient" : "text"}
                       color={
-                        route().current('prueba')
+                        route().current(actual)
                           ? sidenavColor
                           : sidenavType === "dark"
                           ? "white"
@@ -89,7 +87,7 @@ export function Sidenav({ brandImg, brandName, routes, user }) {
                       </Typography>
                     </Button>
   
-                </Prueba>
+                </Link>
               </li>
             ))}
 
