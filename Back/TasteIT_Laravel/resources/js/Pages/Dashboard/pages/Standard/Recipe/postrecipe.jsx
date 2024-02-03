@@ -24,26 +24,29 @@ import { platformSettingsData, conversationsData, projectsData } from "../../../
 import MainTitle from "@/Components/MainTitle";
 import CreatePost from "../../../widgets/postRecipe/CreatePost";
 import "../../../../../../../public/assets/css/test.css"
+import { Dashboard } from "@/Pages/Dashboard/layouts";
 
 export function PostRecipe({auth}) {
   return (
     <>
+      <Dashboard auth={auth}>
 
-      <div className="mt-12 mb-8 flex flex-col gap-12">
+        <div className="mt-12 mb-8 flex flex-col gap-12">
 
-        <Card>
-          <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
-              <Typography variant="h6" color="white">
-                  Post Recipe<br></br>
-              </Typography>
-          </CardHeader>
+          <Card>
+            <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
+                <Typography variant="h6" color="white">
+                    Post Recipe<br></br>
+                </Typography>
+            </CardHeader>
 
-          <CardBody className="p-4">
-            <CreatePost auth={auth}/>
-          </CardBody>
-        </Card>
+            <CardBody className="p-4">
+              <CreatePost auth={auth}/>
+            </CardBody>
+          </Card>
 
-      </div>
+        </div>
+      </Dashboard>
     </>
   );
 }

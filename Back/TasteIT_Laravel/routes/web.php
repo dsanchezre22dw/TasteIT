@@ -37,10 +37,10 @@ Route::get('/', function () {
 
 Route::prefix('dashboard')->group(function () {
     Route::get('/home', [UserController::class, 'index']);
-    Route::get('/profile', [UserController::class, 'prueba'])->name('users.profile'); 
+    Route::get('/profile', [UserController::class, 'profile'])->name('users.profile'); 
     Route::get('/tables', [UserController::class, 'index']);
     Route::get('/notifications', [UserController::class, 'index']);
-    Route::get('/prueba', [UserController::class, 'prueba']);
+    Route::get('/prueba', [UserController::class, 'prueba'])->name('prueba');
 
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index'); 
@@ -52,11 +52,12 @@ Route::prefix('dashboard')->group(function () {
     });
 
     Route::prefix('recipes')->group(function () {
-        Route::get('/', [RecipeController::class, 'index'])->name('recipes.index'); 
+        Route::get('/', [RecipeController::class, 'prueba'])->name('recipes.index'); 
+        Route::get('/{id}', [RecipeController::class, 'show'])->name('recipes.show');
         Route::delete('/delete/{id}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); 
         Route::get('/edit/{id}', [RecipeController::class, 'edit'])->name('recipes.edit'); 
         Route::post('/edit/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
-        Route::get('/add', [RecipeController::class, 'show'])->name('recipes.show');  
+        Route::get('/create', [RecipeController::class, 'create'])->name('recipes.create');  
         Route::post('/add', [RecipeController::class, 'store'])->name('recipes.add'); 
         Route::post('/save', [RecipeController::class, 'save'])->name('recipes.save'); 
         Route::get('/valorate/{id}', [RecipeController::class, 'showValorate'])->name('recipes.showValorate');

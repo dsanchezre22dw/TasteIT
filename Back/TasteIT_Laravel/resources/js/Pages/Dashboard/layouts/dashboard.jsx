@@ -14,7 +14,7 @@ import PostRecipe from "../pages/Standard/Recipe/postrecipe";
 import { useEffect } from 'react';
 import RecipesIndex from '../pages/Standard/Recipe/indexrecipe';
 
-export function Dashboard({ auth, users, user, recipes, shoppingList, fridge, ingredients, ingredient}) {
+export function Dashboard({ auth, children}) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
 
@@ -40,6 +40,7 @@ export function Dashboard({ auth, users, user, recipes, shoppingList, fridge, in
         >
           <Cog6ToothIcon className="h-5 w-5" />
         </IconButton>
+        {children}
         <div className="text-blue-gray-600">
           <Footer />
         </div>

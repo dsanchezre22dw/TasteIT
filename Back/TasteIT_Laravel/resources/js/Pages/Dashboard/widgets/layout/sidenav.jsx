@@ -63,15 +63,15 @@ export function Sidenav({ brandImg, brandName, routes, user }) {
                 </Typography>
               </li>
             )}
-            {pages.map(({ icon, name, route }) => (
+            {pages.map(({ icon, name, link }) => (
               <li key={name}>
                 {/*<NavLink to={`/${layout}${path}`}>*/}
-                <NavLink to={`/${layout}${route}`}>
-                  {({ isActive }) => (
+                <Prueba href={`/${layout}${link}`}>
+
                     <Button
-                      variant={isActive ? "gradient" : "text"}
+                      variant={route().current('prueba') ? "gradient" : "text"}
                       color={
-                        isActive
+                        route().current('prueba')
                           ? sidenavColor
                           : sidenavType === "dark"
                           ? "white"
@@ -88,13 +88,11 @@ export function Sidenav({ brandImg, brandName, routes, user }) {
                         {name}
                       </Typography>
                     </Button>
-                  )}
-                </NavLink>
+  
+                </Prueba>
               </li>
             ))}
-          <Prueba href='/dashboard/prueba'>
-            <Button variant="gradient">PRUEBA</Button>
-          </Prueba>
+
           </ul>
         ))}
       </div>

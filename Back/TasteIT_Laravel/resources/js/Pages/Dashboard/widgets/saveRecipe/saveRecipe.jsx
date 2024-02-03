@@ -22,7 +22,12 @@ import {
 import ClockIcon from '@/Components/ClockIcon';
 import StarIcon from '@/Components/StarIcon';
 
-function SaveRecipe({ data, setData, post, width}) {
+function SaveRecipe({savedRecipesIds, recipe_id, width}) {
+
+  const { data, setData, post, processing, errors, reset, recentlySuccessful} = useForm({
+    saved: savedRecipesIds.includes(recipe_id),
+    recipe_id: recipe_id,
+  });
 
   const save = (event) => {
     event.preventDefault();

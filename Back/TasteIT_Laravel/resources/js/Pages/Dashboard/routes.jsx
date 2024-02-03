@@ -39,29 +39,25 @@ export const routes = [
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
         path: `/dashboard/profile`,
-        route: "/profile",
-        element: <Profile />,
+        link: "/profile",
       },
       {
         icon: <InformationCircleIcon {...icon} />,
         name: "users",
         path: `/dashboard/users`,
-        route: "/users",
-        element: <UsersIndex />,
+        link: "/users",
       },
       {
         icon: <AcademicCapIcon {...icon} />,
         name: "recipes",
         path: `/dashboard/recipes`,
-        route: "/recipes",
-        element: <RecipesIndex />,
+        link: "/recipes",
       },
       {
         icon: <AcademicCapIcon {...icon} />,
         name: "ingredients",
         path: `/dashboard/ingredients`,
-        route: "/ingredients",
-        element: <AcceptIngredient />,
+        link: "/ingredients",
       },
     ],
   },
@@ -75,8 +71,7 @@ export const routes = [
 
         name: "users edit",
         path: `/dashboard/users/edit/:userId`,
-        route: "/users/edit",
-        element: <UsersEdit />,
+        link: "/users/edit",
 
       },
       {
@@ -84,8 +79,7 @@ export const routes = [
 
         name: "ingredients edit",
         path: `/dashboard/ingredients/edit/:ingredientId`,
-        route: "/ingredients/edit",
-        element: <IngredientsEdit />,
+        link: "/ingredients/edit",
 
       },
       {
@@ -93,8 +87,7 @@ export const routes = [
 
         name: "users add",
         path: `/dashboard/users/add`,
-        route: "/users/add",
-        element: <UsersAdd />,
+        link: "/users/add",
       },
     ],
 
@@ -108,36 +101,31 @@ export const routes = [
         icon: <AcademicCapIcon {...icon} />,
         name: "recipes",
         path: `/dashboard/recipes`,
-        route: "/recipes",
-        element: <RecipesIndex />,
+        link: "/recipes",
       },
       {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
         path: `/dashboard/profile`,
-        route: "/profile",
-        element: <Profile />,
+        link: "/profile",
       },
       {
         icon: <ShoppingCartIcon {...icon} />,
         name: "shopping",
         path: `/dashboard/shopping`,
-        route: "/shopping",
-        element: <ShoppingList />,
+        link: "/shopping",
       },
       {
         icon: <ShoppingCartIcon {...icon} />,
         name: "fridge",
         path: `/dashboard/fridge`,
-        route: "/fridge",
-        element: <Fridge />,
+        link: "/fridge",
       },
       {
         icon: <AcademicCapIcon {...icon} />,
         name: "ingredient",
         path: `/dashboard/ingredient`,
-        route: "/ingredient",
-        element: <CreateIngredients />,
+        link: "/ingredient",
       },
     ],
   },
@@ -150,16 +138,14 @@ export const routes = [
         icon: <AcademicCapIcon {...icon} />,
         name: "recipes add",
         path: `/dashboard/recipes/add`,
-        route: "/recipes/add",
-        element: <PostRecipe />,
+        link: "/recipes/add",
       },
       {
         icon: <ServerStackIcon {...icon} />,
 
         name: "recipes see",
         path: `/dashboard/recipes/:recipeId`,
-        route: "/recipes",
-        element: <SeeRecipe />,
+        link: "/recipes",
 
       },
       {
@@ -167,8 +153,7 @@ export const routes = [
 
         name: "recipes edit",
         path: `/dashboard/recipes/edit/:recipeId`,
-        route: "/recipes/edit",
-        element: <RecipesEdit />,
+        link: "/recipes/edit",
 
       },
       {
@@ -176,8 +161,7 @@ export const routes = [
 
         name: "recipes valorate",
         path: `/dashboard/recipes/valorate/:recipeId`,
-        route: "/recipes/valorate",
-        element: <ValorateRecipe />,
+        link: "/recipes/valorate",
 
       },
     ],

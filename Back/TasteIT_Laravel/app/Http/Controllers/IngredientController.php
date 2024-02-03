@@ -29,7 +29,7 @@ class IngredientController extends Controller
             return $recipe;
         });
 
-        return Inertia::render('Dashboard/layouts/dashboard', [
+        return Inertia::render('Dashboard/pages/Standard/Ingredients/CreateIngredients', [
             'ingredients' => $ingredients,
             'users' => $users,
             'recipes' => $recipesWithTypesAndAvgValorations,

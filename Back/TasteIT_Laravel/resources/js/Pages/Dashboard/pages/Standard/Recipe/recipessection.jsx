@@ -20,7 +20,7 @@ import {
   PencilIcon,
   TrashIcon
 } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
+import { Link } from "@inertiajs/react";
 import { ProfileInfoCard, MessageCard } from "../../../widgets/cards";
 import { platformSettingsData, conversationsData, projectsData } from "../../../data";
 import StarIcon from "../../../../../../../resources/js/Components/StarIcon";
@@ -46,11 +46,11 @@ export function RecipesSection({recipesToShow, show}) {
 
 
           {show === true ? (
-            <Link to={'/dashboard/recipes'} className="ml-10">
+            <Link href={'/dashboard/recipes'} className="ml-10">
               <Button variant="gradient">See Recipes</Button>
             </Link>
           ) : (
-            <Link to={'/dashboard/recipes/add'} className="ml-10">
+            <Link href={'/dashboard/recipes/create'} className="ml-10">
               <Button variant="gradient">Add Recipe</Button>
             </Link>
           )}

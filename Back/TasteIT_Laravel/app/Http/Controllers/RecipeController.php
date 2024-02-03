@@ -20,7 +20,6 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $users = User::with(['saves'])->get();
         $recipes = Recipe::with(['recipe_types', 'valorations', 'ingredients', 'user'])->get();
     
         $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
@@ -35,9 +34,26 @@ class RecipeController extends Controller
             return $recipe;
         });
     
-        return Inertia::render('Dashboard/layouts/dashboard', [
-            'users' => $users,
+        return Inertia::render('Dashboard/pages/Standard/Recipe/indexrecipe', [
+            'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipes' => $recipesWithTypesAndAvgValorations,
+        ]);
+    }
+
+        /**
+     * Display the specified resource.
+     */
+    public function show(Recipe $recipe, $recipeId)
+    {
+        
+        $recipe = Recipe::with(['recipe_types', 'valorations', 'ingredients', 'user'])->findOrFail($recipeId);
+
+        $recipe->avg_valoration = number_format($recipe->valorations->avg('pivot.valoration'), 2);
+        $recipe->amount_valorations = $recipe->valorations->count();;
+    
+        return Inertia::render('Dashboard/pages/Standard/Recipe/seerecipe', [
+            'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
+            'recipe' => $recipe,
         ]);
     }
     
@@ -46,7 +62,7 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -94,12 +110,16 @@ class RecipeController extends Controller
 
         $user->save();
 
-        return redirect()->route("users.profile");
     }
 
-    public function showValorate(Request $request)
+    public function showValorate(Request $request, $recipeId)
     {
-        return Inertia::render('Dashboard/layouts/dashboard');
+        
+        $recipe = Recipe::with(['user'])->findOrFail($recipeId);
+    
+        return Inertia::render('Dashboard/pages/Standard/Recipe/valoraterecipe', [
+            'recipe' => $recipe,
+        ]);
     }
 
 
@@ -127,23 +147,14 @@ class RecipeController extends Controller
 
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Recipe $recipe)
-    {
-        return Inertia::render('Dashboard/layouts/dashboard');
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($recipeId)
     {
-        $recipe = \App\Models\Recipe::findOrFail($id);
-        $recipes = Recipe::all();
-        return Inertia::render('Dashboard/layouts/dashboard', [
+        $recipe = Recipe::with(['recipe_types', 'valorations', 'ingredients', 'user'])->findOrFail($recipeId);
+
+        return Inertia::render('Dashboard/pages/Standard/Recipe/editrecipe', [
             'recipe' => $recipe,
-            'recipes' => $recipes,
         ]);
     }
 
@@ -163,5 +174,12 @@ class RecipeController extends Controller
         $recipe = Recipe::findOrFail($id);
         $recipe->delete();
         return redirect()->back();
+    }
+
+    public function prueba()
+    {
+
+        return Inertia::render('Profile/Edit', [
+        ]);
     }
 }

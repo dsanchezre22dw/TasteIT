@@ -30,15 +30,13 @@ import StarIcon from "@/Components/StarIcon";
 import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
 import RecipesSection from "../../pages/Standard/Recipe/recipessection";
 
-export function SavedRecipes({ auth, recipes, user, users }) {
-
-  const actualUser = users.find(user => user.id === parseInt(auth.user.id));
-  const myRecipes = actualUser.saves;
-  const savedRecipes = recipes.filter(recipe => myRecipes.some(savedRecipe => savedRecipe.id === recipe.id));
+export function SavedRecipes({ auth, recipes, savedRecipesIds }) {
+  
+  const savedRecipes = recipes.filter(recipe => savedRecipesIds.includes(recipe.id));
 
   const renderRecipes = savedRecipes
   .map((recipe) => (
-    <RecipeCard key={recipe.id} auth={auth} recipe={recipe} />
+    <RecipeCard key={recipe.id} auth={auth} savedRecipesIds={savedRecipesIds} recipe={recipe}/>
   ));
   
   return (

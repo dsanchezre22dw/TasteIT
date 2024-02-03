@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Fridge;
@@ -36,6 +37,25 @@ class UserController extends Controller
             'recipes' => $recipesWithTypesAndAvgValorations,
         ]);
     }
+
+    public function profile()
+    {
+        $recipes = Recipe::with(['recipe_types', 'valorations', 'user'])->get();
+    
+        $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
+            $avgValoration = $recipe->valorations->avg('pivot.valoration');
+            $avgValoration = number_format($avgValoration, 2);
+            $recipe->avg_valoration = $avgValoration;
+    
+            return $recipe;
+        });
+
+        return Inertia::render('Dashboard/pages/Standard/Profile/profile', [
+            'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
+            'recipes' => $recipesWithTypesAndAvgValorations,
+        ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -170,7 +190,7 @@ class UserController extends Controller
     public function prueba()
     {
 
-        return Inertia::render('Dashboard/pages/Prueba', [
+        return Inertia::render('Profile/Edit', [
         ]);
     }
 }

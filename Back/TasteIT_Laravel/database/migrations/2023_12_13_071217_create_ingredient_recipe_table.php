@@ -17,6 +17,8 @@ return new class extends Migration
             $table->integer('amount');
 
             $table->timestamps();
+
+            $table->unique(['recipe_id', 'ingredient_id']);
         });
     }
 

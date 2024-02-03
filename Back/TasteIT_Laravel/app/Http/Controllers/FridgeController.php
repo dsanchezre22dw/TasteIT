@@ -34,7 +34,7 @@ class FridgeController extends Controller
             return $recipe;
         });
     
-        return Inertia::render('Dashboard/layouts/dashboard', [
+        return Inertia::render('Dashboard/pages/Standard/Fridge/fridge', [
             'fridge' => $fridge,
             'shoppingList' => $shopping_list,
             'users' => $users,
