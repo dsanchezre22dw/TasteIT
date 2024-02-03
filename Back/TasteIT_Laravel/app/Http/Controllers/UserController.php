@@ -22,19 +22,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with(['saves'])->get();
-        $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
-    
-        $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
-            $avgValoration = $recipe->valorations->avg('pivot.valoration');
-            $avgValoration = number_format($avgValoration, 2);
-            $recipe->avg_valoration = $avgValoration;
-    
-            return $recipe;
-        });
 
-        return Inertia::render('Dashboard/layouts/dashboard', [
+
+        return Inertia::render('Dashboard/pages/Admin/Users/indexuser', [
             'users' => $users,
-            'recipes' => $recipesWithTypesAndAvgValorations,
         ]);
     }
 
@@ -60,9 +51,13 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(User $user)
     {
-        //
+        $users = User::all();
+
+        return Inertia::render('Dashboard/pages/Admin/Users/adduser', [
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -95,15 +90,6 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        $users = User::all();
-        return Inertia::render('Dashboard/layouts/dashboard', [
-            'users' => $users,
-        ]);    }
 
     /**
      * Show the form for editing the specified resource.
@@ -111,10 +97,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = \App\Models\User::findOrFail($id);
-        $users = User::all();
-        return Inertia::render('Dashboard/layouts/dashboard', [
+        return Inertia::render('Dashboard/pages/Admin/Users/edituser', [
             'user' => $user,
-            'users' => $users,
         ]);
     }
 
@@ -128,8 +112,8 @@ class UserController extends Controller
         $request->validate([
             'firstname' => 'required|string|max:50',
             'surname' => 'nullable|string|max:100',
-            'username' => 'required|string|max:50|unique:'.User::class,
-            'email' => 'required|lowercase|email|max:100|unique:'.User::class,
+            'username' => 'required|string|max:50|unique:'.User::class.',username,'.$id,
+            'email' => 'required|lowercase|email|max:100|unique:'.User::class.',email,'.$id,
             'enabled' => 'required|boolean',
             'usertype' => 'required|in:admin,standard,chef',
         ]);

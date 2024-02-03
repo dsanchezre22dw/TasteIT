@@ -47,18 +47,19 @@ Route::prefix('dashboard')->group(function () {
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy'); 
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit'); 
         Route::post('/edit/{id}', [UserController::class, 'update'])->name('users.update');
-        Route::get('/add', [UserController::class, 'show'])->name('users.show');  
-        Route::post('/add', [UserController::class, 'store'])->name('users.add'); 
+        Route::get('/create', [UserController::class, 'create'])->name('users.create');  
+        Route::post('/store', [UserController::class, 'store'])->name('users.store'); 
     });
 
     Route::prefix('recipes')->group(function () {
-        Route::get('/', [RecipeController::class, 'prueba'])->name('recipes.index'); 
+        Route::get('/', [RecipeController::class, 'index'])->name('recipes.index'); 
+        Route::get('/create', [RecipeController::class, 'create'])->name('recipes.create'); 
         Route::get('/{id}', [RecipeController::class, 'show'])->name('recipes.show');
         Route::delete('/delete/{id}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); 
         Route::get('/edit/{id}', [RecipeController::class, 'edit'])->name('recipes.edit'); 
         Route::post('/edit/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
-        Route::get('/create', [RecipeController::class, 'create'])->name('recipes.create');  
-        Route::post('/add', [RecipeController::class, 'store'])->name('recipes.add'); 
+        Route::get('/prueba', [RecipeController::class, 'index'])->name('recipes.prueba');  
+        Route::post('/store', [RecipeController::class, 'store'])->name('recipes.store'); 
         Route::post('/save', [RecipeController::class, 'save'])->name('recipes.save'); 
         Route::get('/valorate/{id}', [RecipeController::class, 'showValorate'])->name('recipes.showValorate');
         Route::post('/valorate/{id}', [RecipeController::class, 'valorate'])->name('recipes.valorate'); 

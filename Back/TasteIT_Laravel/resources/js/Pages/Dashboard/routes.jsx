@@ -137,8 +137,8 @@ export const routes = [
       {
         icon: <AcademicCapIcon {...icon} />,
         name: "recipes add",
-        path: `/dashboard/recipes/add`,
-        link: "/recipes/add",
+        path: `/dashboard/recipes/store`,
+        link: "/recipes/store",
       },
       {
         icon: <ServerStackIcon {...icon} />,

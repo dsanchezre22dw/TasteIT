@@ -62,7 +62,8 @@ class RecipeController extends Controller
      */
     public function create()
     {
-
+        return Inertia::render('Dashboard/pages/Standard/Recipe/postrecipe', [
+        ]);
     }
 
     /**
@@ -178,7 +179,6 @@ class RecipeController extends Controller
 
     public function prueba()
     {
-
         return Inertia::render('Profile/Edit', [
         ]);
     }
