@@ -41,11 +41,16 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
   const { difficultyColor, difficultyText } = getDifficultyColorAndText(recipe.difficulty);
 
   const [description, setDesciption] = useState(recipe.description);
-  const [lang, setLang] = useState('en');
+  const [lang, setLang] = useState(localStorage.getItem('preferredLang')??'en');
 
   var http
 
   useEffect (() => {
+
+    if (lang != 'en') {
+      getTranslated(lang,'en');
+    }
+    
     getLanguages();
 
   },[])
@@ -96,13 +101,14 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
   function handleLang(e){
 
     setLang(e.target.value);
+    localStorage.setItem('preferredLang',e.target.value);
     
     getTranslated(e.target.value)
   }
 
-  function getTranslated(newLang) {
+  function getTranslated(newLang, baseLang = lang) {
 
-    const data = `q=${description}&target=${newLang}&source=${lang}`;
+    const data = `q=${description}&target=${newLang}&source=${baseLang}`;
 
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
