@@ -80,6 +80,10 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
 
         option.value = language.language;
         option.textContent = language.language;
+        if (language.language == lang) {
+          option.selected = true;
+        }
+        
 
         select.append(option);
       });
@@ -93,25 +97,22 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
 
     setLang(e.target.value);
     
-    getTranslated()
+    getTranslated(e.target.value)
   }
 
-  function getTranslated() {
+  function getTranslated(newLang) {
 
-    const data = `q=${description}&target=${lang}&source=en`;
+    const data = `q=${description}&target=${newLang}&source=${lang}`;
 
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
     xhr.addEventListener('readystatechange', function () {
       if (this.readyState === this.DONE) {
-        console.log(this.responseText);
 
-        let translated = JSON.parse(this.responseText).data.translations.translatedText;
+        let translated = JSON.parse(this.responseText).data.translations[0].translatedText;
 
-        console.log(translated);
-
-        setDesciption();
+        setDesciption(translated);
       }
     });
 
