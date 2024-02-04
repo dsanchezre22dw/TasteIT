@@ -13,6 +13,7 @@ import {
   Switch,
   Tooltip,
   Button,
+  select,
 } from "@material-tailwind/react";
 
 import {
@@ -38,6 +39,95 @@ import { getDifficultyColorAndText } from '../../../../../../../public/assets/js
 export function SeeRecipe({auth, recipe, savedRecipesIds}) { 
 
   const { difficultyColor, difficultyText } = getDifficultyColorAndText(recipe.difficulty);
+
+  const [description, setDesciption] = useState(recipe.description);
+  const [lang, setLang] = useState('en');
+
+  var http
+
+  useEffect (() => {
+    getLanguages();
+
+  },[])
+
+  function getLanguages() {
+
+    http = new XMLHttpRequest();
+    http.withCredentials = true;
+
+    http.addEventListener('readystatechange', showLanguages);
+
+    let url = 'https://google-translate1.p.rapidapi.com/language/translate/v2/languages'
+
+    http.open('GET', url);
+
+    http.setRequestHeader('X-RapidAPI-Key', 'f352493104msh7915e36f6ca17bdp119e28jsnc63eb77a9a83');
+    http.setRequestHeader('X-RapidAPI-Host', 'google-translate1.p.rapidapi.com');
+
+    http.send(null);
+  }
+
+  function showLanguages(){
+    if (http.readyState === http.DONE) {
+
+      let select = document.getElementById('langs');
+
+      let languages = JSON.parse(http.responseText).data.languages;
+      console.log(languages);
+
+      languages.forEach(language => {
+        let option = document.createElement('option');
+
+        option.value = language.language;
+        option.textContent = language.language;
+
+        select.append(option);
+      });
+
+
+    }
+
+  }
+
+  function handleLang(e){
+
+    setLang(e.target.value);
+    
+    getTranslated()
+  }
+
+  function getTranslated() {
+
+    const data = `q=${description}&target=${lang}&source=en`;
+
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener('readystatechange', function () {
+      if (this.readyState === this.DONE) {
+        console.log(this.responseText);
+
+        let translated = JSON.parse(this.responseText).data.translations.translatedText;
+
+        console.log(translated);
+
+        setDesciption();
+      }
+    });
+
+    let url = 'https://google-translate1.p.rapidapi.com/language/translate/v2';
+
+    xhr.open('POST', url);
+
+    xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('X-RapidAPI-Key', 'f352493104msh7915e36f6ca17bdp119e28jsnc63eb77a9a83');
+    xhr.setRequestHeader('X-RapidAPI-Host', 'google-translate1.p.rapidapi.com');
+
+    xhr.send(data);
+  }
+
+
+
 
   return (
     <>
@@ -161,7 +251,11 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
                 How to prepare
               </Typography>
 
-              {recipe.description}
+              {description}
+
+              <br />
+              <label htmlFor="langs"> Description language: </label>
+              <select name="langs" id="langs" value={lang} onChange={(e) => handleLang(e)}></select>
 
             </div>
 
