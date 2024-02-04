@@ -71,6 +71,20 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'duration_mins' => 'required|numeric',
+            'difficulty' => 'required|in:beginner,medium,expert',
+            'description' => 'required|string|max:1024',
+            'user_id' => 'required|numeric',
+            'amount' => 'required|array|min:1',
+            'image' => 'required|image'
+        ],[
+            'amount.required' => 'Please add at least one ingredient.',
+            'image.image' => 'The file must be an image.'
+        ]);
+
         $recipe = new Recipe;
 
         $recipe->title = $request->title;
