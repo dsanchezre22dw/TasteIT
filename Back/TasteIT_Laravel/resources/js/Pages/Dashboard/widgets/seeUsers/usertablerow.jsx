@@ -12,9 +12,11 @@ const UserTableRow = ({ id, username, email, type, enabled, handleDelete }) => {
         <div className="flex items-center gap-4">
           <Avatar src="/img/team-2.jpeg" alt={username} size="sm" variant="rounded" />
           <div>
-            <Typography variant="small" color="blue-gray" className="font-semibold">
-              {username}
-            </Typography>
+            <Link href={`/dashboard/users/${id}`}>
+              <Typography variant="small" color="blue-gray" className="font-semibold">
+                {username}
+              </Typography>
+            </Link>
             <Typography className="text-xs font-normal text-blue-gray-500">{email}</Typography>
           </div>
         </div>

@@ -22,28 +22,28 @@ import {
 import ClockIcon from '@/Components/ClockIcon';
 import StarIcon from '@/Components/StarIcon';
 
-function SaveRecipe({savedRecipesIds, recipe_id, width}) {
+function BlockUser({blocked, follower_id, width}) {
 
   const { data, setData, post, processing, errors, reset, recentlySuccessful} = useForm({
-    saved: savedRecipesIds.includes(recipe_id),
+    blocked: blocked,
   });
 
   const save = (event) => {
     event.preventDefault();
-    setData("saved", !data.saved);
-    post(`/dashboard/recipes/save/${recipe_id}`);
+    setData("blocked", !data.blocked);
+    post(`/dashboard/users/block/${follower_id}`);
   };
 
 
   return (
     <button type="button" className="flex items-center" onClick={save}>
       <img
-        src={data.saved ? "/assets/img/saved.png" : "/assets/img/unsaved.png"}
-        alt="Guardar/No guardar"
+        src={data.blocked ? "/assets/img/unblock.png" : "/assets/img/block.png"}
+        alt="Block/unblock"
         width={width}
       />
     </button>
   );
 }
 
-export default SaveRecipe;
+export default BlockUser;

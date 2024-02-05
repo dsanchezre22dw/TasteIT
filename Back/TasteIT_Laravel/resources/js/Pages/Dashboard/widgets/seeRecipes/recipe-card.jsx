@@ -55,9 +55,11 @@ function RecipeCard({ auth, savedRecipesIds, recipe }) {
       </CardHeader>
       <CardBody className="py-0 px-1">
         <div className="flex flex-row justify-between ">
-          <Typography variant="h5" color="blue-gray" className="mt-1 mb-2 ml-2">
-            {title}
-          </Typography>
+          <Link href={`/dashboard/recipes/${id}`}>
+            <Typography variant="h5" color="blue-gray" className="mt-1 mb-2 ml-2">
+              {title}
+            </Typography>
+          </Link>
 
           { (auth.user.type !== "admin" && recipe.user.id !== auth.user.id) && (
             <SaveRecipe savedRecipesIds={savedRecipesIds} recipe_id={id} width={24}/>

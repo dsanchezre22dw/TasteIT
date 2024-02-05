@@ -21,6 +21,8 @@ return new class extends Migration
 
             $table->unique(['followed_id', 'follower_id']);
 
+            $table->boolean('blocked')->default(false);
+
             $table->timestamps();
         });
     }

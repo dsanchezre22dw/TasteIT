@@ -35,6 +35,7 @@ class RecipeController extends Controller
         });
     
         return Inertia::render('Dashboard/pages/Standard/Recipe/indexrecipe', [
+            'user' => \App\Models\User::with(['followers', 'following'])->findOrFail(Auth::id()),
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipes' => $recipesWithTypesAndAvgValorations,
         ]);
@@ -99,18 +100,17 @@ class RecipeController extends Controller
         return redirect()->route('recipes.index');
     }
 
-    public function save(Request $request)
+    public function save(Request $request, $recipe_id)
     {
         $user = Auth::user();
 
         if (!$request->saved){
-            $user->saves()->attach($request->recipe_id);
+            $user->saves()->attach($recipe_id);
         }else{
-            $user->saves()->detach($request->recipe_id);
+            $user->saves()->detach($recipe_id);
         }
 
         $user->save();
-
     }
 
     public function showValorate(Request $request, $recipeId)

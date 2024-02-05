@@ -21,10 +21,12 @@ import {
 import { Link } from "react-router-dom";
 import { ProfileInfoCard, MessageCard } from "../../widgets/cards";
 import { platformSettingsData, conversationsData, projectsData } from "../../data";
+import { Dashboard } from "@/Pages/Dashboard/layouts";
 
 export function Profilee({auth}) {
   return (
     <>
+      <Dashboard auth={auth}>
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
         <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
       </div>
@@ -70,7 +72,7 @@ export function Profilee({auth}) {
               </Tabs>
             </div>
           </div>
-          <div className="gird-cols-1 mb-12 grid gap-12 px-4 lg:grid-cols-2 xl:grid-cols-3">
+          <div className="grid-cols-1 mb-12 grid gap-12 px-4 lg:grid-cols-2 xl:grid-cols-3">
             <div>
               <Typography variant="h6" color="blue-gray" className="mb-3">
                 Platform Settings
@@ -214,6 +216,7 @@ export function Profilee({auth}) {
           </div>
         </CardBody>
       </Card>
+      </Dashboard>
     </>
   );
 }
