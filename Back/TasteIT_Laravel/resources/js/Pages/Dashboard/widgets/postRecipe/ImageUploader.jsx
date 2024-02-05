@@ -22,7 +22,7 @@ export default function ImageUploader({data, setData, errors, image}) {
 
         imageUploader.addEventListener('click', () => uploadInput.click());
         uploadInput.addEventListener('change', handleFileSelect);
-        //imagePreview.addEventListener('click', () => uploadInput.click());
+        imagePreview.addEventListener('click', () => uploadInput.click());
 
     },[]) 
     useEffect( () => {
@@ -34,7 +34,6 @@ export default function ImageUploader({data, setData, errors, image}) {
 
     function handleFileSelect(event) {
         const fileList = event.target.files;
-        console.log('archivos:', fileList)
 
         if (fileList.length > 0) {
             const file = fileList[0];
@@ -54,8 +53,6 @@ export default function ImageUploader({data, setData, errors, image}) {
             uploadInput.style.display = 'none';
             uploadError.style.display = 'none';
 
-            
-            console.log('Archivo seleccionado:', file);
             setData('image',file);
 
         }
@@ -64,13 +61,7 @@ export default function ImageUploader({data, setData, errors, image}) {
     function handleFileSelected(filePath) {
         // Verifica que la ruta del archivo no esté vacía
         if (filePath.trim() !== '') {
-            // Construye la ruta completa del archivo considerando la ruta base de la aplicación React
-            const baseUrl = 'http://localhost:8000'; // Ruta base real de tu aplicación
-            const fullPath = baseUrl + filePath;
-    
-            // Crea un objeto File a partir de la ruta del archivo
-            const file = new File([fullPath], fullPath.split('/').pop());
-    
+
             // Muestra la imagen seleccionada
             imagePreview.src = filePath;
             imagePreview.style.display = 'block';
@@ -80,11 +71,7 @@ export default function ImageUploader({data, setData, errors, image}) {
             uploadText.style.display = 'none';
             uploadInput.style.display = 'none';
             uploadError.style.display = 'none';
-    
-            console.log('Archivo seleccionado:', file);
-            setData('image', file);
-        } else {
-            console.error('La ruta del archivo está vacía.');
+
         }
     }
     
@@ -97,7 +84,7 @@ export default function ImageUploader({data, setData, errors, image}) {
     return (
         <span id="image-uploader" className="m-6 w-96 md:w-[500px] h-96 md:h-[500px]">
 
-            <input type="file" id="upload-input" accept="image/*" name="image" defaultValue={data.image} required/>
+            <input type="file" id="upload-input" accept="image/*" name="image" defaultValue={data.image} required={image? false : true}/>
             
             <svg id="upload-icon" className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>

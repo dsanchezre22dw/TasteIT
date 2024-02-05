@@ -20,9 +20,14 @@ export default function CreatePost( {auth, recipe=""} ) {
         user_id: auth.user.id
     });
 
+    var url = '/dashboard/recipes/store';
+
     useEffect( () => {
 
         if(recipe != ""){
+
+            url = `/dashboard/recipes/update/${recipe.id}`;
+
             let obj = {}
 
             recipe.ingredients.forEach(ingredient => {
@@ -32,13 +37,13 @@ export default function CreatePost( {auth, recipe=""} ) {
             setData('amount', obj);
         }
 
-    },[])
+    },[data.image])
 
 
     const submit = (e) => {
         e.preventDefault();
 
-        post('/dashboard/recipes/store');
+        post(`/dashboard/recipes/update/${recipe.id}`);
     };
 
     return (

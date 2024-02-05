@@ -179,9 +179,52 @@ class RecipeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRecipeRequest $request, Recipe $recipe)
+    public function update(Request $request, $recipeID)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'duration_mins' => 'required|numeric',
+            'difficulty' => 'required|in:beginner,medium,expert',
+            'description' => 'required|string|max:1024',
+            'user_id' => 'required|numeric',
+            'amount' => 'required|array|min:1',
+            'image' => 'nullable|image'
+        ],[
+            'amount.required' => 'Please add at least one ingredient.',
+            'image.image' => 'The file must be an image.'
+        ]);
+        $recipe = Recipe::find($recipeID);
+
+        $recipe->title = $request->title;
+        $recipe->duration_mins = $request->duration_mins;
+        $recipe->difficulty = $request->difficulty;
+        $recipe->description = $request->description;
+        $recipe->user_id = $request->user_id;
+        
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = 'assets/img/recipes';
+
+            $imageName = time() . '.' . $file->getClientOriginalExtension();
+
+            // Guardar la imagen en la carpeta 'public/img'
+            $file->move(public_path('assets/img/recipes'), $imageName);
+
+            $recipe->image = "/".$path."/".$imageName;
+
+            
+        }
+        $recipe->save();
+
+        $recipe->ingredients()->detach();
+
+        foreach ($request->amount as $ingredient => $amount) {
+            $ing = Ingredient::where('name','like',$ingredient)->first();
+
+            $recipe->ingredients()->attach($ing, ['amount' => $amount]);
+        }
+
+        return redirect()->route('recipes.show',$recipeID);
     }
 
     /**

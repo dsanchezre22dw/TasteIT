@@ -71,7 +71,7 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/{id}', [RecipeController::class, 'show'])->name('recipes.show');
         Route::delete('/delete/{id}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); 
         Route::get('/edit/{id}', [RecipeController::class, 'edit'])->name('recipes.edit'); 
-        Route::post('/edit/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
+        Route::post('/update/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
         Route::get('/prueba', [RecipeController::class, 'index'])->name('recipes.prueba');  
         Route::post('/store', [RecipeController::class, 'store'])->name('recipes.store'); 
         Route::post('/save/{id}', [RecipeController::class, 'save'])->name('recipes.save'); 
