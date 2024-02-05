@@ -43,6 +43,16 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
   const [description, setDesciption] = useState(recipe.description);
   const [lang, setLang] = useState(localStorage.getItem('preferredLang')??'en');
 
+  const form = useForm({
+    ingredientId: '',
+    amount: ''
+  });
+
+  const { data, setData, post} = useForm({
+    ingredientId: '',
+    amount: ''
+});
+
   var http
 
   useEffect (() => {
@@ -134,7 +144,13 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
   }
 
 
+  function handleAddShopping(id, amount) {
+    setData('ingredientId',id);
+    setData('amount',amount);
 
+    post(`/dashboard/shopping/add`);
+    
+  }
 
   return (
     <>
@@ -238,8 +254,9 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
                 {recipe.ingredients.map((ingredient) => (
                   
                     <div className="flex ml-1" key={ingredient.id}>
-                      <ShoppingCartIcon className="w-5"></ShoppingCartIcon>
-
+                      <button onClick={() => handleAddShopping(ingredient.id, ingredient.pivot.amount)}>
+                        <ShoppingCartIcon className="w-5"></ShoppingCartIcon>
+                      </button>
                       {ingredient.pivot.amount}g {ingredient.name}
 
                     </div>

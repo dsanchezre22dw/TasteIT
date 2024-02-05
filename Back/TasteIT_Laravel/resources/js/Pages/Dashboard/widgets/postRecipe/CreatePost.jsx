@@ -20,9 +20,11 @@ export default function CreatePost( {auth, recipe=""} ) {
         user_id: auth.user.id
     });
 
-    var url = '/dashboard/recipes/store';
+    var url;
 
     useEffect( () => {
+
+        url = '/dashboard/recipes/store';
 
         if(recipe != ""){
 
@@ -43,7 +45,7 @@ export default function CreatePost( {auth, recipe=""} ) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(`/dashboard/recipes/update/${recipe.id}`);
+        post(url);
     };
 
     return (

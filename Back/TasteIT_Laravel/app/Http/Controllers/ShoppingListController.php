@@ -66,6 +66,19 @@ class ShoppingListController extends Controller
         return redirect()->back();
     }
 
+    public function add(Request $request)
+    {
+        dd($request);
+        $user = Auth::user();
+        $shopping_list = $user->shopping_list;
+
+        $ingredient = Ingredient::find($request->ingredientId);
+        $shopping_list->ingredients()->attach($ingredient,['amount' => $request->amount]);
+
+
+        return redirect()->back();
+    }
+
     /**
      * Display the specified resource.
      */
