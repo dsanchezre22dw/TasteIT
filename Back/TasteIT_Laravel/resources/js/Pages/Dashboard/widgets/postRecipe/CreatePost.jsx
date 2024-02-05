@@ -20,6 +20,20 @@ export default function CreatePost( {auth, recipe=""} ) {
         user_id: auth.user.id
     });
 
+    useEffect( () => {
+
+        if(recipe != ""){
+            let obj = {}
+            
+            recipe.ingredients.forEach(ingredient => {
+                obj[ingredient.name] = ingredient.pivot.amount;
+            });
+
+            setData('amount', obj);
+        }
+
+    },[])
+
 
     const submit = (e) => {
         e.preventDefault();
