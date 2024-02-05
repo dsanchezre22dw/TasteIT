@@ -6,7 +6,7 @@ export default function AddedIngredient(props) {
     useEffect( () => {
         let array = props.data.amount;
         array[props.ingredientName] = 1;
-        console.log(array);
+
         props.setData('amount', array);
     },[])
 
@@ -18,7 +18,7 @@ export default function AddedIngredient(props) {
 
         let array = props.data.amount;
         delete array[ingrediente];
-        console.log(array);
+
         props.setData('amount', array);
     };
 
@@ -33,9 +33,7 @@ export default function AddedIngredient(props) {
             value = array[props.ingredientName]-1;
         }
 
-        console.log('siii',value);
         array[props.ingredientName] = value;
-        console.log(array);
         
 
         if (!(value > 0) && e.target.value != 0) {

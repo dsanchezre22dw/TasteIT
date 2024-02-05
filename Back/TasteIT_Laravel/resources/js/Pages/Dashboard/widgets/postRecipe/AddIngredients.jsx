@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddedIngredient from './AddedIngredient';
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import TextInput from '@/Components/TextInput';
 
-export default function AddIngredients({data, setData}){
+export default function AddIngredients({data, setData, errors}){
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
@@ -11,7 +14,6 @@ export default function AddIngredients({data, setData}){
         
         const fetchSuggestions = async () => {
         const response = await axios.get(`/api/ingredients?term=${searchTerm}`);
-        console.log(response.data.suggestions);
         
         setSuggestions(response.data.suggestions);
         
@@ -39,16 +41,31 @@ export default function AddIngredients({data, setData}){
 
 
     return (
-        <div className='m-6'>
-            <p className="w-[133px]">Ingredients:</p>
-            <input type="text" placeholder="Write a ingredient" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} id='searchInput' />
-            <ul id='search' className='w-[200px] bg-gray-100'>
-                {filteredSuggestions.map((ingredient) => (
-                <li key={ingredient} onClick={() => handleSelectIngredient(ingredient)} className='hover:bg-gray-300 p-2'>
-                    {ingredient}
-                </li>
-                ))}
-            </ul>
+        <div className='relative'>
+
+            <div>
+                <InputLabel htmlFor="searchInput" value="Ingredients*" />
+                <TextInput
+                    id="searchInput"
+                    name="searchInput"
+                    value={searchTerm}
+                    className="mt-1 block w-[100%]"
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    maxLength='255'
+                />
+
+                <ul id='search' className='w-full bg-gray-100'>
+                    {filteredSuggestions.map((ingredient) => (
+                    <li key={ingredient} onClick={() => handleSelectIngredient(ingredient)} className='hover:bg-gray-300 p-2'>
+                        {ingredient}
+                    </li>
+                    ))}
+                </ul>
+
+                <InputError message={errors.amount} className="mt-2" />
+
+            </div>
+            
             <div className='mt-3'>
                 <h2>Selected ingredients:</h2>
                 <div>
