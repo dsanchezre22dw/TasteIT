@@ -26,9 +26,11 @@ import {
   ordersOverviewData,
 } from "../../data";
 import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
+import { Dashboard } from "@/Pages/Dashboard/layouts";
 
-export function Home() {
+export function Home({auth}) {
   return (
+    <Dashboard auth={auth}>
     <div className="mt-12">
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
         {statisticsCardsData.map(({ icon, title, footer, ...rest }) => (
@@ -252,6 +254,7 @@ export function Home() {
         </Card>
       </div>
     </div>
+    </Dashboard>
   );
 }
 

@@ -41,7 +41,7 @@ export function SavedRecipes({ auth, recipes, savedRecipesIds }) {
   
   return (
     <>
-      <RecipesSection recipesToShow={renderRecipes} show={true}></RecipesSection> 
+      <RecipesSection recipesToShow={renderRecipes} see={true}></RecipesSection> 
     </>
   );
 }

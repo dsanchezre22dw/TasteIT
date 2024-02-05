@@ -67,9 +67,9 @@ export function Sidenav({ brandImg, brandName, routes, user }) {
                 <Link href={`/${layout}${path}`}>
 
                     <Button
-                      variant={route().current(actual) ? "gradient" : "text"}
+                      variant={route().current(actual) || window.location.pathname.startsWith(`/${layout}${path}`) ? "gradient" : "text"}
                       color={
-                        route().current(actual)
+                        route().current(actual) || window.location.pathname.startsWith(`/${layout}${path}`)
                           ? sidenavColor
                           : sidenavType === "dark"
                           ? "white"

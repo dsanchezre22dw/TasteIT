@@ -36,19 +36,33 @@ Route::get('/', function () {
 })->name('index');
 
 Route::prefix('dashboard')->group(function () {
-    Route::get('/home', [UserController::class, 'index']);
+
+    Route::get('/', function(){
+
+        if (Gate::allows('access-admin')){
+            return redirect()->route('users.index');
+        }else{
+            return redirect()->route('recipes.index');
+        }
+    });
+
     Route::get('/profile', [UserController::class, 'profile'])->name('profile'); 
     Route::get('/tables', [UserController::class, 'index']);
     Route::get('/notifications', [UserController::class, 'index']);
     Route::get('/prueba', [UserController::class, 'prueba'])->name('prueba');
+    Route::get('/statistics', [UserController::class, 'statistics'])->name('statistics.index');
+    Route::get('/profilelayout', [UserController::class, 'profilelayout'])->name('profilelayout.index');
 
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index'); 
+        Route::get('/{id}', [UserController::class, 'show'])->name('users.show');
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy'); 
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit'); 
         Route::post('/edit/{id}', [UserController::class, 'update'])->name('users.update');
         Route::get('/create', [UserController::class, 'create'])->name('users.create');  
         Route::post('/store', [UserController::class, 'store'])->name('users.store'); 
+        Route::post('/follow/{id}', [UserController::class, 'follow'])->name('users.follow'); 
+        Route::post('/block/{id}', [UserController::class, 'block'])->name('users.block'); 
     });
 
     Route::prefix('recipes')->group(function () {
@@ -60,7 +74,7 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/edit/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
         Route::get('/prueba', [RecipeController::class, 'index'])->name('recipes.prueba');  
         Route::post('/store', [RecipeController::class, 'store'])->name('recipes.store'); 
-        Route::post('/save', [RecipeController::class, 'save'])->name('recipes.save'); 
+        Route::post('/save/{id}', [RecipeController::class, 'save'])->name('recipes.save'); 
         Route::get('/valorate/{id}', [RecipeController::class, 'showValorate'])->name('recipes.showValorate');
         Route::post('/valorate/{id}', [RecipeController::class, 'valorate'])->name('recipes.valorate'); 
  
@@ -96,28 +110,6 @@ Route::prefix('dashboard')->group(function () {
     });
 
 });
-
-Route::get('/dashboard', function () {
-    $users = User::all();
-    $recipes = Recipe::with(['recipe_types', 'valorations'])->get();
-    
-    $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
-        $avgValoration = $recipe->valorations->avg('pivot.valoration');
-        $avgValoration = number_format($avgValoration, 2);
-        $recipe->avg_valoration = $avgValoration;
-
-        return $recipe;
-    });
-
-
-    return Inertia::render('Dashboard/layouts/dashboard', [
-        'users' => $users,
-        'recipes' => $recipesWithTypesAndAvgValorations,
-
-    ]);
-
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

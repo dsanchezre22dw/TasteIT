@@ -31,6 +31,12 @@ class UserController extends Controller
 
     public function profile()
     {
+        return $this->show(Auth::id());
+    }
+
+
+    public function show($userId)
+    {
         $recipes = Recipe::with(['recipe_types', 'valorations', 'user'])->get();
     
         $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
@@ -42,6 +48,8 @@ class UserController extends Controller
         });
 
         return Inertia::render('Dashboard/pages/Standard/Profile/profile', [
+            'actualUser' => \App\Models\User::with(['followers', 'following'])->findOrFail(Auth::id()),
+            'user' => \App\Models\User::with(['followers', 'following'])->findOrFail($userId),
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipes' => $recipesWithTypesAndAvgValorations,
         ]);
@@ -171,10 +179,49 @@ class UserController extends Controller
         return response()->json(['suggestions' => $sortedResults]);
     }
 
+    public function follow(Request $request, $following_id)
+    {
+        $user = Auth::user();
+
+        if (!$request->following){
+            $user->following()->attach($following_id, ['blocked' => false]);
+        }else{
+            $user->following()->detach($following_id);
+        }
+
+        $user->save();
+    }
+
+    public function block(Request $request, $follower_id)
+    {
+        $user = Auth::user();
+
+        if (!$request->blocked){
+            $user->followers()->updateExistingPivot($follower_id, ['blocked' => true]);
+        }else{
+            $user->followers()->updateExistingPivot($follower_id, ['blocked' => false]);
+        }
+
+    }
+
     public function prueba()
     {
 
         return Inertia::render('Profile/Edit', [
+        ]);
+    }
+
+    public function statistics()
+    {
+
+        return Inertia::render('Dashboard/pages/dashboard/home', [
+        ]);
+    }
+
+    public function profilelayout()
+    {
+
+        return Inertia::render('Dashboard/pages/dashboard/profile', [
         ]);
     }
 }

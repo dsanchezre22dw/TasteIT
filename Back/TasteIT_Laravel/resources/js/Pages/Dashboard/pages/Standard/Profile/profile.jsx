@@ -26,11 +26,17 @@ import UserSettings from "../../../widgets/Standard/UserSettings";
 import MyRecipes from "../../../widgets/Standard/MyRecipes";
 import SavedRecipes from "../../../widgets/Standard/SavedRecipes";
 import EditUserInformation from "../../../widgets/Standard/EditUserInformation";
+import BlockedUsers from "@/Pages/Dashboard/widgets/Standard/BlockedUsers";
 import { useEffect } from "react";
+import { Link } from "@inertiajs/react";
 import { Dashboard } from "@/Pages/Dashboard/layouts";
+import FollowUser from "@/Pages/Dashboard/widgets/followUser/followUser";
 
-export function Profile({auth, savedRecipesIds, recipes}) {
-  const [activeTab, setActiveTab] = useState("info");
+export function Profile({auth, actualUser, user, savedRecipesIds, recipes}) {
+
+  let view = user.id === auth.user.id ? "info" : "mine";
+
+  const [activeTab, setActiveTab] = useState(view);
   
   return (
     <>
@@ -45,7 +51,7 @@ export function Profile({auth, savedRecipesIds, recipes}) {
             <div className="mb-10 flex items-center justify-between flex-wrap gap-6">
               <div className="flex items-center gap-6">
                 <Avatar
-                  src="/img/bruce-mars.jpeg"
+                  src={user.profileImg}
                   alt="bruce-mars"
                   size="xl"
                   variant="rounded"
@@ -53,18 +59,38 @@ export function Profile({auth, savedRecipesIds, recipes}) {
                 />
                 <div>
                   <Typography variant="h5" color="blue-gray" className="mb-1">
-                    {auth.user.username}
+                    {user.username}
+                    {user.type === "chef"  && (
+                      <div style={{ backgroundColor: 'blue', padding: '3px', display: 'inline-block', borderRadius: '50%' }}>
+                        <img src="/assets/img/chef-hat.svg" alt="Descripción opcional" width={17}/>
+                      </div>
+                    )}
                   </Typography>
+
                   <Typography
                     variant="small"
                     className="font-normal text-blue-gray-600"
                   >
-                    {auth.user.type}
+                    {user.firstname} {user.surname}
                   </Typography>
                 </div>
+                
+                {user.id !== auth.user.id && (
+                  <>
+                    {auth.user.type !== 'admin' ? (
+                      <FollowUser followingIds={actualUser.following.map(following => following.id)} following_id={user.id} width={24}/>
+                    ) : (
+                      <Link href={`/dashboard/users/edit/${user.id}`}>
+                        <i className="material-icons settings">&#xE8B8;</i>
+                      </Link>
+                    )}
+                  </>
+                )}
+
+                
               </div>
 
-              {auth.user.type !== "admin" && (
+              { (user.type !== "admin" && user.id === auth.user.id) && (
                 <div className="w-96">
                   <Tabs value={activeTab}>
                     <TabsHeader>
@@ -80,6 +106,9 @@ export function Profile({auth, savedRecipesIds, recipes}) {
                       <Tab value="settings" onClick={() => setActiveTab("settings")}>
                         <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
+                      <Tab value="blocked" onClick={() => setActiveTab("blocked")}>
+                        <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
+                      </Tab>
                     </TabsHeader>
                   </Tabs>
                 </div>
@@ -87,10 +116,11 @@ export function Profile({auth, savedRecipesIds, recipes}) {
 
             </div>
 
-            {activeTab === "info" && <UserInformation user={auth.user} setActiveTab={setActiveTab}/>}
-            {activeTab === "mine" && <MyRecipes auth={auth} savedRecipesIds={savedRecipesIds} recipes={recipes}/>}
+            {activeTab === "info" && <UserInformation auth={auth} user={user} followers={user.followers} following={user.following} setActiveTab={setActiveTab}/>}
+            {activeTab === "mine" && <MyRecipes auth={auth} user={user} savedRecipesIds={savedRecipesIds} recipes={recipes} show={user.id === auth.user.id}/>}
             {activeTab === "saved" && <SavedRecipes auth={auth} savedRecipesIds={savedRecipesIds} recipes={recipes}/>}
             {activeTab === "settings" && <UserSettings/>}
+            {activeTab === "blocked" && <BlockedUsers user={user} followers={user.followers} following={user.following} setActiveTab={setActiveTab}/>}
             {activeTab === "edit" && <EditUserInformation/>}
 
 

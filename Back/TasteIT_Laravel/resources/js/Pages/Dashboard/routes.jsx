@@ -94,6 +94,18 @@ export const routes = [
         path: "/ingredient",
         actual: "ingredients.index",
       },
+      {
+        icon: <AcademicCapIcon {...icon} />,
+        name: "profile layout",
+        path: "/profilelayout",
+        actual: "profilelayout.index",
+      },
+      {
+        icon: <AcademicCapIcon {...icon} />,
+        name: "statistics",
+        path: "/statistics",
+        actual: "statistics.index",
+      },
     ],
   },
 ];
