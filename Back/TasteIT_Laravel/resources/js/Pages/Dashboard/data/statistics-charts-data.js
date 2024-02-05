@@ -1,6 +1,6 @@
 import { chartsConfig } from "../configs";
 
-const websiteViewsChart = {
+export const websiteViewsChart = {
   type: "bar",
   height: 220,
   series: [
@@ -25,7 +25,7 @@ const websiteViewsChart = {
   },
 };
 
-const dailySalesChart = {
+export const dailySalesChart = {
   type: "line",
   height: 220,
   series: [
@@ -94,7 +94,7 @@ const completedTaskChart = {
     },
   },
 };
-const completedTasksChart = {
+export const completedTasksChart = {
   ...completedTaskChart,
   series: [
     {
@@ -103,29 +103,3 @@ const completedTasksChart = {
     },
   ],
 };
-
-export const statisticsChartsData = [
-  {
-    color: "white",
-    title: "Website View",
-    description: "Last Campaign Performance",
-    footer: "campaign sent 2 days ago",
-    chart: websiteViewsChart,
-  },
-  {
-    color: "white",
-    title: "Daily Sales",
-    description: "15% increase in today sales",
-    footer: "updated 4 min ago",
-    chart: dailySalesChart,
-  },
-  {
-    color: "white",
-    title: "Completed Tasks",
-    description: "Last Campaign Performance",
-    footer: "just updated",
-    chart: completedTasksChart,
-  },
-];
-
-export default statisticsChartsData;

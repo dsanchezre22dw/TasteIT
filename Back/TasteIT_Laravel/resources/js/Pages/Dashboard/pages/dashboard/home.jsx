@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   Typography,
   Card,
@@ -13,6 +14,14 @@ import {
   Tooltip,
   Progress,
 } from "@material-tailwind/react";
+
+import {
+  BanknotesIcon,
+  UserPlusIcon,
+  UsersIcon,
+  ChartBarIcon,
+} from "@heroicons/react/24/solid";
+
 import {
   EllipsisVerticalIcon,
   ArrowUpIcon,
@@ -20,35 +29,132 @@ import {
 import { StatisticsCard } from "../../widgets/cards";
 import { StatisticsChart } from "../../widgets/charts";
 import {
-  statisticsCardsData,
-  statisticsChartsData,
   projectsTableData,
   ordersOverviewData,
+  websiteViewsChart,
+  dailySalesChart,
+  completedTasksChart,
 } from "../../data";
 import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 import { Dashboard } from "@/Pages/Dashboard/layouts";
 
 export function Home({auth}) {
+
+  const [recipesAmountByUsers, setRecipesAmountByUsers] = useState([]);
+  const [newUsers, setNewUsers] = useState([]);
+  const [newRecipes, setNewRecipes] = useState([]);
+  const [recipeTypes, setRecipeTypes] = useState([]);
+  const [statisticsCardsData, setStatisticsCardsData] = useState([]);
+  
+  
+  const [statisticsChartsData, setStatisticsChartsData] = useState([
+    {
+      color: "white",
+      title: "Website View",
+      description: "Last Campaign Performance",
+      footer: "campaign sent 2 days ago",
+      chart: websiteViewsChart,
+    },
+    {
+      color: "white",
+      title: "Daily Sales",
+      description: "15% increase in today sales",
+      footer: "updated 4 min ago",
+      chart: dailySalesChart,
+    },
+    {
+      color: "white",
+      title: "Completed Tasks",
+      description: "Last Campaign Performance",
+      footer: "just updated",
+      chart: completedTasksChart,
+    },
+
+  ]);
+
+  useEffect(() => {
+    axios.get('/api/top-users')
+      .then(response => {
+        setRecipesAmountByUsers(response.data);
+      })
+      .catch(error => {
+        console.error('Error obtaining the recipes uploaded by users', error);
+      });
+  
+  }, []);
+  
+  useEffect(() => {
+    axios.get('/api/new-users')
+      .then(response => {
+        setNewUsers(response.data);
+      })
+      .catch(error => {
+        console.error('Error obtaining the new users of this month', error);
+      });
+  
+  }, []);
+
+  useEffect(() => {
+    axios.get('/api/new-recipes')
+      .then(response => {
+        setNewRecipes(response.data);
+      })
+      .catch(error => {
+        console.error('Error obtaining the recipe types and its recipes', error);
+      });
+  
+  }, []);
+
+  useEffect(() => {
+    axios.get('/api/recipe-types')
+      .then(response => {
+        setRecipeTypes(response.data);
+      })
+      .catch(error => {
+        console.error('Error obtaining the new recipes of this month', error);
+      });
+  
+  }, []);
+
+
+  useEffect(() => {
+
+    if (recipeTypes){
+      var copy = statisticsChartsData;
+      copy[0].color = "red";
+      copy[0].chart.options.xaxis.categories = recipeTypes.map(recipe => recipe.name);
+      setStatisticsChartsData(copy);
+    }
+
+  }, []);
+
+
+  useEffect(() => {
+    setStatisticsCardsData([newUsers, newRecipes]);
+  }, [newUsers, newRecipes]);
+
   return (
     <Dashboard auth={auth}>
     <div className="mt-12">
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
-        {statisticsCardsData.map(({ icon, title, footer, ...rest }) => (
+        {statisticsCardsData.map(({ value, growth, title, index }) => (
           <StatisticsCard
-            key={title}
-            {...rest}
+            key={index}
+            value={value}
+            color="gray"
             title={title}
-            icon={React.createElement(icon, {
+            icon={React.createElement(BanknotesIcon, {
               className: "w-6 h-6 text-white",
             })}
             footer={
               <Typography className="font-normal text-blue-gray-600">
-                <strong className={footer.color}>{footer.value}</strong>
-                &nbsp;{footer.label}
+                <strong className={growth < 0 ? "text-red-500" : growth === 0 ? "text-gray-500" : "text-green-500"}>{growth > 0 ? '+' : ''}{growth}%</strong>
+                &nbsp;than last month
               </Typography>
             }
           />
         ))}
+
       </div>
       <div className="mb-6 grid grid-cols-1 gap-y-12 gap-x-6 md:grid-cols-2 xl:grid-cols-3">
         {statisticsChartsData.map((props) => (
@@ -108,7 +214,7 @@ export function Home({auth}) {
             <table className="w-full min-w-[640px] table-auto">
               <thead>
                 <tr>
-                  {["companies", "members", "budget", "completion"].map(
+                  {["user", "recipes", "percentage"].map(
                     (el) => (
                       <th
                         key={el}
@@ -126,49 +232,35 @@ export function Home({auth}) {
                 </tr>
               </thead>
               <tbody>
-                {projectsTableData.map(
-                  ({ img, name, members, budget, completion }, key) => {
+                {recipesAmountByUsers.map(
+                  ({ id, username, profileImg, recipes_count, recipes_percentage }, key) => {
                     const className = `py-3 px-5 ${
-                      key === projectsTableData.length - 1
+                      key === recipesAmountByUsers.length - 1
                         ? ""
                         : "border-b border-blue-gray-50"
                     }`;
 
                     return (
-                      <tr key={name}>
+                      <tr key={id}>
                         <td className={className}>
                           <div className="flex items-center gap-4">
-                            <Avatar src={img} alt={name} size="sm" />
+                            <Avatar src={profileImg} alt={username} size="sm" />
                             <Typography
                               variant="small"
                               color="blue-gray"
                               className="font-bold"
                             >
-                              {name}
+                              {username}
                             </Typography>
                           </div>
                         </td>
-                        <td className={className}>
-                          {members.map(({ img, name }, key) => (
-                            <Tooltip key={name} content={name}>
-                              <Avatar
-                                src={img}
-                                alt={name}
-                                size="xs"
-                                variant="circular"
-                                className={`cursor-pointer border-2 border-white ${
-                                  key === 0 ? "" : "-ml-2.5"
-                                }`}
-                              />
-                            </Tooltip>
-                          ))}
-                        </td>
+
                         <td className={className}>
                           <Typography
                             variant="small"
                             className="text-xs font-medium text-blue-gray-600"
                           >
-                            {budget}
+                            {recipes_count}
                           </Typography>
                         </td>
                         <td className={className}>
@@ -177,12 +269,12 @@ export function Home({auth}) {
                               variant="small"
                               className="mb-1 block text-xs font-medium text-blue-gray-600"
                             >
-                              {completion}%
+                              {recipes_percentage}%
                             </Typography>
                             <Progress
-                              value={completion}
+                              value={recipes_percentage}
                               variant="gradient"
-                              color={completion === 100 ? "green" : "blue"}
+                              color={recipes_percentage === 100 ? "green" : "blue"}
                               className="h-1"
                             />
                           </div>

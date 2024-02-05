@@ -13,6 +13,8 @@ use App\Models\Recipe;
 use App\Models\Shopping_list;
 use Inertia\Inertia;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -224,4 +226,58 @@ class UserController extends Controller
         return Inertia::render('Dashboard/pages/dashboard/profile', [
         ]);
     }
+
+    public function getUsers()
+    {
+        $lastMonth = Carbon::now()->subMonth();
+    
+        // Subconsulta para obtener el total de recetas en el último mes
+        $totalRecipesLastMonth = Recipe::where('created_at', '>=', $lastMonth)->count();
+    
+        // Consulta para obtener los usuarios y contar cuántas recetas han subido en el último mes
+        $topUsers = User::select(
+                'users.id',
+                'users.username',
+                'users.profileImg',
+                DB::raw('COUNT(recipes.id) as recipes_count'),
+                DB::raw("ROUND(COUNT(recipes.id) / $totalRecipesLastMonth * 100, 2) as recipes_percentage")
+            )
+            ->leftJoin('recipes', 'users.id', '=', 'recipes.user_id')
+            ->where('recipes.created_at', '>=', $lastMonth)
+            ->groupBy('users.id', 'users.username', 'users.profileImg')
+            ->orderByDesc('recipes_count')
+            ->limit(10)
+            ->get();
+    
+        return response()->json($topUsers);
+    }
+
+    public function getNewUsersStats()
+    {
+        // Obtener la fecha de inicio y fin del último mes
+        $lastMonth = Carbon::now()->subMonth();
+
+        // Obtener la fecha de inicio y fin del mes anterior al último
+        $previousMonth = Carbon::now()->subMonths(2);
+
+        // Contar la cantidad de usuarios registrados en el último mes
+        $usersLastMonth = User::where('created_at', '>=', $lastMonth)->count();
+
+        // Contar la cantidad de usuarios registrados en el mes anterior al último
+        $usersPreviousMonth = User::whereBetween('created_at', [$previousMonth, $lastMonth])->count();
+
+        // Calcular el porcentaje de crecimiento
+        if ($usersPreviousMonth > 0) {
+            $growthPercentage = (($usersLastMonth - $usersPreviousMonth) / $usersPreviousMonth) * 100;
+        } else {
+            $growthPercentage = 0; // Evitar división por cero
+        }
+
+        return response()->json([
+            'value' => $usersLastMonth,
+            'growth' => round($growthPercentage, 2), // Redondear a dos decimales
+            'title' => "New Users",
+        ]);
+    }
+    
 }

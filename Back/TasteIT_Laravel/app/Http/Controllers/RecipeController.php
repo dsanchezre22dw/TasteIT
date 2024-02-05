@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
-
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class RecipeController extends Controller
 {
@@ -195,5 +196,46 @@ class RecipeController extends Controller
     {
         return Inertia::render('Profile/Edit', [
         ]);
+    }
+
+    public function getNewRecipesStats()
+    {
+        // Obtener la fecha de inicio y fin del último mes
+        $lastMonth = Carbon::now()->subMonth();
+
+        // Obtener la fecha de inicio y fin del mes anterior al último
+        $previousMonth = Carbon::now()->subMonths(2);
+
+        // Contar la cantidad de usuarios registrados en el último mes
+        $recipesLastMonth = Recipe::where('created_at', '>=', $lastMonth)->count();
+
+        // Contar la cantidad de usuarios registrados en el mes anterior al último
+        $recipesPreviousMonth = Recipe::whereBetween('created_at', [$previousMonth, $lastMonth])->count();
+
+        // Calcular el porcentaje de crecimiento
+        if ($recipesPreviousMonth > 0) {
+            $growthPercentage = (($recipesLastMonth - $recipesPreviousMonth) / $recipesPreviousMonth) * 100;
+        } else {
+            $growthPercentage = 0; // Evitar división por cero
+        }
+
+        return response()->json([
+            'value' => $recipesLastMonth,
+            'growth' => round($growthPercentage, 2),
+            'title' => "New Recipes",
+        ]);
+    }
+
+    public function getRecipeTypeRecipes()
+    {
+
+        $recipeTypeCounts = DB::table('recipe_recipe_type')
+            ->join('recipe_types', 'recipe_recipe_type.recipe_type_id', '=', 'recipe_types.id')
+            ->select('recipe_types.id', 'recipe_types.name', DB::raw('COUNT(*) as recipe_count'))
+            ->groupBy('recipe_types.id', 'recipe_types.name')
+            ->get();
+        
+
+        return response()->json($recipeTypeCounts);
     }
 }
