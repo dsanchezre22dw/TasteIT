@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import InputError from '@/Components/InputError';
 
-export default function ImageUploader({data, setData, errors}) {
+export default function ImageUploader({data, setData, errors, image}) {
 
     var imageUploader;
     var uploadInput;
@@ -22,11 +22,19 @@ export default function ImageUploader({data, setData, errors}) {
 
         imageUploader.addEventListener('click', () => uploadInput.click());
         uploadInput.addEventListener('change', handleFileSelect);
-        imagePreview.addEventListener('click', () => uploadInput.click());
-    }) 
+        //imagePreview.addEventListener('click', () => uploadInput.click());
+
+    },[]) 
+    useEffect( () => {
+        if (image) {
+            handleFileSelected(image);
+        }
+        
+    },[])
 
     function handleFileSelect(event) {
         const fileList = event.target.files;
+        console.log('archivos:', fileList)
 
         if (fileList.length > 0) {
             const file = fileList[0];
@@ -52,6 +60,35 @@ export default function ImageUploader({data, setData, errors}) {
 
         }
     }
+
+    function handleFileSelected(filePath) {
+        // Verifica que la ruta del archivo no esté vacía
+        if (filePath.trim() !== '') {
+            // Construye la ruta completa del archivo considerando la ruta base de la aplicación React
+            const baseUrl = 'http://localhost:8000'; // Ruta base real de tu aplicación
+            const fullPath = baseUrl + filePath;
+    
+            // Crea un objeto File a partir de la ruta del archivo
+            const file = new File([fullPath], fullPath.split('/').pop());
+    
+            // Muestra la imagen seleccionada
+            imagePreview.src = filePath;
+            imagePreview.style.display = 'block';
+    
+            // Oculta el icono, el texto y el input
+            uploadIcon.style.display = 'none';
+            uploadText.style.display = 'none';
+            uploadInput.style.display = 'none';
+            uploadError.style.display = 'none';
+    
+            console.log('Archivo seleccionado:', file);
+            setData('image', file);
+        } else {
+            console.error('La ruta del archivo está vacía.');
+        }
+    }
+    
+    
 
     const [errorMessages, setErrorMessages] = useState({
         image: 'Please upload an image',

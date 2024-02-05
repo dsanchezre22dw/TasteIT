@@ -24,7 +24,7 @@ export default function CreatePost( {auth, recipe=""} ) {
 
         if(recipe != ""){
             let obj = {}
-            
+
             recipe.ingredients.forEach(ingredient => {
                 obj[ingredient.name] = ingredient.pivot.amount;
             });
@@ -45,7 +45,7 @@ export default function CreatePost( {auth, recipe=""} ) {
         <div>
             <form onSubmit={submit} name="createPost" encType="multipart/form-data">
                 <div className="flex flex-wrap">
-                    <ImageUploader data={data} setData={setData} errors={errors}/>
+                    <ImageUploader data={data} setData={setData} errors={errors} image={recipe.image}/>
 
                     <span className="m-6">
 
