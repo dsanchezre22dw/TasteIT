@@ -309,4 +309,48 @@ class RecipeController extends Controller
     
         return response()->json($newRecipesByMonth);
     }
+
+    public function getRecipesWithUsers()
+    {
+        $recipesAndUsers = Recipe::select('recipes.title as action', 'users.username as author')
+            ->join('users', 'recipes.user_id', '=', 'users.id')
+            ->orderBy('recipes.created_at', 'DESC')
+            ->get()
+            ->map(function ($item) {
+                $item['type'] = 'recipes';
+                return $item;
+            });
+
+        $seguidores = User::select('users.username as author', 'followed_users.username as action', 'follows.created_at')
+            ->join('follows', 'users.id', '=', 'follows.follower_id')
+            ->join('users as followed_users', 'followed_users.id', '=', 'follows.followed_id')
+            ->orderBy('follows.created_at', 'DESC')
+            ->get()
+            ->map(function ($item) {
+                $item['type'] = 'follower';
+                return $item;
+            });
+    
+
+        return response()->json([
+            'recetas' => $recipesAndUsers,
+            'follows' => $seguidores,
+        ]);
+
+    }
+
+    public function pruebaapi()
+    {
+        $seguidores = User::select('users.username as author', 'followed_users.username as action', 'follows.created_at')
+        ->join('follows', 'users.id', '=', 'follows.follower_id')
+        ->join('users as followed_users', 'followed_users.id', '=', 'follows.followed_id')
+        ->orderBy('follows.created_at', 'DESC')
+        ->get();
+
+        return $seguidores;
+
+        return response()->json([
+            'seguidores' => $seguidores,
+        ]);
+    }
 }
