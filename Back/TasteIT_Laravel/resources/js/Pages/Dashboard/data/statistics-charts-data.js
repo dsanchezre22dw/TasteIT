@@ -6,7 +6,6 @@ export const websiteViewsChart = {
   series: [
     {
       name: "Views",
-      data: [50, 20, 10, 22, 50, 10, 40],
     },
   ],
   options: {
@@ -20,8 +19,15 @@ export const websiteViewsChart = {
     },
     xaxis: {
       ...chartsConfig.xaxis,
-      categories: ["M", "T", "W", "T", "F", "S", "S"],
     },
+    yaxis: {
+      ...chartsConfig.yaxis,
+      labels: {
+        formatter: function(value) {
+          return parseInt(value, 10); // Redondea el valor al número entero más cercano
+        }
+      }
+    }
   },
 };
 
@@ -31,7 +37,7 @@ export const dailySalesChart = {
   series: [
     {
       name: "Sales",
-      data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+      data: [50, 40, 300, 320, 500, 350, 200, 230, 500, 12, 12 ,12 ],
     },
   ],
   options: {
@@ -46,6 +52,9 @@ export const dailySalesChart = {
     xaxis: {
       ...chartsConfig.xaxis,
       categories: [
+        "Jan",
+        "Feb",
+        "Mar",
         "Apr",
         "May",
         "Jun",
@@ -92,6 +101,14 @@ const completedTaskChart = {
         "Dec",
       ],
     },
+    yaxis: {
+      ...chartsConfig.yaxis,
+      labels: {
+        formatter: function(value) {
+          return parseInt(value, 10); // Redondea el valor al número entero más cercano
+        }
+      }
+    }
   },
 };
 export const completedTasksChart = {

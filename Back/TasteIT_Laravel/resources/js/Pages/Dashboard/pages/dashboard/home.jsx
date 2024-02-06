@@ -44,94 +44,121 @@ export function Home({auth}) {
   const [newUsers, setNewUsers] = useState([]);
   const [newRecipes, setNewRecipes] = useState([]);
   const [recipeTypes, setRecipeTypes] = useState([]);
+  const [usersMonthly, setUsersMonthly] = useState([]);
+  const [recipesMonthly, setRecipesMonthly] = useState([]);
   const [statisticsCardsData, setStatisticsCardsData] = useState([]);
+  const [statisticsChartsData, setStatisticsChartsData] = useState([]);
   
+  useEffect(() => {
+    axios.get('/api/top-users')
+    .then(response => {
+      setRecipesAmountByUsers(response.data);
+    })
+    .catch(error => {
+      console.error('Error obtaining the recipes uploaded by users', error);
+    });
+
+    axios.get('/api/new-users')
+    .then(response => {
+      setNewUsers(response.data);
+    })
+    .catch(error => {
+      console.error('Error obtaining the new users of this month', error);
+    });
+
+    axios.get('/api/new-recipes')
+    .then(response => {
+      setNewRecipes(response.data);
+    })
+    .catch(error => {
+      console.error('Error obtaining the recipe types and its recipes', error);
+    });
+
+    axios.get('/api/recipe-types')
+    .then(response => {
+      setRecipeTypes(response.data);
+      setRecipesTypesChart(response.data)
+    })
+    .catch(error => {
+      console.error('Error obtaining the new recipes of this month', error);
+    });
   
-  const [statisticsChartsData, setStatisticsChartsData] = useState([
-    {
+    axios.get('/api/monthly-users')
+    .then(response => {
+      setUsersMonthly(response.data);
+      setUsersMonthlyChart(response.data)
+    })
+    .catch(error => {
+      console.error('Error obtaining the new recipes of this month', error);
+    });
+
+    axios.get('/api/monthly-recipes')
+    .then(response => {
+      setRecipesMonthly(response.data);
+      setRecipesMonthlyChart(response.data)
+    })
+    .catch(error => {
+      console.error('Error obtaining the new recipes of this month', error);
+    });
+
+  }, []);
+
+  
+  useEffect(() => {
+    setStatisticsCardsData([newUsers, newRecipes]);
+  }, [newUsers, newRecipes]);
+
+  function setRecipesTypesChart(data){
+    setStatisticsChartsData([])
+    var chartConfig = {
       color: "white",
-      title: "Website View",
-      description: "Last Campaign Performance",
+      title: "Recipe types",
+      description: "Recipe types used by recipes",
       footer: "campaign sent 2 days ago",
       chart: websiteViewsChart,
-    },
-    {
+    };
+
+    chartConfig.chart.options.xaxis.categories = data.map(recipe => recipe.name);
+    chartConfig.chart.series[0].data = data.map(recipe => recipe.recipe_count);
+
+    var newStatisticsChart = (prevState => [...prevState, chartConfig]);
+    setStatisticsChartsData(newStatisticsChart);
+  }
+
+  function setUsersMonthlyChart(data){
+    var chartConfig = {
       color: "white",
       title: "Daily Sales",
       description: "15% increase in today sales",
       footer: "updated 4 min ago",
       chart: dailySalesChart,
-    },
-    {
+    };
+
+    chartConfig.chart.options.xaxis.categories = data.map(data => data.month_name);
+    chartConfig.chart.series[0].data = data.map(data => data.new_users);
+
+    var newStatisticsChart = (prevState => [...prevState, chartConfig]);
+
+    setStatisticsChartsData(newStatisticsChart);
+  }
+
+  function setRecipesMonthlyChart(data){
+    var chartConfig = {
       color: "white",
       title: "Completed Tasks",
       description: "Last Campaign Performance",
       footer: "just updated",
       chart: completedTasksChart,
-    },
-
-  ]);
-
-  useEffect(() => {
-    axios.get('/api/top-users')
-      .then(response => {
-        setRecipesAmountByUsers(response.data);
-      })
-      .catch(error => {
-        console.error('Error obtaining the recipes uploaded by users', error);
-      });
-  
-  }, []);
-  
-  useEffect(() => {
-    axios.get('/api/new-users')
-      .then(response => {
-        setNewUsers(response.data);
-      })
-      .catch(error => {
-        console.error('Error obtaining the new users of this month', error);
-      });
-  
-  }, []);
-
-  useEffect(() => {
-    axios.get('/api/new-recipes')
-      .then(response => {
-        setNewRecipes(response.data);
-      })
-      .catch(error => {
-        console.error('Error obtaining the recipe types and its recipes', error);
-      });
-  
-  }, []);
-
-  useEffect(() => {
-    axios.get('/api/recipe-types')
-      .then(response => {
-        setRecipeTypes(response.data);
-      })
-      .catch(error => {
-        console.error('Error obtaining the new recipes of this month', error);
-      });
-  
-  }, []);
+    };
 
 
-  useEffect(() => {
+    chartConfig.chart.options.xaxis.categories = data.map(data => data.month_name);
+    chartConfig.chart.series[0].data = data.map(data => data.new_recipes);
 
-    if (recipeTypes){
-      var copy = statisticsChartsData;
-      copy[0].color = "red";
-      copy[0].chart.options.xaxis.categories = recipeTypes.map(recipe => recipe.name);
-      setStatisticsChartsData(copy);
-    }
+    var newStatisticsChart = (prevState => [...prevState, chartConfig]);
 
-  }, []);
-
-
-  useEffect(() => {
-    setStatisticsCardsData([newUsers, newRecipes]);
-  }, [newUsers, newRecipes]);
+    setStatisticsChartsData(newStatisticsChart);
+  }
 
   return (
     <Dashboard auth={auth}>

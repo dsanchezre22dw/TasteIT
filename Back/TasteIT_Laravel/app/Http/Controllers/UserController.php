@@ -279,5 +279,31 @@ class UserController extends Controller
             'title' => "New Users",
         ]);
     }
+
+    public function getMonthlyUsers()
+    {
+        $newUsersByMonth = User::select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('COUNT(*) as new_users')
+        )
+        ->where('created_at', '>=', now()->subYear())
+        ->groupBy('year', 'month')
+        ->orderBy('year')
+        ->orderBy('month')
+        ->get();
+    
+        // Mapeamos el nombre del mes
+        $newUsersByMonth->transform(function ($item) {
+            $monthNames = [
+                1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June',
+                7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
+            ];
+            $item->month_name = $monthNames[$item->month];
+            return $item;
+        });
+    
+        return response()->json($newUsersByMonth);
+    }
     
 }

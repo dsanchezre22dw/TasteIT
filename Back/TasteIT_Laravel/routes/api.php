@@ -29,3 +29,5 @@ Route::get('/top-users',[UserController::class, 'getUsers']);
 Route::get('/new-users',[UserController::class, 'getNewUsersStats']);
 Route::get('/new-recipes',[RecipeController::class, 'getNewRecipesStats']);
 Route::get('/recipe-types',[RecipeController::class, 'getRecipeTypeRecipes']);
+Route::get('/monthly-users',[UserController::class, 'getMonthlyUsers']);
+Route::get('/monthly-recipes',[RecipeController::class, 'getMonthlyRecipes']);
