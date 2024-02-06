@@ -20,18 +20,39 @@ export default function CreatePost( {auth, recipe=""} ) {
         user_id: auth.user.id
     });
 
+    var url;
+
+    useEffect( () => {
+
+        url = '/dashboard/recipes/store';
+
+        if(recipe != ""){
+
+            url = `/dashboard/recipes/update/${recipe.id}`;
+
+            let obj = {}
+
+            recipe.ingredients.forEach(ingredient => {
+                obj[ingredient.name] = ingredient.pivot.amount;
+            });
+
+            setData('amount', obj);
+        }
+
+    },[data.image])
+
 
     const submit = (e) => {
         e.preventDefault();
 
-        post('/dashboard/recipes/store');
+        post(url);
     };
 
     return (
         <div>
             <form onSubmit={submit} name="createPost" encType="multipart/form-data">
                 <div className="flex flex-wrap">
-                    <ImageUploader data={data} setData={setData} errors={errors}/>
+                    <ImageUploader data={data} setData={setData} errors={errors} image={recipe.image}/>
 
                     <span className="m-6">
 

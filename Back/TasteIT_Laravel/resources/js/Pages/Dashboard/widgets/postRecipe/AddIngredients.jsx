@@ -11,6 +11,12 @@ export default function AddIngredients({data, setData, errors}){
     const [selectedIngredients, setSelectedIngredients] = useState([]);
 
     useEffect(() => {
+        if (data && data.amount) {
+            setSelectedIngredients(Object.keys(data.amount));
+        }
+    }, [data.amount]);
+
+    useEffect(() => {
         
         const fetchSuggestions = async () => {
         const response = await axios.get(`/api/ingredients?term=${searchTerm}`);
@@ -38,6 +44,7 @@ export default function AddIngredients({data, setData, errors}){
     const filteredSuggestions = suggestions
     .filter((ingredient) => !selectedIngredients.includes(ingredient))
     .slice(0, 5); // Limitar la cantidad de sugerencias a mostrar
+
 
 
     return (

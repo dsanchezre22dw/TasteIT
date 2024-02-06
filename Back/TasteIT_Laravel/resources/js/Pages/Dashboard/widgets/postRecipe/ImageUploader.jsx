@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import InputError from '@/Components/InputError';
 
-export default function ImageUploader({data, setData, errors}) {
+export default function ImageUploader({data, setData, errors, image}) {
 
     var imageUploader;
     var uploadInput;
@@ -23,7 +23,14 @@ export default function ImageUploader({data, setData, errors}) {
         imageUploader.addEventListener('click', () => uploadInput.click());
         uploadInput.addEventListener('change', handleFileSelect);
         imagePreview.addEventListener('click', () => uploadInput.click());
-    }) 
+
+    },[]) 
+    useEffect( () => {
+        if (image) {
+            handleFileSelected(image);
+        }
+        
+    },[])
 
     function handleFileSelect(event) {
         const fileList = event.target.files;
@@ -46,12 +53,29 @@ export default function ImageUploader({data, setData, errors}) {
             uploadInput.style.display = 'none';
             uploadError.style.display = 'none';
 
-            
-            console.log('Archivo seleccionado:', file);
             setData('image',file);
 
         }
     }
+
+    function handleFileSelected(filePath) {
+        // Verifica que la ruta del archivo no esté vacía
+        if (filePath.trim() !== '') {
+
+            // Muestra la imagen seleccionada
+            imagePreview.src = filePath;
+            imagePreview.style.display = 'block';
+    
+            // Oculta el icono, el texto y el input
+            uploadIcon.style.display = 'none';
+            uploadText.style.display = 'none';
+            uploadInput.style.display = 'none';
+            uploadError.style.display = 'none';
+
+        }
+    }
+    
+    
 
     const [errorMessages, setErrorMessages] = useState({
         image: 'Please upload an image',
@@ -60,7 +84,7 @@ export default function ImageUploader({data, setData, errors}) {
     return (
         <span id="image-uploader" className="m-6 w-96 md:w-[500px] h-96 md:h-[500px]">
 
-            <input type="file" id="upload-input" accept="image/*" name="image" defaultValue={data.image} required/>
+            <input type="file" id="upload-input" accept="image/*" name="image" defaultValue={data.image} required={image? false : true}/>
             
             <svg id="upload-icon" className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
