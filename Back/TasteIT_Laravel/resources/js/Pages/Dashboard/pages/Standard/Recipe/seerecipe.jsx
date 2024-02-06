@@ -135,13 +135,11 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
     xhr.send(data);
   }
 
-<<<<<<< HEAD
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this recipe?')) {
       form.delete(`/dashboard/recipes/delete/${id}`);
     }
   };
-=======
 
   function handleAddShopping(id, amount) {
 
@@ -151,7 +149,6 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
     
   }
 
->>>>>>> fe96ab1be00bef58616ec30dc95026a38651e9f7
 
 
   return (
