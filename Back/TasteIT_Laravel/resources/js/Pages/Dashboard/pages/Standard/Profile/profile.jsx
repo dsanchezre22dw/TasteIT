@@ -94,19 +94,19 @@ export function Profile({auth, actualUser, user, savedRecipesIds, recipes}) {
                 <div className="w-96">
                   <Tabs value={activeTab}>
                     <TabsHeader>
-                      <Tab value="info" onClick={() => setActiveTab("info")}>
+                      <Tab value="info" className={activeTab == 'info'?"text-red-400":''} onClick={() => setActiveTab("info")}>
                         <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
-                      <Tab value="mine" onClick={() => setActiveTab("mine")}>
+                      <Tab value="mine" className={activeTab == 'mine'?"text-red-400":''} onClick={() => setActiveTab("mine")}>
                         <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
-                      <Tab value="saved" onClick={() => setActiveTab("saved")}>
+                      <Tab value="saved" className={activeTab == 'saved'?"text-red-400":''} onClick={() => setActiveTab("saved")}>
                         <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
                       </Tab>
-                      <Tab value="settings" onClick={() => setActiveTab("settings")}>
+                      <Tab value="settings" className={activeTab == 'settings'?"text-red-400":''} onClick={() => setActiveTab("settings")}>
                         <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
-                      <Tab value="blocked" onClick={() => setActiveTab("blocked")}>
+                      <Tab value="blocked" className={activeTab == 'blocked'?"text-red-400":''} onClick={() => setActiveTab("blocked")}>
                         <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                     </TabsHeader>
