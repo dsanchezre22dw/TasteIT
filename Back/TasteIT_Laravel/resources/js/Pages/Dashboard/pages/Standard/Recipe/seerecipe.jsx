@@ -294,7 +294,7 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
 
 
                   <Link to={`/dashboard/recipes/valorate/${recipe.id}`} className="ml-10">
-                    <Button variant="gradient">Make valoration</Button>
+                    <Button variant="gradient" color="red">Make valoration</Button>
                   </Link>
 
                   </div>

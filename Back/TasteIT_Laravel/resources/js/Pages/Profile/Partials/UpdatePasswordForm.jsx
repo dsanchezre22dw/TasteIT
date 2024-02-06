@@ -41,7 +41,7 @@ export default function UpdatePasswordForm({ className = '' }) {
     };
 
     return (
-        <div className="mt-12 mb-8 flex flex-col gap-12 w-[50%] mx-auto">
+        <div className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Update Password</h2>
 
@@ -50,38 +50,38 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </p>
             </header>
 
-            <form onSubmit={updatePassword} className="space-y-4 -mt-6">
-                <div>
-                    <InputLabel htmlFor="current_password" value="Current Password" />
+            <form onSubmit={updatePassword} className="mt-6 space-y-6">
+                    <div>
+                        <InputLabel htmlFor="current_password" value="Current Password" />
 
-                    <TextInput
-                        id="current_password"
-                        ref={currentPasswordInput}
-                        value={data.current_password}
-                        onChange={(e) => setData('current_password', e.target.value)}
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                    />
+                        <TextInput
+                            id="current_password"
+                            ref={currentPasswordInput}
+                            value={data.current_password}
+                            onChange={(e) => setData('current_password', e.target.value)}
+                            type="password"
+                            className="mt-1 block w-full"
+                            autoComplete="current-password"
+                        />
 
-                    <InputError message={errors.current_password} className="mt-2" />
-                </div>
+                        <InputError message={errors.current_password} className="mt-2" />
+                    </div>
 
-                <div>
-                    <InputLabel htmlFor="password" value="New Password" />
+                    <div>
+                        <InputLabel htmlFor="password" value="New Password" />
 
-                    <TextInput
-                        id="password"
-                        ref={passwordInput}
-                        value={data.password}
-                        onChange={(e) => setData('password', e.target.value)}
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                    />
+                        <TextInput
+                            id="password"
+                            ref={passwordInput}
+                            value={data.password}
+                            onChange={(e) => setData('password', e.target.value)}
+                            type="password"
+                            className="mt-1 block w-full"
+                            autoComplete="new-password"
+                        />
 
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
+                        <InputError message={errors.password} className="mt-2" />
+                    </div>
 
                 <div id="message">
                     <p id="letter" className="invalid">A <b>lowercase</b> letter</p>

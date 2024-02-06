@@ -33,7 +33,7 @@ export function UsersIndex({ auth, users }) {
     <Dashboard auth={auth}>
       <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
-          <CardHeader variant="gradient" color="gray" className="mb-8 p-6 flex items-center justify-between">
+          <CardHeader variant="gradient" color="red" className="mb-8 p-6 flex items-center justify-between">
             <Typography variant="h6" color="white">
               Users Table
             </Typography>
@@ -42,7 +42,7 @@ export function UsersIndex({ auth, users }) {
 
           <div className="ml-auto mr-10">
             <Link href={'/dashboard/users/create'}>
-              <Button variant="gradient">Add User</Button>
+              <Button variant="gradient" color="red">Add User</Button>
             </Link>
           </div>
 
@@ -68,7 +68,7 @@ export function UsersIndex({ auth, users }) {
               </thead>
               <tbody>
               {users.map((user, key) => (
-                <UserTableRow key={key} {...user} handleDelete={handleDelete} />
+                <UserTableRow key={key} {...user} handleDelete={handleDelete} num={key}/>
               ))}
 
               </tbody>
