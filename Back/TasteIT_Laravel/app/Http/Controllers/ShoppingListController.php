@@ -66,15 +66,15 @@ class ShoppingListController extends Controller
         return redirect()->back();
     }
 
-    public function add(Request $request)
+    public function add($array)
     {
-        dd($request);
+        $array = explode(',',$array);
+
         $user = Auth::user();
         $shopping_list = $user->shopping_list;
 
-        $ingredient = Ingredient::find($request->ingredientId);
-        $shopping_list->ingredients()->attach($ingredient,['amount' => $request->amount]);
-
+        $ingredient = Ingredient::find($array[0]);
+        $shopping_list->ingredients()->attach($ingredient,['amount' => $array[1]]);
 
         return redirect()->back();
     }

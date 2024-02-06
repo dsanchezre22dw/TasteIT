@@ -84,7 +84,7 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/', [ShoppingListController::class,'index'])->name('shopping.index'); 
         Route::post('/update', [ShoppingListController::class,'store']);
         Route::post('/clear', [ShoppingListController::class,'update']);
-        Route::post('/add', [ShoppingListController::class,'add']);
+        Route::post('/add/{array}', [ShoppingListController::class,'add']);
     });
 
     Route::prefix('fridge')->group(function (){

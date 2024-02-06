@@ -48,10 +48,7 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
     amount: ''
   });
 
-  const { data, setData, post} = useForm({
-    ingredientId: '',
-    amount: ''
-});
+  const { data, setData, post} = useForm({});
 
   var http
 
@@ -145,10 +142,10 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
 
 
   function handleAddShopping(id, amount) {
-    setData('ingredientId',id);
-    setData('amount',amount);
 
-    post(`/dashboard/shopping/add`);
+    let array = [id,amount];
+
+    post(`/dashboard/shopping/add/${array}`);
     
   }
 
@@ -257,6 +254,7 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
                       <button onClick={() => handleAddShopping(ingredient.id, ingredient.pivot.amount)}>
                         <ShoppingCartIcon className="w-5"></ShoppingCartIcon>
                       </button>
+
                       {ingredient.pivot.amount}g {ingredient.name}
 
                     </div>
