@@ -35,10 +35,7 @@ class ShoppingListController extends Controller
         });
     
         return Inertia::render('Dashboard/pages/Standard/ShoppingList/shoppinglist', [
-            'shoppingList' => $shopping_list,
-            'fridge' => $fridge,
-            'users' => $users,
-            'recipes' => $recipesWithTypesAndAvgValorations,
+            'shoppingList' => $shopping_list
         ]);
     }
 
@@ -62,6 +59,26 @@ class ShoppingListController extends Controller
             $ingredient = Ingredient::where('name','like',$ingredientName)->first();
             $shopping_list->ingredients()->attach($ingredient,['amount' => $amount]);
         }
+
+        return redirect()->back()->with('success', '¡Operación exitosa!');
+    }
+
+    public function add($array)
+    {
+        $array = explode(',',$array);
+
+        $user = Auth::user();
+        $shopping_list = $user->shopping_list;
+
+        $ingredient = Ingredient::find($array[0]);
+
+        $amount = $shopping_list->ingredients()->find($array[0]);
+        if ($amount) {
+            $amount = $amount->pivot->amount;
+        }
+
+        $shopping_list->ingredients()->detach($array[0]);
+        $shopping_list->ingredients()->attach($ingredient,['amount' => $array[1]+$amount]);
 
         return redirect()->back();
     }

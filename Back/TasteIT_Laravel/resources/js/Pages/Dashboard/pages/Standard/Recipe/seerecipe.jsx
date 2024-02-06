@@ -43,9 +43,11 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
   const [description, setDesciption] = useState(recipe.description);
   const [lang, setLang] = useState(localStorage.getItem('preferredLang')??'en');
 
-  
+  const [successMessage, setSuccessMessage] = useState('');
 
-  var http;
+  const {post} = useForm({});
+
+  var http
 
   useEffect (() => {
 
@@ -133,18 +135,30 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
     xhr.send(data);
   }
 
+<<<<<<< HEAD
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this recipe?')) {
       form.delete(`/dashboard/recipes/delete/${id}`);
     }
   };
+=======
+
+  function handleAddShopping(id, amount) {
+
+    let array = [id, amount];
+
+    post(`/dashboard/shopping/add/${array}`);
+    
+  }
+
+>>>>>>> fe96ab1be00bef58616ec30dc95026a38651e9f7
 
 
   return (
     <>
       <Dashboard auth={auth}>
         <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
-          
+        
           <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
         </div>
         <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100 rounded-xl">
@@ -161,7 +175,7 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
                   <Typography
                     variant="h1"
                   >
-                    {recipe.title}
+                    {recipe.title} {successMessage && <div>{successMessage}</div>}
                   </Typography>
                   
                   <div>
@@ -242,7 +256,9 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
                 {recipe.ingredients.map((ingredient) => (
                   
                     <div className="flex ml-1" key={ingredient.id}>
-                      <ShoppingCartIcon className="w-5"></ShoppingCartIcon>
+                      <button onClick={() => handleAddShopping(ingredient.id, ingredient.pivot.amount)}>
+                        <ShoppingCartIcon className="w-5"></ShoppingCartIcon>
+                      </button>
 
                       {ingredient.pivot.amount}g {ingredient.name}
 

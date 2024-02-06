@@ -5,7 +5,10 @@ export default function AddedIngredient(props) {
 
     useEffect( () => {
         let array = props.data.amount;
-        array[props.ingredientName] = 1;
+
+        if (!array[props.ingredientName]) {
+            array[props.ingredientName] = 1;
+        }
 
         props.setData('amount', array);
     },[])
