@@ -43,12 +43,9 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
   const [description, setDesciption] = useState(recipe.description);
   const [lang, setLang] = useState(localStorage.getItem('preferredLang')??'en');
 
-  const form = useForm({
-    ingredientId: '',
-    amount: ''
-  });
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const { data, setData, post} = useForm({});
+  const {post} = useForm({});
 
   var http
 
@@ -143,17 +140,19 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
 
   function handleAddShopping(id, amount) {
 
-    let array = [id,amount];
+    let array = [id, amount];
 
     post(`/dashboard/shopping/add/${array}`);
     
   }
 
+
+
   return (
     <>
       <Dashboard auth={auth}>
         <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
-          
+        
           <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
         </div>
         <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100 rounded-xl">
@@ -170,7 +169,7 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
                   <Typography
                     variant="h1"
                   >
-                    {recipe.title}
+                    {recipe.title} {successMessage && <div>{successMessage}</div>}
                   </Typography>
                   
                   <div>
