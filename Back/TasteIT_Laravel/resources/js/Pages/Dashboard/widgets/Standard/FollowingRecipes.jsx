@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardBody,
@@ -28,20 +28,23 @@ import { platformSettingsData, conversationsData, projectsData } from "../../dat
 import ClockIcon from "@/Components/ClockIcon";
 import StarIcon from "@/Components/StarIcon";
 import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
-import RecipesIndex from "../../pages/Standard/Recipe/indexrecipe";
 import RecipesSection from "../../pages/Standard/Recipe/recipessection";
 
-export function MyRecipes({ auth, user, recipes, savedRecipesIds, recipe_types, show}) {
-
-  const myRecipes = recipes
-  .filter((recipe) => recipe.user_id === user.id);
+export function FollowingRecipes({ auth, user, recipes, savedRecipesIds }) {
+  
+  const followingRecipes = recipes
+  .filter(recipe => user.following.map(following => following.id).includes(recipe.user_id));
   
 
+  
   return (
     <>
-      <RecipesSection auth={auth} user={user} recipesToShow={myRecipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types} show={show}></RecipesSection>         
+      {followingRecipes
+      .map((recipe) => (
+        <RecipeCard key={recipe.id} auth={auth} savedRecipesIds={savedRecipesIds} recipe={recipe}/>
+      ))}    
     </>
   );
 }
 
-export default MyRecipes;
+export default FollowingRecipes;

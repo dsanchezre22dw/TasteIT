@@ -29,18 +29,8 @@ import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
 import RecipesSection from "./recipessection";
 import { Dashboard } from "@/Pages/Dashboard/layouts";
 
-export function RecipesIndex({auth, user, savedRecipesIds, recipes}) { 
+export function RecipesIndex({auth, user, savedRecipesIds, recipes, recipe_types}) { 
 
-  const renderRecipes = recipes
-    .map((recipe) => (
-      <RecipeCard key={recipe.id} auth={auth} savedRecipesIds={savedRecipesIds} recipe={recipe}/>
-  ));
-
-  const followingRecipes = recipes
-    .filter(recipe => user.following.map(following => following.id).includes(recipe.user_id))
-    .map((recipe) => (
-      <RecipeCard key={recipe.id} auth={auth} savedRecipesIds={savedRecipesIds} recipe={recipe}/>
-  ));
   
   return (
     <>
@@ -52,7 +42,7 @@ export function RecipesIndex({auth, user, savedRecipesIds, recipes}) {
         </div>
         <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100 rounded-xl">
           <CardBody className="p-4">
-            <RecipesSection auth={auth} recipesToShow={renderRecipes} followingRecipes={followingRecipes} general={true}></RecipesSection>   
+            <RecipesSection auth={auth} user={user} recipesToShow={recipes} recipe_types={recipe_types} savedRecipesIds={savedRecipesIds} general={true}></RecipesSection>   
           </CardBody>
         </Card>
       </Dashboard>

@@ -30,18 +30,14 @@ import StarIcon from "@/Components/StarIcon";
 import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
 import RecipesSection from "../../pages/Standard/Recipe/recipessection";
 
-export function SavedRecipes({ auth, recipes, savedRecipesIds }) {
+export function SavedRecipes({ auth, recipes, savedRecipesIds, recipe_types }) {
   
   const savedRecipes = recipes.filter(recipe => savedRecipesIds.includes(recipe.id));
 
-  const renderRecipes = savedRecipes
-  .map((recipe) => (
-    <RecipeCard key={recipe.id} auth={auth} savedRecipesIds={savedRecipesIds} recipe={recipe}/>
-  ));
   
   return (
     <>
-      <RecipesSection recipesToShow={renderRecipes} see={true}></RecipesSection> 
+      <RecipesSection auth={auth} recipesToShow={savedRecipes} savedRecipesIds= {savedRecipesIds} recipe_types={recipe_types}></RecipesSection>       
     </>
   );
 }

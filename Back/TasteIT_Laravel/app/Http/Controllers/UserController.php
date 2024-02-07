@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Fridge;
 use App\Models\Recipe;
 use App\Models\Shopping_list;
+use App\Models\Recipe_type;
 use Inertia\Inertia;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\DB;
@@ -49,11 +50,14 @@ class UserController extends Controller
             return $recipe;
         });
 
+        $recipe_types = Recipe_type::all();
+
         return Inertia::render('Dashboard/pages/Standard/Profile/profile', [
             'actualUser' => \App\Models\User::with(['followers', 'following'])->findOrFail(Auth::id()),
             'user' => \App\Models\User::with(['followers', 'following'])->findOrFail($userId),
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipes' => $recipesWithTypesAndAvgValorations,
+            'recipe_types' => $recipe_types,
         ]);
     }
 
