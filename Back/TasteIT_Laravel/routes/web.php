@@ -66,7 +66,7 @@ Route::prefix('dashboard')->group(function () {
     });
 
     Route::prefix('recipes')->group(function () {
-        Route::get('/', [RecipeController::class, 'index'])->name('recipes.index'); 
+        Route::get('/', [RecipeController::class, 'index'])->name('recipes.index')->middleware(['auth', 'verified']); 
         Route::get('/create', [RecipeController::class, 'create'])->name('recipes.create'); 
         Route::get('/{id}', [RecipeController::class, 'show'])->name('recipes.show');
         Route::delete('/delete/{id}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); 

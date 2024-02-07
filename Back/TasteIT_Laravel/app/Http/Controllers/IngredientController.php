@@ -9,6 +9,7 @@ use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
+use Carbon\Carbon;
 
 class IngredientController extends Controller
 {
@@ -29,7 +30,7 @@ class IngredientController extends Controller
             return $recipe;
         });
 
-        return Inertia::render('Dashboard/pages/Standard/Ingredients/CreateIngredients', [
+        return Inertia::render('Dashboard/pages/Admin/Ingredients/AcceptIngredient', [
             'ingredients' => $ingredients,
             'users' => $users,
             'recipes' => $recipesWithTypesAndAvgValorations,
@@ -130,5 +131,33 @@ class IngredientController extends Controller
         $suggestions = $ingredients->pluck('name');
 
         return response()->json(['suggestions' => $suggestions]);
+    }
+
+    public function getNewIngredientsStats()
+    {
+        // Obtener la fecha de inicio y fin del último mes
+        $lastMonth = Carbon::now()->subMonth();
+
+        // Obtener la fecha de inicio y fin del mes anterior al último
+        $previousMonth = Carbon::now()->subMonths(2);
+
+        // Contar la cantidad de usuarios registrados en el último mes
+        $ingredientsLastMonth = Ingredient::where('created_at', '>=', $lastMonth)->count();
+
+        // Contar la cantidad de usuarios registrados en el mes anterior al último
+        $ingredientsPreviousMonth = Ingredient::whereBetween('created_at', [$previousMonth, $lastMonth])->count();
+
+        // Calcular el porcentaje de crecimiento
+        if ($ingredientsPreviousMonth > 0) {
+            $growthPercentage = (($ingredientsLastMonth - $ingredientsPreviousMonth) / $ingredientsPreviousMonth) * 100;
+        } else {
+            $growthPercentage = 0; // Evitar división por cero
+        }
+
+        return response()->json([
+            'value' => $ingredientsLastMonth,
+            'growth' => round($growthPercentage, 2),
+            'title' => "New Ingredients",
+        ]);
     }
 }

@@ -13,6 +13,8 @@ use App\Models\Recipe;
 use App\Models\Shopping_list;
 use Inertia\Inertia;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -85,17 +87,8 @@ class UserController extends Controller
 
         $user = User::create($userData);
 
-        $fridge = Fridge::create([
-            'user_id' => $user->id,
-        ]);
-
-        $shopping_list = Shopping_list::create([
-            'user_id' => $user->id,
-        ]);
-
-        $user->fridge()->save($fridge);
-        $user->shopping_list()->save($shopping_list);
-
+        $user->fridge()->create();
+        $user->shopping_list()->create();
     }
 
 
@@ -134,7 +127,6 @@ class UserController extends Controller
         $user->enabled = $request->input('enabled');
 
         $user->save();
-
     }
 
     /**
@@ -224,4 +216,84 @@ class UserController extends Controller
         return Inertia::render('Dashboard/pages/dashboard/profile', [
         ]);
     }
+
+    public function getTopUsers()
+    {
+        $lastMonth = Carbon::now()->subMonth();
+    
+        // Subconsulta para obtener el total de recetas en el último mes
+        $totalRecipesLastMonth = Recipe::where('created_at', '>=', $lastMonth)->count();
+    
+        // Consulta para obtener los usuarios y contar cuántas recetas han subido en el último mes
+        $topUsers = User::select(
+                'users.id',
+                'users.username',
+                'users.profileImg',
+                DB::raw('COUNT(recipes.id) as recipes_count'),
+                DB::raw("ROUND(COUNT(recipes.id) / $totalRecipesLastMonth * 100, 2) as recipes_percentage")
+            )
+            ->leftJoin('recipes', 'users.id', '=', 'recipes.user_id')
+            ->where('recipes.created_at', '>=', $lastMonth)
+            ->groupBy('users.id', 'users.username', 'users.profileImg')
+            ->orderByDesc('recipes_count')
+            ->limit(10)
+            ->get();
+    
+        return response()->json($topUsers);
+    }
+
+    public function getNewUsersStats()
+    {
+        // Obtener la fecha de inicio y fin del último mes
+        $lastMonth = Carbon::now()->subMonth();
+
+        // Obtener la fecha de inicio y fin del mes anterior al último
+        $previousMonth = Carbon::now()->subMonths(2);
+
+        // Contar la cantidad de usuarios registrados en el último mes
+        $usersLastMonth = User::where('created_at', '>=', $lastMonth)->count();
+
+        // Contar la cantidad de usuarios registrados en el mes anterior al último
+        $usersPreviousMonth = User::whereBetween('created_at', [$previousMonth, $lastMonth])->count();
+
+        // Calcular el porcentaje de crecimiento
+        if ($usersPreviousMonth > 0) {
+            $growthPercentage = (($usersLastMonth - $usersPreviousMonth) / $usersPreviousMonth) * 100;
+        } else {
+            $growthPercentage = 0; // Evitar división por cero
+        }
+
+        return response()->json([
+            'value' => $usersLastMonth,
+            'growth' => round($growthPercentage, 2), // Redondear a dos decimales
+            'title' => "New Users",
+        ]);
+    }
+
+    public function getMonthlyUsers()
+    {
+        $newUsersByMonth = User::select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('COUNT(*) as new_users')
+        )
+        ->where('created_at', '>=', now()->subYear())
+        ->groupBy('year', 'month')
+        ->orderBy('year')
+        ->orderBy('month')
+        ->get();
+    
+        // Mapeamos el nombre del mes
+        $newUsersByMonth->transform(function ($item) {
+            $monthNames = [
+                1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June',
+                7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
+            ];
+            $item->month_name = $monthNames[$item->month];
+            return $item;
+        });
+    
+        return response()->json($newUsersByMonth);
+    }
+    
 }

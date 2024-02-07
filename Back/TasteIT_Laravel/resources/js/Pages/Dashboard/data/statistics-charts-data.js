@@ -1,12 +1,11 @@
 import { chartsConfig } from "../configs";
 
-const websiteViewsChart = {
+export const websiteViewsChart = {
   type: "bar",
   height: 220,
   series: [
     {
       name: "Views",
-      data: [50, 20, 10, 22, 50, 10, 40],
     },
   ],
   options: {
@@ -20,18 +19,25 @@ const websiteViewsChart = {
     },
     xaxis: {
       ...chartsConfig.xaxis,
-      categories: ["M", "T", "W", "T", "F", "S", "S"],
     },
+    yaxis: {
+      ...chartsConfig.yaxis,
+      labels: {
+        formatter: function(value) {
+          return parseInt(value, 10); // Redondea el valor al número entero más cercano
+        }
+      }
+    }
   },
 };
 
-const dailySalesChart = {
+export const dailySalesChart = {
   type: "line",
   height: 220,
   series: [
     {
       name: "Sales",
-      data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+      data: [50, 40, 300, 320, 500, 350, 200, 230, 500, 12, 12 ,12 ],
     },
   ],
   options: {
@@ -46,6 +52,9 @@ const dailySalesChart = {
     xaxis: {
       ...chartsConfig.xaxis,
       categories: [
+        "Jan",
+        "Feb",
+        "Mar",
         "Apr",
         "May",
         "Jun",
@@ -92,9 +101,17 @@ const completedTaskChart = {
         "Dec",
       ],
     },
+    yaxis: {
+      ...chartsConfig.yaxis,
+      labels: {
+        formatter: function(value) {
+          return parseInt(value, 10); // Redondea el valor al número entero más cercano
+        }
+      }
+    }
   },
 };
-const completedTasksChart = {
+export const completedTasksChart = {
   ...completedTaskChart,
   series: [
     {
@@ -103,29 +120,3 @@ const completedTasksChart = {
     },
   ],
 };
-
-export const statisticsChartsData = [
-  {
-    color: "white",
-    title: "Website View",
-    description: "Last Campaign Performance",
-    footer: "campaign sent 2 days ago",
-    chart: websiteViewsChart,
-  },
-  {
-    color: "white",
-    title: "Daily Sales",
-    description: "15% increase in today sales",
-    footer: "updated 4 min ago",
-    chart: dailySalesChart,
-  },
-  {
-    color: "white",
-    title: "Completed Tasks",
-    description: "Last Campaign Performance",
-    footer: "just updated",
-    chart: completedTasksChart,
-  },
-];
-
-export default statisticsChartsData;
