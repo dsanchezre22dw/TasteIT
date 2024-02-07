@@ -31,5 +31,5 @@ Route::get('/new-recipes',[RecipeController::class, 'getNewRecipesStats']);
 Route::get('/recipe-types',[RecipeController::class, 'getRecipeTypeRecipes']);
 Route::get('/monthly-users',[UserController::class, 'getMonthlyUsers']);
 Route::get('/monthly-recipes',[RecipeController::class, 'getMonthlyRecipes']);
-Route::get('/recipes-users',[RecipeController::class, 'getRecipesWithUsers']);
+Route::get('/users-activity',[RecipeController::class, 'getRecipesWithUsers']);
 Route::get('/prueba',[RecipeController::class, 'pruebaapi']);

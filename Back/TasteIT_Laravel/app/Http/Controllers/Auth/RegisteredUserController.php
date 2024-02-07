@@ -38,7 +38,7 @@ class RegisteredUserController extends Controller
             'surname' => 'nullable|string|max:100',
             'username' => 'required|string|max:50|unique:'.User::class,
             'email' => 'required|lowercase|email|max:100|unique:'.User::class,
-            'password' => ['required', 'confirmed', 'min:8', Password::min(8)->mixedCase()->numbers()],
+            'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()],
         ]);
 
         $user = User::create([
@@ -50,6 +50,9 @@ class RegisteredUserController extends Controller
             'type' => 'standard',
             'enabled' => 1
         ]);
+
+        $user->fridge()->create();
+        $user->shopping_list()->create();
 
         event(new Registered($user));
 

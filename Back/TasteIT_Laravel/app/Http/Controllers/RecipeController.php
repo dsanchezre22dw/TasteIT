@@ -312,7 +312,36 @@ class RecipeController extends Controller
 
     public function getRecipesWithUsers()
     {
-        $recipesAndUsers = Recipe::select('recipes.title as action', 'users.username as author')
+        $recipesAndUsers = Recipe::select('recipes.title as action', 'users.username as author', 'recipes.created_at')
+            ->join('users', 'recipes.user_id', '=', 'users.id')
+            ->orderBy('recipes.created_at', 'DESC')
+            ->get()
+            ->map(function ($item) {
+                $item['type'] = 'recipes';
+                $item['formatted_date'] = Carbon::parse($item['created_at'])->isoFormat('D MMM h:mm A');
+                return $item->toArray();
+            });
+
+        $seguidores = User::select('users.username as author', 'followed_users.username as action', 'follows.created_at')
+            ->join('follows', 'users.id', '=', 'follows.follower_id')
+            ->join('users as followed_users', 'followed_users.id', '=', 'follows.followed_id')
+            ->orderBy('follows.created_at', 'DESC')
+            ->get()
+            ->map(function ($item) {
+                $item['type'] = 'follower';
+                $item['formatted_date'] = Carbon::parse($item['created_at'])->isoFormat('D MMM h:mm A');
+                return $item->toArray();
+            });
+    
+        $resultados = $recipesAndUsers->concat($seguidores)->sortByDesc('created_at')->take(5)->values();
+
+        return $resultados->toArray();
+
+    }
+
+    public function pruebaapi()
+    {
+        $recipesAndUsers = Recipe::select('recipes.title as action', 'users.username as author', 'recipes.created_at')
             ->join('users', 'recipes.user_id', '=', 'users.id')
             ->orderBy('recipes.created_at', 'DESC')
             ->get()
@@ -331,26 +360,8 @@ class RecipeController extends Controller
                 return $item;
             });
     
+        $resultados = $recipesAndUsers->concat($seguidores)->sortBy('author');
 
-        return response()->json([
-            'recetas' => $recipesAndUsers,
-            'follows' => $seguidores,
-        ]);
-
-    }
-
-    public function pruebaapi()
-    {
-        $seguidores = User::select('users.username as author', 'followed_users.username as action', 'follows.created_at')
-        ->join('follows', 'users.id', '=', 'follows.follower_id')
-        ->join('users as followed_users', 'followed_users.id', '=', 'follows.followed_id')
-        ->orderBy('follows.created_at', 'DESC')
-        ->get();
-
-        return $seguidores;
-
-        return response()->json([
-            'seguidores' => $seguidores,
-        ]);
+        return $resultados;
     }
 }

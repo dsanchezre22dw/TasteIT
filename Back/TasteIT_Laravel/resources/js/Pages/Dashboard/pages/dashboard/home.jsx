@@ -20,6 +20,7 @@ import {
   UserPlusIcon,
   UsersIcon,
   ChartBarIcon,
+  BellIcon,
 } from "@heroicons/react/24/solid";
 
 import {
@@ -46,6 +47,7 @@ export function Home({auth}) {
   const [recipeTypes, setRecipeTypes] = useState([]);
   const [usersMonthly, setUsersMonthly] = useState([]);
   const [recipesMonthly, setRecipesMonthly] = useState([]);
+  const [usersActivity, setUsersActivity] = useState([]);
   const [statisticsCardsData, setStatisticsCardsData] = useState([]);
   const [statisticsChartsData, setStatisticsChartsData] = useState([]);
   
@@ -71,7 +73,7 @@ export function Home({auth}) {
       setNewRecipes(response.data);
     })
     .catch(error => {
-      console.error('Error obtaining the recipe types and its recipes', error);
+      console.error('Error obtaining the new recipes of this month', error);
     });
 
     axios.get('/api/recipe-types')
@@ -80,7 +82,7 @@ export function Home({auth}) {
       setRecipesTypesChart(response.data)
     })
     .catch(error => {
-      console.error('Error obtaining the new recipes of this month', error);
+      console.error('Error obtaining the recipe types and its recipes', error);
     });
   
     axios.get('/api/monthly-users')
@@ -89,7 +91,7 @@ export function Home({auth}) {
       setUsersMonthlyChart(response.data)
     })
     .catch(error => {
-      console.error('Error obtaining the new recipes of this month', error);
+      console.error('Error obtaining the new users by month', error);
     });
 
     axios.get('/api/monthly-recipes')
@@ -98,7 +100,15 @@ export function Home({auth}) {
       setRecipesMonthlyChart(response.data)
     })
     .catch(error => {
-      console.error('Error obtaining the new recipes of this month', error);
+      console.error('Error obtaining the new recipes by month', error);
+    });
+
+    axios.get('/api/users-activity')
+    .then(response => {
+      setUsersActivity(response.data);
+    })
+    .catch(error => {
+      console.error('Error obtaining the users activity', error);
     });
 
   }, []);
@@ -336,18 +346,19 @@ export function Home({auth}) {
             </Typography>
           </CardHeader>
           <CardBody className="pt-0">
-            {ordersOverviewData.map(
-              ({ icon, color, title, description }, key) => (
-                <div key={title} className="flex items-start gap-4 py-3">
+            
+            {usersActivity && usersActivity.map(
+              ({ action, author, type, formatted_date, index }, key) => (
+                <div key={index} className="flex items-start gap-4 py-3">
                   <div
                     className={`relative p-1 after:absolute after:-bottom-6 after:left-2/4 after:w-0.5 after:-translate-x-2/4 after:bg-blue-gray-50 after:content-[''] ${
-                      key === ordersOverviewData.length - 1
+                      key === usersActivity.length - 1
                         ? "after:h-0"
                         : "after:h-4/6"
                     }`}
                   >
-                    {React.createElement(icon, {
-                      className: `!w-5 !h-5 ${color}`,
+                    {React.createElement(BellIcon, {
+                      className: `!w-5 !h-5 text-blue-gray-300`,
                     })}
                   </div>
                   <div>
@@ -356,14 +367,16 @@ export function Home({auth}) {
                       color="blue-gray"
                       className="block font-medium"
                     >
-                      {title}
+                      {type === "follower"
+                        ? `${author} followed user '${action}'`
+                        : `${author} uploaded recipe '${action}'`}
                     </Typography>
                     <Typography
                       as="span"
                       variant="small"
                       className="text-xs font-medium text-blue-gray-500"
                     >
-                      {description}
+                      {formatted_date}
                     </Typography>
                   </div>
                 </div>

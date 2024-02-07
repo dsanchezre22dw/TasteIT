@@ -87,17 +87,8 @@ class UserController extends Controller
 
         $user = User::create($userData);
 
-        $fridge = Fridge::create([
-            'user_id' => $user->id,
-        ]);
-
-        $shopping_list = Shopping_list::create([
-            'user_id' => $user->id,
-        ]);
-
-        $user->fridge()->save($fridge);
-        $user->shopping_list()->save($shopping_list);
-
+        $user->fridge()->create();
+        $user->shopping_list()->create();
     }
 
 
@@ -136,7 +127,6 @@ class UserController extends Controller
         $user->enabled = $request->input('enabled');
 
         $user->save();
-
     }
 
     /**
