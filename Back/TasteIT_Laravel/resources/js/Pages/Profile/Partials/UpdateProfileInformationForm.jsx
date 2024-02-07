@@ -1,22 +1,41 @@
+import React, { useState } from "react";
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
+import { setupPasswordValidation, validateFirstName, validateSurname, validatePassword } from '../../../../../public/assets/js/validationUtils';
+
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
     const user = usePage().props.auth.user;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        name: user.name,
+        username: user.username,
+        firstname: user.firstname,
+        surname: user.surname,
         email: user.email,
+    });
+
+    const [errorMessages, setErrorMessages] = useState({
+        firstname: '',
+        surname: '',
+        // Otros campos que necesiten validación
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('profile.update'));
+        var errors_exist = "";
+
+        errors_exist += validateFirstName(data, setErrorMessages);
+        errors_exist += validateSurname(data, setErrorMessages);
+
+        if (errors_exist === ""){
+            patch(route('profile.update'));
+        }
+
     };
 
     return (
@@ -31,19 +50,54 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="username" value="Username" />
 
                     <TextInput
-                        id="name"
+                        id="username"
                         className="mt-1 block w-full"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
+                        value={data.username}
+                        onChange={(e) => setData('username', e.target.value)}
+                        required
+                        isFocused
+                        autoComplete="username"
+                    />
+
+                    <InputError className="mt-2" message={errors.username} />
+
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="firstname" value="First name" />
+
+                    <TextInput
+                        id="firstname"
+                        className="mt-1 block w-full"
+                        value={data.firstname}
+                        onChange={(e) => setData('firstname', e.target.value)}
                         required
                         isFocused
                         autoComplete="name"
                     />
 
-                    <InputError className="mt-2" message={errors.name} />
+                    <InputError className="mt-2" message={errorMessages.firstname} />
+                    <InputError className="mt-2" message={errors.firstname} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="surname" value="Surname" />
+
+                    <TextInput
+                        id="surname"
+                        className="mt-1 block w-full"
+                        value={data.surname}
+                        onChange={(e) => setData('surname', e.target.value)}
+                        required
+                        isFocused
+                        autoComplete="name"
+                    />
+
+                    <InputError className="mt-2" message={errorMessages.surname} />
+                    <InputError className="mt-2" message={errors.surname} />
                 </div>
 
                 <div>

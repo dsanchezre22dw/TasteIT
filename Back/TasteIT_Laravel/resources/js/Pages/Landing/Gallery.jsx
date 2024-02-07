@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionTitle from './SectionTitle';
+import '../../../css/carousel.css'
 
 const Gallery = ()=>{
     return(

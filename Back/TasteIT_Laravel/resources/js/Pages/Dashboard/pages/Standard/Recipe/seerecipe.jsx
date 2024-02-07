@@ -96,8 +96,6 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
 
         select.append(option);
       });
-
-
     }
 
   }
@@ -137,6 +135,11 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
     xhr.send(data);
   }
 
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this recipe?')) {
+      form.delete(`/dashboard/recipes/delete/${id}`);
+    }
+  };
 
   function handleAddShopping(id, amount) {
 
@@ -292,9 +295,8 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
 
                 <div className="float-right -mt-12">
 
-
-                  <Link to={`/dashboard/recipes/valorate/${recipe.id}`} className="ml-10">
-                    <Button variant="gradient" color="red">Make valoration</Button>
+                  <Link href={`/dashboard/recipes/valorate/${recipe.id}`} className="ml-10">
+                    <Button variant="gradient">Make valoration</Button>
                   </Link>
 
                   </div>

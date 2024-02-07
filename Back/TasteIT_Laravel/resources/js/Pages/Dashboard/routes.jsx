@@ -60,6 +60,12 @@ export const routes = [
         path: "/ingredients",
         actual: "ingredients.index",
       },
+      {
+        icon: <FontAwesomeIcon icon={faChartPie} size="xl"/>,
+        name: "statistics",
+        path: "/statistics",
+        actual: "statistics.index",
+      },
     ],
   },
   {
@@ -101,12 +107,6 @@ export const routes = [
         name: "profile layout",
         path: "/profilelayout",
         actual: "profilelayout.index",
-      },
-      {
-        icon: <FontAwesomeIcon icon={faChartPie} size="xl"/>,
-        name: "statistics",
-        path: "/statistics",
-        actual: "statistics.index",
       },
     ],
   },

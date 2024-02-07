@@ -61,7 +61,7 @@ section {
 
 .section-bg-half {
   background: rgb(255,255,255);
-  background: linear-gradient(90deg, rgb(204, 152, 152) 72%, rgba(121,9,9,1) 28%); 
+  background: linear-gradient(90deg, rgb(204, 152, 152) 68%, rgba(121,9,9,1) 32%); 
 }
 
 @media (max-width: 1800px) {
