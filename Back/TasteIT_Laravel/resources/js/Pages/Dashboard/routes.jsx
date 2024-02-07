@@ -24,6 +24,8 @@ import ValorateRecipe from "./pages/Standard/Recipe/valoraterecipe";
 import CreateIngredients from "./pages/Standard/Ingredients/CreateIngredients";
 import AcceptIngredient from "./pages/Admin/Ingredients/AcceptIngredient";
 import IngredientsEdit from "./pages/Admin/Ingredients/IngredientsEdit";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWheatAwn, faBowlFood, faJar, faCircleUser, faCartShopping, faChartArea, faChartPie, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -65,31 +67,31 @@ export const routes = [
     admin: "no",
     pages: [
       {
-        icon: <AcademicCapIcon {...icon} />,
+        icon: <FontAwesomeIcon icon={faBowlFood} size="xl"/>,
         name: "recipes",
         path: "/recipes",
         actual: "recipes.index",
       },
       {
-        icon: <UserCircleIcon {...icon} />,
+        icon: <FontAwesomeIcon icon={faCircleUser} size="xl"/>,
         name: "profile",
         path: "/profile",
         actual: "profile",
       },
       {
-        icon: <ShoppingCartIcon {...icon} />,
+        icon: <FontAwesomeIcon icon={faCartShopping} size="xl"/>,
         name: "shopping",
         path: "/shopping",
         actual: "shopping.index",
       },
       {
-        icon: <ShoppingCartIcon {...icon} />,
+        icon: <FontAwesomeIcon icon={faBoxArchive} size="xl"/>,
         name: "fridge",
         path: "/fridge",
         actual: "fridge.index",
       },
       {
-        icon: <AcademicCapIcon {...icon} />,
+        icon: <FontAwesomeIcon icon={faWheatAwn} size="xl"/>,
         name: "ingredient",
         path: "/ingredient",
         actual: "ingredients.index",
@@ -101,7 +103,7 @@ export const routes = [
         actual: "profilelayout.index",
       },
       {
-        icon: <AcademicCapIcon {...icon} />,
+        icon: <FontAwesomeIcon icon={faChartPie} size="xl"/>,
         name: "statistics",
         path: "/statistics",
         actual: "statistics.index",
