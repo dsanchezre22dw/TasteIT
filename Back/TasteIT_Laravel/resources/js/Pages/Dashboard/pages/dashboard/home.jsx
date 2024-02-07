@@ -44,6 +44,7 @@ export function Home({auth}) {
   const [recipesAmountByUsers, setRecipesAmountByUsers] = useState([]);
   const [newUsers, setNewUsers] = useState([]);
   const [newRecipes, setNewRecipes] = useState([]);
+  const [newIngredients, setNewIngredients] = useState([]);
   const [recipeTypes, setRecipeTypes] = useState([]);
   const [usersMonthly, setUsersMonthly] = useState([]);
   const [recipesMonthly, setRecipesMonthly] = useState([]);
@@ -74,6 +75,15 @@ export function Home({auth}) {
     })
     .catch(error => {
       console.error('Error obtaining the new recipes of this month', error);
+    });
+
+
+    axios.get('/api/new-ingredients')
+    .then(response => {
+      setNewIngredients(response.data);
+    })
+    .catch(error => {
+      console.error('Error obtaining the new ingredients of this month', error);
     });
 
     axios.get('/api/recipe-types')
@@ -115,8 +125,8 @@ export function Home({auth}) {
 
   
   useEffect(() => {
-    setStatisticsCardsData([newUsers, newRecipes]);
-  }, [newUsers, newRecipes]);
+    setStatisticsCardsData([newUsers, newRecipes, newIngredients]);
+  }, [newUsers, newRecipes, newIngredients]);
 
   function setRecipesTypesChart(data){
     setStatisticsChartsData([])

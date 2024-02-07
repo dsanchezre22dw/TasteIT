@@ -217,7 +217,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function getUsers()
+    public function getTopUsers()
     {
         $lastMonth = Carbon::now()->subMonth();
     
