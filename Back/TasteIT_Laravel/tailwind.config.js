@@ -18,6 +18,9 @@ module.exports = withMT({
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                custom: "#ff0",
+              },
         },
     },
 

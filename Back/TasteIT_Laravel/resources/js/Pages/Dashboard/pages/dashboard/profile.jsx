@@ -132,7 +132,7 @@ export function Profilee({auth}) {
                     key={props.name}
                     {...props}
                     action={
-                      <Button variant="text" size="sm">
+                      <Button variant="text" size="sm" color="red">
                         reply
                       </Button>
                     }
@@ -189,7 +189,7 @@ export function Profilee({auth}) {
                     </CardBody>
                     <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
                       <Link to={route}>
-                        <Button variant="outlined" size="sm">
+                        <Button variant="outlined" size="sm" color="red">
                           view project
                         </Button>
                       </Link>

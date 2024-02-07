@@ -89,7 +89,7 @@ Navbar.defaultProps = {
       href="https://www.creative-tim.com/product/material-tailwind-dashboard-react"
       target="_blank"
     >
-      <Button variant="gradient" size="sm" fullWidth>
+      <Button variant="gradient" size="sm" color="red" fullWidth>
         free download
       </Button>
     </a>

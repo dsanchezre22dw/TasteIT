@@ -91,7 +91,7 @@ console.log(selectedIngredients)
             ))}
             </div>
         </div>
-        <Button variant="gradient" className="ml-5" onClick={submit}>
+        <Button variant="gradient" color="red" className="ml-5" onClick={submit}>
             Save
         </Button>
         </form>

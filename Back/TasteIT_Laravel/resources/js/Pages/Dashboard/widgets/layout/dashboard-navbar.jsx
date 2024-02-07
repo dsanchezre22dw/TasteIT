@@ -174,13 +174,17 @@ export function DashboardNavbar({ auth }) {
           >
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500" />
           </IconButton>
-          <UserButton user={auth.user}/>
+          <UserButton user={auth.user} className="hidden md:flex"/>
           <IconButton
               variant="text"
               color="blue-gray"
-              className="grid xl:hidden"
+              className="grid md:hidden"
           >
-              <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+              { auth.user.profileImg? (
+                  <Avatar src={auth.user.profileImg} className="h-5 w-5"  variant="circular"/>
+              ):(
+                  <UserCircleIcon className="h-5 w-5" />
+              )}
               
           </IconButton>
           <Menu>

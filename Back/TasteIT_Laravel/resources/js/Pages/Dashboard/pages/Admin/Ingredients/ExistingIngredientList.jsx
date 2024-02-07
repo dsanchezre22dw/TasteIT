@@ -17,7 +17,7 @@ import {
   } from "@heroicons/react/24/solid";
   import { useForm } from '@inertiajs/inertia-react';
 
-export default function ExistingIngredientList({ingredient}) {
+export default function ExistingIngredientList({auth, ingredient}) {
     const {
         id,
         name,
@@ -49,6 +49,7 @@ export default function ExistingIngredientList({ingredient}) {
           {name}
         </Typography>
       </CardBody>
+      {auth.user.type == 'admin'? (
       <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
           <div className="flex justify-around w-full">
 
@@ -84,6 +85,7 @@ export default function ExistingIngredientList({ingredient}) {
             </div>
           </div>
       </CardFooter>
+      ):''}
     </Card>
       );
 }

@@ -15,7 +15,7 @@ export default function NewIngredient() {
             <form onSubmit={submit}>
                 <label htmlFor="ingredient">New Ingredient: </label>
                 <input type="text" name="ingredient" className="mx-5" value={data.name} placeholder="Ingredient Name" onChange={(e) => setData('name',e.target.value)}/>
-                <Button variant="gradient" onClick={submit}>
+                <Button variant="gradient" color="red" onClick={submit}>
                     Create
                 </Button>
             </form>
