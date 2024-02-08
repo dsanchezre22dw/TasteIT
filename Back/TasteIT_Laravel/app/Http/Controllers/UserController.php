@@ -114,6 +114,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd($request);
         $user = \App\Models\User::findOrFail($id);
 
         $request->validate([
@@ -123,6 +124,7 @@ class UserController extends Controller
             'email' => 'required|lowercase|email|max:100|unique:'.User::class.',email,'.$id,
             'enabled' => 'required|boolean',
             'usertype' => 'required|in:admin,standard,chef',
+            'image' => 'nullable|image'
         ]);
 
         $user->username = $request->input('username');

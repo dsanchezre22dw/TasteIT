@@ -6,6 +6,7 @@ import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { setupPasswordValidation, validateFirstName, validateSurname, validatePassword } from '../../../../../public/assets/js/validationUtils';
+import ImageUploader from "@/Pages/Dashboard/widgets/postRecipe/ImageUploader";
 
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
@@ -16,6 +17,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         firstname: user.firstname,
         surname: user.surname,
         email: user.email,
+        image: null,
     });
 
     const [errorMessages, setErrorMessages] = useState({
@@ -49,6 +51,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
+                <ImageUploader data={data} setData={setData} errors={errors} image={user.profileImg}/> 
                 <div>
                     <InputLabel htmlFor="username" value="Username" />
 
@@ -75,7 +78,6 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         value={data.firstname}
                         onChange={(e) => setData('firstname', e.target.value)}
                         required
-                        isFocused
                         autoComplete="name"
                     />
 
@@ -91,8 +93,6 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         className="mt-1 block w-full"
                         value={data.surname}
                         onChange={(e) => setData('surname', e.target.value)}
-                        required
-                        isFocused
                         autoComplete="name"
                     />
 

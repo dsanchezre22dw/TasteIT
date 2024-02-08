@@ -123,7 +123,7 @@ export default function CreatePost( {auth, recipe="", recipe_types} ) {
 
                         </div>
 
-                        <div className='mt-3'>
+                        <div className='mt-3 max-w-[500px]'>
                             <InputLabel htmlFor="recipetype" value="Recipe Types" />
 
                             <div className="flex flex-wrap gap-4">
