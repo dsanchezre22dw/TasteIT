@@ -17,7 +17,7 @@ export default function CreatePost( {auth, recipe="", recipe_types} ) {
         amount: {},
         description: recipe.description,
         image: null,
-        recipetype: recipe.recipe_types,
+        recipetype: null,
         user_id: auth.user.id
     });
 
@@ -33,12 +33,19 @@ export default function CreatePost( {auth, recipe="", recipe_types} ) {
 
             create = false;
 
-            let obj = {}
+            let obj = {};
+            let array = [];
 
             recipe.ingredients.forEach(ingredient => {
                 obj[ingredient.name] = ingredient.pivot.amount;
             });
 
+            recipe.recipe_types.forEach(type => {
+                array.push(type.id)
+            })
+
+            setFilteringTypes(array)
+            setData('recipetype',array);
             setData('amount', obj);
         }
 
@@ -49,9 +56,11 @@ export default function CreatePost( {auth, recipe="", recipe_types} ) {
         e.preventDefault();
 
         
-
-
+        if (recipe === "") {
             post('/dashboard/recipes/store');
+        } else {
+            post(`/dashboard/recipes/update/${recipe.id}`);
+        }
         
     };
 

@@ -189,9 +189,11 @@ class RecipeController extends Controller
     public function edit($recipeId)
     {
         $recipe = Recipe::with(['recipe_types', 'valorations', 'ingredients', 'user'])->findOrFail($recipeId);
+        $recipe_types = Recipe_type::all();
 
         return Inertia::render('Dashboard/pages/Standard/Recipe/editrecipe', [
             'recipe' => $recipe,
+            'recipe_types' => $recipe_types,
         ]);
     }
 
@@ -241,6 +243,16 @@ class RecipeController extends Controller
             $ing = Ingredient::where('name','like',$ingredient)->first();
 
             $recipe->ingredients()->attach($ing, ['amount' => $amount]);
+        }
+
+        $recipe->recipe_types()->detach();
+
+        if ($request->recipetype) {
+            foreach ($request->recipetype as $key => $typeId) {
+                $type = Ingredient::find($typeId);
+
+                $recipe->recipe_types()->attach($type);
+            }
         }
 
         return redirect()->route('recipes.show',$recipeID);
