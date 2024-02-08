@@ -72,8 +72,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return Inertia::render('Dashboard/pages/Admin/Users/adduser', [
-            'users' => $users,
+        return Inertia::render('Dashboard/pages/Standard/Profile/profile', [
         ]);
     }
 
@@ -201,13 +200,6 @@ class UserController extends Controller
             $user->followers()->updateExistingPivot($follower_id, ['blocked' => false]);
         }
 
-    }
-
-    public function prueba()
-    {
-
-        return Inertia::render('Profile/Edit', [
-        ]);
     }
 
     public function statistics()

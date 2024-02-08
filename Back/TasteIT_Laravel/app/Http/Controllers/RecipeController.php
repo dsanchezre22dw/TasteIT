@@ -245,11 +245,6 @@ class RecipeController extends Controller
         return redirect()->back();
     }
 
-    public function prueba()
-    {
-        return Inertia::render('Profile/Edit', [
-        ]);
-    }
 
     public function getNewRecipesStats()
     {
@@ -346,29 +341,4 @@ class RecipeController extends Controller
 
     }
 
-    public function pruebaapi()
-    {
-        $recipesAndUsers = Recipe::select('recipes.title as action', 'users.username as author', 'recipes.created_at')
-            ->join('users', 'recipes.user_id', '=', 'users.id')
-            ->orderBy('recipes.created_at', 'DESC')
-            ->get()
-            ->map(function ($item) {
-                $item['type'] = 'recipes';
-                return $item;
-            });
-
-        $seguidores = User::select('users.username as author', 'followed_users.username as action', 'follows.created_at')
-            ->join('follows', 'users.id', '=', 'follows.follower_id')
-            ->join('users as followed_users', 'followed_users.id', '=', 'follows.followed_id')
-            ->orderBy('follows.created_at', 'DESC')
-            ->get()
-            ->map(function ($item) {
-                $item['type'] = 'follower';
-                return $item;
-            });
-    
-        $resultados = $recipesAndUsers->concat($seguidores)->sortBy('author');
-
-        return $resultados;
-    }
 }

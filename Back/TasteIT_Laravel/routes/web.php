@@ -35,38 +35,36 @@ Route::get('/', function () {
     return Redirect::route('dashboard');
 })->name('index');
 
-Route::prefix('dashboard')->group(function () {
+Route::middleware('auth')->prefix('dashboard')->group(function () {
 
-    Route::get('/', function(){
-
-        if (Gate::allows('access-admin')){
-            return redirect()->route('users.index');
-        }else{
-            return redirect()->route('recipes.index');
-        }
-    });
+    Route::get('/', function () {
+        return Redirect::route('statistics.index');
+    })->name('dashboard')->middleware('admin');
 
     Route::get('/profile', [UserController::class, 'profile'])->name('profile'); 
-    Route::get('/tables', [UserController::class, 'index']);
-    Route::get('/notifications', [UserController::class, 'index']);
-    Route::get('/prueba', [UserController::class, 'prueba'])->name('prueba');
     Route::get('/statistics', [UserController::class, 'statistics'])->name('statistics.index');
-    Route::get('/profilelayout', [UserController::class, 'profilelayout'])->name('profilelayout.index');
 
     Route::prefix('users')->group(function () {
-        Route::get('/', [UserController::class, 'index'])->name('users.index'); 
-        Route::get('/{id}', [UserController::class, 'show'])->name('users.show');
-        Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy'); 
-        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit'); 
-        Route::post('/edit/{id}', [UserController::class, 'update'])->name('users.update');
-        Route::get('/create', [UserController::class, 'create'])->name('users.create');  
-        Route::post('/store', [UserController::class, 'store'])->name('users.store'); 
-        Route::post('/follow/{id}', [UserController::class, 'follow'])->name('users.follow'); 
-        Route::post('/block/{id}', [UserController::class, 'block'])->name('users.block'); 
+
+        Route::middleware('admin')->group(function (){
+            Route::get('/', [UserController::class, 'index'])->name('users.index');
+            Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+            Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+            Route::post('/edit/{id}', [UserController::class, 'update'])->name('users.update');
+            Route::get('/create', [UserController::class, 'create'])->name('users.create');  
+            Route::post('/store', [UserController::class, 'store'])->name('users.store');  
+        });
+
+        Route::middleware('standard')->group(function (){
+            Route::post('/follow/{id}', [UserController::class, 'follow'])->name('users.follow'); 
+            Route::post('/block/{id}', [UserController::class, 'block'])->name('users.block'); 
+        });
+
+        Route::get('/{id}', [UserController::class, 'show'])->name('users.show'); 
     });
 
     Route::prefix('recipes')->group(function () {
-        Route::get('/', [RecipeController::class, 'index'])->name('recipes.index')->middleware(['auth', 'verified']); 
+        Route::get('/', [RecipeController::class, 'index'])->name('recipes.index'); 
         Route::get('/create', [RecipeController::class, 'create'])->name('recipes.create'); 
         Route::get('/{id}', [RecipeController::class, 'show'])->name('recipes.show');
         Route::delete('/delete/{id}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); 
@@ -103,14 +101,14 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/accept/{id}', [IngredientController::class, 'accept'])->name('ingredients.accept'); 
     });
 
-    //Ingredient standard
-    Route::prefix('ingredient')->group(function (){
-        Route::get('/', [IngredientController::class,'index']);
-        Route::post('/create', [IngredientController::class,'store']);
-
-    });
-
 });
+
+
+
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Head } from '@inertiajs/react';
 import {
   Card,
   CardBody,
@@ -64,7 +64,7 @@ export default function ExistingIngredientList({auth, ingredient}) {
             </div>
             
             <div>
-                <Link to={`/dashboard/ingredients/edit/${id}`}>
+                <Link href={`/dashboard/ingredients/edit/${id}`}>
                     <Tooltip content="Edit Ingredient">
                         <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500 mt-[2.2px]" />
                     </Tooltip>

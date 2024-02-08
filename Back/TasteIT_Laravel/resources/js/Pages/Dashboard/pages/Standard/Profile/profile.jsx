@@ -61,7 +61,7 @@ export function Profile({auth, actualUser, user, savedRecipesIds, recipes, recip
                   <Typography variant="h5" color="blue-gray" className="mb-1">
                     {user.username}
                     {user.type === "chef"  && (
-                      <div style={{ backgroundColor: 'blue', padding: '3px', display: 'inline-block', borderRadius: '50%' }}>
+                      <div style={{ backgroundColor: 'red', padding: '3px', display: 'inline-block', borderRadius: '50%', marginLeft: '10px'}}>
                         <img src="/assets/img/chef-hat.svg" alt="Descripción opcional" width={17}/>
                       </div>
                     )}

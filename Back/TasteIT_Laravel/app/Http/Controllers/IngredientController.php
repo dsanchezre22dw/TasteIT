@@ -72,7 +72,7 @@ class IngredientController extends Controller
     {
         $ingredient = Ingredient::findOrFail($ingredientId);
         $ingredients = Ingredient::all();
-        return Inertia::render('Dashboard/layouts/dashboard', [
+        return Inertia::render('Dashboard/pages/Admin/Ingredients/IngredientsEdit', [
             'ingredient' => $ingredient,
             'ingredients' => $ingredients,
         ]);
