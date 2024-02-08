@@ -31,18 +31,15 @@ import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
 import RecipesIndex from "../../pages/Standard/Recipe/indexrecipe";
 import RecipesSection from "../../pages/Standard/Recipe/recipessection";
 
-export function MyRecipes({ auth, user, recipes, savedRecipesIds, show}) {
+export function MyRecipes({ auth, user, recipes, savedRecipesIds, recipe_types, ingredients, show}) {
 
-  const renderRecipes = recipes
-  .filter((recipe) => recipe.user_id === user.id)
-  .map((recipe) => (
-    <RecipeCard key={recipe.id} auth={auth} savedRecipesIds={savedRecipesIds} recipe={recipe}/>
-  ));
+  const myRecipes = recipes
+  .filter((recipe) => recipe.user_id === user.id);
   
 
   return (
     <>
-      <RecipesSection recipesToShow={renderRecipes} show={show}></RecipesSection>         
+      <RecipesSection auth={auth} user={user} recipesToShow={myRecipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types} ingredients={ingredients} show={show}></RecipesSection>         
     </>
   );
 }

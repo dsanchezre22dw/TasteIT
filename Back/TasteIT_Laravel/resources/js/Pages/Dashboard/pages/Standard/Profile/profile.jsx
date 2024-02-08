@@ -32,7 +32,7 @@ import { Link } from "@inertiajs/react";
 import { Dashboard } from "@/Pages/Dashboard/layouts";
 import FollowUser from "@/Pages/Dashboard/widgets/followUser/followUser";
 
-export function Profile({auth, actualUser, user, savedRecipesIds, recipes}) {
+export function Profile({auth, actualUser, user, savedRecipesIds, recipes, recipe_types, ingredients}) {
 
   let view = user.id === auth.user.id ? "info" : "mine";
 
@@ -117,8 +117,8 @@ export function Profile({auth, actualUser, user, savedRecipesIds, recipes}) {
             </div>
 
             {activeTab === "info" && <UserInformation auth={auth} user={user} followers={user.followers} following={user.following} setActiveTab={setActiveTab}/>}
-            {activeTab === "mine" && <MyRecipes auth={auth} user={user} savedRecipesIds={savedRecipesIds} recipes={recipes} show={user.id === auth.user.id}/>}
-            {activeTab === "saved" && <SavedRecipes auth={auth} savedRecipesIds={savedRecipesIds} recipes={recipes}/>}
+            {activeTab === "mine" && <MyRecipes auth={auth} user={user} savedRecipesIds={savedRecipesIds} recipes={recipes} recipe_types={recipe_types} ingredients={ingredients} show={user.id === auth.user.id}/>}
+            {activeTab === "saved" && <SavedRecipes auth={auth} savedRecipesIds={savedRecipesIds} recipes={recipes} recipe_types={recipe_types} ingredients={ingredients}/>}
             {activeTab === "settings" && <UserSettings/>}
             {activeTab === "blocked" && <BlockedUsers user={user} followers={user.followers} following={user.following} setActiveTab={setActiveTab}/>}
             {activeTab === "edit" && <EditUserInformation/>}

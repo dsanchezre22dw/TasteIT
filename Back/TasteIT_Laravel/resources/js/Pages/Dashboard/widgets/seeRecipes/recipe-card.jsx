@@ -88,7 +88,7 @@ function RecipeCard({ auth, savedRecipesIds, recipe }) {
         </div>
         <div className="mt-6 flex flex-wrap gap-4 ml-4">
             {recipe_types.map((type, index) => (
-                <RecipeType key={`${type.id}_${index}`} id={type.id} name={type.name} index={index} />
+                <RecipeType key={`${type.id}_${index}`} id={type.id} name={type.name} index={index}/>
             ))}
         </div>
 
