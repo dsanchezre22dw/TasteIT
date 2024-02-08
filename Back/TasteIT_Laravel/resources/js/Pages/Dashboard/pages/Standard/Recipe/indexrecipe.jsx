@@ -33,7 +33,7 @@ import { Dashboard } from "@/Pages/Dashboard/layouts";
 import AllRecipes from "@/Pages/Dashboard/widgets/Standard/AllRecipes";
 import FollowingRecipes from "@/Pages/Dashboard/widgets/Standard/FollowingRecipes";
 
-export function RecipesIndex({auth, user, savedRecipesIds, recipes, recipe_types}) { 
+export function RecipesIndex({auth, user, savedRecipesIds, recipes, recipe_types, ingredients}) { 
 
   const [activeTab, setActiveTab] = useState("all");
 
@@ -57,7 +57,6 @@ export function RecipesIndex({auth, user, savedRecipesIds, recipes, recipe_types
                   <Tabs value={activeTab}>
                     <TabsHeader>
                     <Tab value="all" onClick={() => setActiveTab("all")}>
-
                         <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                       <Tab value="followed" onClick={() => setActiveTab("followed")}>
@@ -69,17 +68,11 @@ export function RecipesIndex({auth, user, savedRecipesIds, recipes, recipe_types
               )}
             </div>   
 
+            {activeTab === "all" && <AllRecipes auth={auth} recipes={recipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types} ingredients={ingredients}/>}
 
-
-            {activeTab === "all" && <AllRecipes auth={auth} recipes={recipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types}/>}
-
-            {activeTab === "followed" && <FollowingRecipes auth={auth} user={user} recipes={recipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types}/>}
-
+            {activeTab === "followed" && <FollowingRecipes auth={auth} user={user} recipes={recipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types} ingredients={ingredients}/>}
 
           </div>
-
-
-
 
           </CardBody>
         </Card>

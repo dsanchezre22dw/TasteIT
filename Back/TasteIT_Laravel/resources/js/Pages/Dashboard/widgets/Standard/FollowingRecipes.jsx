@@ -30,7 +30,7 @@ import StarIcon from "@/Components/StarIcon";
 import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
 import RecipesSection from "../../pages/Standard/Recipe/recipessection";
 
-export function FollowingRecipes({ auth, user, recipes, savedRecipesIds, recipe_types }) {
+export function FollowingRecipes({ auth, user, recipes, savedRecipesIds, recipe_types, ingredients }) {
   
   const followingRecipes = recipes
   .filter(recipe => user.following.map(following => following.id).includes(recipe.user_id));
@@ -39,7 +39,7 @@ export function FollowingRecipes({ auth, user, recipes, savedRecipesIds, recipe_
   
   return (
     <>
-      <RecipesSection auth={auth} recipesToShow={followingRecipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types}></RecipesSection>       
+      <RecipesSection auth={auth} recipesToShow={followingRecipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types} ingredients={ingredients}></RecipesSection>       
     </>
   );
 }

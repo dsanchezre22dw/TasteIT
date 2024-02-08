@@ -23,7 +23,6 @@ class RecipeController extends Controller
     public function index()
     {
         $recipes = Recipe::with(['recipe_types', 'valorations', 'ingredients', 'user'])->get();
-        $recipe_types = Recipe_type::all();
     
         $recipesWithTypesAndAvgValorations = $recipes->map(function ($recipe) {
             $avgValoration = $recipe->valorations->avg('pivot.valoration');
@@ -36,12 +35,17 @@ class RecipeController extends Controller
     
             return $recipe;
         });
+
+        $recipe_types = Recipe_type::all();
+        $ingredients = Ingredient::all();
+
     
         return Inertia::render('Dashboard/pages/Standard/Recipe/indexrecipe', [
             'user' => \App\Models\User::with(['followers', 'following'])->findOrFail(Auth::id()),
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipes' => $recipesWithTypesAndAvgValorations,
             'recipe_types' => $recipe_types,
+            'ingredients' => $ingredients,
         ]);
     }
 

@@ -31,7 +31,7 @@ import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
 import RecipesIndex from "../../pages/Standard/Recipe/indexrecipe";
 import RecipesSection from "../../pages/Standard/Recipe/recipessection";
 
-export function MyRecipes({ auth, user, recipes, savedRecipesIds, recipe_types, show}) {
+export function MyRecipes({ auth, user, recipes, savedRecipesIds, recipe_types, ingredients, show}) {
 
   const myRecipes = recipes
   .filter((recipe) => recipe.user_id === user.id);
@@ -39,7 +39,7 @@ export function MyRecipes({ auth, user, recipes, savedRecipesIds, recipe_types, 
 
   return (
     <>
-      <RecipesSection auth={auth} user={user} recipesToShow={myRecipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types} show={show}></RecipesSection>         
+      <RecipesSection auth={auth} user={user} recipesToShow={myRecipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types} ingredients={ingredients} show={show}></RecipesSection>         
     </>
   );
 }

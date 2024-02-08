@@ -31,11 +31,11 @@ import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
 import RecipesIndex from "../../pages/Standard/Recipe/indexrecipe";
 import RecipesSection from "../../pages/Standard/Recipe/recipessection";
 
-export function AllRecipes({ auth, recipes, savedRecipesIds, recipe_types }) {
+export function AllRecipes({ auth, recipes, savedRecipesIds, recipe_types, ingredients }) {
 
   return (
     <>
-      <RecipesSection auth={auth} recipesToShow={recipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types}></RecipesSection>             
+      <RecipesSection auth={auth} recipesToShow={recipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types} ingredients={ingredients}></RecipesSection>             
     </>
   );
 }
