@@ -20,7 +20,9 @@ import {
   ChatBubbleLeftEllipsisIcon,
   Cog6ToothIcon,
   PencilIcon,
-  TrashIcon
+  TrashIcon,
+  UsersIcon,
+  UserPlusIcon
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { ProfileInfoCard, MessageCard } from "../../../widgets/cards";
@@ -57,10 +59,10 @@ export function RecipesIndex({auth, user, savedRecipesIds, recipes, recipe_types
                   <Tabs value={activeTab}>
                     <TabsHeader>
                     <Tab value="all" className={activeTab == 'all'? 'text-red-400':''} onClick={() => setActiveTab("all")}>
-                        <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
+                        <UsersIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                       <Tab value="followed" className={activeTab == 'followed'? 'text-red-400':''} onClick={() => setActiveTab("followed")}>
-                        <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
+                        <UserPlusIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                     </TabsHeader>
                   </Tabs>
