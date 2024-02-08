@@ -9,33 +9,43 @@ import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { Transition } from '@headlessui/react';
 
-export default function CreatePost( {auth, recipe=""} ) {
-    const { data, setData, post, processing, errors, reset, recentlySuccessful } = useForm({
+export default function CreatePost( {auth, recipe="", recipe_types} ) {
+    const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
         title: recipe.title,
         duration_mins: recipe.duration_mins,
         difficulty: recipe.difficulty,
         amount: {},
         description: recipe.description,
         image: null,
+        recipetype: null,
         user_id: auth.user.id
     });
 
-    var url;
+    const [filteringTypes, setFilteringTypes] = useState([]);
+
+    var create;
 
     useEffect( () => {
 
-        url = '/dashboard/recipes/store';
+        create = true;
 
-        if(recipe != ""){
+        if(recipe !== ""){
 
-            url = `/dashboard/recipes/update/${recipe.id}`;
+            create = false;
 
-            let obj = {}
+            let obj = {};
+            let array = [];
 
             recipe.ingredients.forEach(ingredient => {
                 obj[ingredient.name] = ingredient.pivot.amount;
             });
 
+            recipe.recipe_types.forEach(type => {
+                array.push(type.id)
+            })
+
+            setFilteringTypes(array)
+            setData('recipetype',array);
             setData('amount', obj);
         }
 
@@ -45,18 +55,38 @@ export default function CreatePost( {auth, recipe=""} ) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(url);
+        
+        if (recipe === "") {
+            post('/dashboard/recipes/store');
+        } else {
+            post(`/dashboard/recipes/update/${recipe.id}`);
+        }
+        
     };
+
+    const handleTypeFilter = (typeId) => {
+        // Si el filtro ya está activo, desactívalo
+        if (filteringTypes.includes(typeId)) {
+          let aux = filteringTypes.filter(id => id !== typeId)
+          setFilteringTypes(aux);
+          setData('recipetype', aux);
+        } else {
+          // De lo contrario, activa el filtro
+          setFilteringTypes([...filteringTypes, typeId]);
+          setData('recipetype', [...filteringTypes, typeId]);
+        }
+      };
 
     return (
         <div>
             <form onSubmit={submit} name="createPost" encType="multipart/form-data">
                 <div className="flex flex-wrap">
+                    
                     <ImageUploader data={data} setData={setData} errors={errors} image={recipe.image}/>
 
                     <span className="m-6">
 
-                        <div>
+                        <div  className='mt-3'>
                             <InputLabel htmlFor="title" value="Title*" />
                             <TextInput
                                 id="title"
@@ -74,7 +104,7 @@ export default function CreatePost( {auth, recipe=""} ) {
 
                         </div>
 
-                        <div>
+                        <div className='mt-3'>
                             <InputLabel htmlFor="duration_mins" value="Prepare Time*" />
 
                             <TextInput
@@ -85,6 +115,7 @@ export default function CreatePost( {auth, recipe=""} ) {
                                 className="mt-1 block w-[100%]"
                                 autoComplete="duration_mins"
                                 onChange={(e) => setData('duration_mins', e.target.value)}
+                                min='0'
                                 required
                             />
 
@@ -92,7 +123,26 @@ export default function CreatePost( {auth, recipe=""} ) {
 
                         </div>
 
-                        <div>
+                        <div className='mt-3'>
+                            <InputLabel htmlFor="recipetype" value="Recipe Types" />
+
+                            <div className="flex flex-wrap gap-4">
+                            {recipe_types.map((type, index) => (
+                                <div 
+                                key={`${type.id}_${index}`} 
+                                className={`rounded-full cursor-pointer hover:bg-blue-200 px-3 py-1 ${filteringTypes.includes(type.id) ? 'bg-blue-200' : 'bg-blue-100'}`}
+                                onClick={() => handleTypeFilter(type.id)} // Pasa el id del tipo al handler
+                                >
+                                {type.name}
+                                </div>
+                            ))}
+                            </div>
+
+                            <InputError message={errors.recipetype} className="mt-2" />
+                        </div>
+                        
+
+                        <div className='mt-3'>
                             <InputLabel htmlFor="description" value="Difficulty*" />
                             <select name="difficulty" defaultValue={data.difficulty} id="" className="mt-1 block w-[100%] border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" 
                             onChange={(e) => setData('difficulty', e.target.value)} required>

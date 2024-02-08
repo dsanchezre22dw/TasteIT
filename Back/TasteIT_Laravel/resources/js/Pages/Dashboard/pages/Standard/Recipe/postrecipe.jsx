@@ -26,7 +26,7 @@ import CreatePost from "../../../widgets/postRecipe/CreatePost";
 import "../../../../../../../public/assets/css/test.css"
 import { Dashboard } from "@/Pages/Dashboard/layouts";
 
-export function PostRecipe({auth}) {
+export function PostRecipe({auth, recipe_types}) {
   return (
     <>
       <Dashboard auth={auth}>
@@ -41,7 +41,7 @@ export function PostRecipe({auth}) {
             </CardHeader>
 
             <CardBody className="p-4">
-              <CreatePost auth={auth}/>
+              <CreatePost auth={auth} recipe_types={recipe_types}/>
             </CardBody>
           </Card>
 

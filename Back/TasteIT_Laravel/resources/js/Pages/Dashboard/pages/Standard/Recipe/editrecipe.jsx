@@ -27,7 +27,7 @@ import CreatePost from "../../../widgets/postRecipe/CreatePost";
 import "../../../../../../../public/assets/css/test.css"
 import { Dashboard } from "@/Pages/Dashboard/layouts";
 
-export function RecipesEdit({auth, recipe}) {
+export function RecipesEdit({auth, recipe, recipe_types}) {
 
   return (
     <>
@@ -38,7 +38,7 @@ export function RecipesEdit({auth, recipe}) {
         <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100">
           <CardBody className="p-4">
             <MainTitle title="Create a new recipe" />
-            <CreatePost auth={auth} recipe={recipe}/>
+            <CreatePost auth={auth} recipe={recipe} recipe_types={recipe_types}/>
           </CardBody>
         </Card>
       </Dashboard>

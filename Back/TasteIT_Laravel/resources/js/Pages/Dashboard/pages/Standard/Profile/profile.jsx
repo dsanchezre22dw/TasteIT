@@ -18,6 +18,9 @@ import {
   ChatBubbleLeftEllipsisIcon,
   Cog6ToothIcon,
   PencilIcon,
+  BookmarkIcon,
+  PlusIcon,
+  NoSymbolIcon
 } from "@heroicons/react/24/solid";
 import { ProfileInfoCard, MessageCard } from "../../../widgets/cards";
 import { platformSettingsData, conversationsData, projectsData } from "../../../data";
@@ -98,16 +101,16 @@ export function Profile({auth, actualUser, user, savedRecipesIds, recipes, recip
                         <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                       <Tab value="mine" className={activeTab == 'mine'?"text-red-400":''} onClick={() => setActiveTab("mine")}>
-                        <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
+                        <PlusIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                       <Tab value="saved" className={activeTab == 'saved'?"text-red-400":''} onClick={() => setActiveTab("saved")}>
-                        <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
+                        <BookmarkIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
                       </Tab>
                       <Tab value="settings" className={activeTab == 'settings'?"text-red-400":''} onClick={() => setActiveTab("settings")}>
                         <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                       <Tab value="blocked" className={activeTab == 'blocked'?"text-red-400":''} onClick={() => setActiveTab("blocked")}>
-                        <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
+                        <NoSymbolIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                     </TabsHeader>
                   </Tabs>
