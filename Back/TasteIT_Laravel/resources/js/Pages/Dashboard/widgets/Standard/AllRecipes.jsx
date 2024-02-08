@@ -31,15 +31,11 @@ import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
 import RecipesIndex from "../../pages/Standard/Recipe/indexrecipe";
 import RecipesSection from "../../pages/Standard/Recipe/recipessection";
 
-export function AllRecipes({ auth, recipes, savedRecipesIds }) {
-  
+export function AllRecipes({ auth, recipes, savedRecipesIds, recipe_types }) {
 
   return (
     <>
-      {recipes
-      .map((recipe) => (
-        <RecipeCard key={recipe.id} auth={auth} savedRecipesIds={savedRecipesIds} recipe={recipe}/>
-      ))}         
+      <RecipesSection auth={auth} recipesToShow={recipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types}></RecipesSection>             
     </>
   );
 }

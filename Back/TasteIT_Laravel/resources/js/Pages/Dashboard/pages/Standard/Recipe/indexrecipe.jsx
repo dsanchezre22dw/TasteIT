@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+
 import {
   Card,
   CardBody,
@@ -28,8 +30,12 @@ import ClockIcon from "../../../../../../../resources/js/Components/ClockIcon";
 import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
 import RecipesSection from "./recipessection";
 import { Dashboard } from "@/Pages/Dashboard/layouts";
+import AllRecipes from "@/Pages/Dashboard/widgets/Standard/AllRecipes";
+import FollowingRecipes from "@/Pages/Dashboard/widgets/Standard/FollowingRecipes";
 
 export function RecipesIndex({auth, user, savedRecipesIds, recipes, recipe_types}) { 
+
+  const [activeTab, setActiveTab] = useState("all");
 
   
   return (
@@ -42,7 +48,39 @@ export function RecipesIndex({auth, user, savedRecipesIds, recipes, recipe_types
         </div>
         <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100 rounded-xl">
           <CardBody className="p-4">
-            <RecipesSection auth={auth} user={user} recipesToShow={recipes} recipe_types={recipe_types} savedRecipesIds={savedRecipesIds} general={true}></RecipesSection>   
+
+
+          <div className="px-4 pb-4">
+            <div className="flex justify-end">
+              { auth.user.type !== 'admin' && (
+                <div className="w-48">
+                  <Tabs value={activeTab}>
+                    <TabsHeader>
+                    <Tab value="all" onClick={() => setActiveTab("all")}>
+
+                        <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
+                      </Tab>
+                      <Tab value="followed" onClick={() => setActiveTab("followed")}>
+                        <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
+                      </Tab>
+                    </TabsHeader>
+                  </Tabs>
+                </div>  
+              )}
+            </div>   
+
+
+
+            {activeTab === "all" && <AllRecipes auth={auth} recipes={recipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types}/>}
+
+            {activeTab === "followed" && <FollowingRecipes auth={auth} user={user} recipes={recipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types}/>}
+
+
+          </div>
+
+
+
+
           </CardBody>
         </Card>
       </Dashboard>

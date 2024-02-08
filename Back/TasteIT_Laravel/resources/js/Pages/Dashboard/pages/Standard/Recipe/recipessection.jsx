@@ -32,16 +32,16 @@ import RecipeType from "@/Pages/Dashboard/widgets/seeRecipes/recipetype-card";
 import AllRecipes from "@/Pages/Dashboard/widgets/Standard/AllRecipes";
 import FollowingRecipes from "@/Pages/Dashboard/widgets/Standard/FollowingRecipes";
 
-export function RecipesSection({auth, user, recipesToShow, savedRecipesIds, recipe_types, general, show=true, see}) { 
+export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_types, show=true, see}) { 
 
   const [activeTab, setActiveTab] = useState("all");
   const [activeFilters, setActiveFilters] = useState([]);
-  const [filteredAllRecipes, setFilteredAllRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
 
   useEffect(() => {
     // Si no hay filtros activos, mostrar todas las recetas
     if (activeFilters.length === 0) {
-      setFilteredAllRecipes(recipesToShow);
+      setFilteredRecipes(recipesToShow);
       return;
     }
 
@@ -51,7 +51,7 @@ export function RecipesSection({auth, user, recipesToShow, savedRecipesIds, reci
       return activeFilters.every(filterId => recipeTypeIds.includes(filterId));
     });
 
-    setFilteredAllRecipes(filtered);
+    setFilteredRecipes(filtered);
   }, [activeFilters, recipesToShow]);
 
   // Función para manejar el cambio de filtros
@@ -101,21 +101,6 @@ export function RecipesSection({auth, user, recipesToShow, savedRecipesIds, reci
 
           </div>
 
-          { (general && auth.user.type !== 'admin') && (
-            <div className="w-48">
-              <Tabs value={activeTab}>
-                <TabsHeader>
-                <Tab value="all" onClick={() => {setActiveTab("all"); setActiveFilters([]);}}>
-
-                    <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
-                  </Tab>
-                  <Tab value="followed" onClick={() => {setActiveTab("followed"); setActiveFilters([]);}}>
-                    <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
-                  </Tab>
-                </TabsHeader>
-              </Tabs>
-            </div>  
-          )}
         </div>   
 
         <div className="flex mt-10 justify-end">
@@ -134,9 +119,10 @@ export function RecipesSection({auth, user, recipesToShow, savedRecipesIds, reci
 
         <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
 
-          {activeTab === "all" && <AllRecipes auth={auth} recipes={filteredAllRecipes} savedRecipesIds={savedRecipesIds}/>}
-
-          {activeTab === "followed" && <FollowingRecipes auth={auth} user={user} recipes={filteredAllRecipes} savedRecipesIds={savedRecipesIds}/>}
+          {filteredRecipes
+          .map((recipe) => (
+            <RecipeCard key={recipe.id} auth={auth} savedRecipesIds={savedRecipesIds} recipe={recipe}/>
+          ))}   
 
       
         </div>
