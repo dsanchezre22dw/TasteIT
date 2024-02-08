@@ -56,10 +56,10 @@ export function RecipesIndex({auth, user, savedRecipesIds, recipes, recipe_types
                 <div className="w-48">
                   <Tabs value={activeTab}>
                     <TabsHeader>
-                    <Tab value="all" onClick={() => setActiveTab("all")}>
+                    <Tab value="all" className={activeTab == 'all'? 'text-red-400':''} onClick={() => setActiveTab("all")}>
                         <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
-                      <Tab value="followed" onClick={() => setActiveTab("followed")}>
+                      <Tab value="followed" className={activeTab == 'followed'? 'text-red-400':''} onClick={() => setActiveTab("followed")}>
                         <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                     </TabsHeader>

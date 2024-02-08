@@ -247,11 +247,11 @@ export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_typ
             {show ? ( 
               see ? ( 
                 <Link href={'/dashboard/recipes'} className="ml-10">
-                  <Button variant="gradient">See Recipes</Button>
+                  <Button variant="gradient" color='red'>See Recipes</Button>
                 </Link>
               ) : (
                 <Link href={'/dashboard/recipes/create'} className="ml-10">
-                  <Button variant="gradient">Add Recipe</Button>
+                  <Button variant="gradient" color='red'>Add Recipe</Button>
                 </Link>
               )
             ) : null} 
