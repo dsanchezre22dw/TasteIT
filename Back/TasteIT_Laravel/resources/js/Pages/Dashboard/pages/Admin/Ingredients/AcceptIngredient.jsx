@@ -3,8 +3,9 @@ import NewIngredient from "../../Standard/Ingredients/NewIngredient";
 import MainTitle from "@/Components/MainTitle";
 import { useState, useEffect } from "react"
 import ExistingIngredientList from "./ExistingIngredientList";
+import { Dashboard } from "@/Pages/Dashboard/layouts";
 
-export default function AcceptIngredient({ingredients}) {
+export default function AcceptIngredient({auth, ingredients}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
@@ -40,7 +41,7 @@ export default function AcceptIngredient({ingredients}) {
 
 
     return (
-        <>
+        <Dashboard auth={auth}>
         <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
             <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
         </div>
@@ -65,16 +66,19 @@ export default function AcceptIngredient({ingredients}) {
             <NewIngredient  />
             </CardBody>
             <CardBody className="p-4">
+            {auth.user.type == 'admin'?(<>
             <Typography variant="h2" className="mt-20">
                 Requested ingredients
             </Typography>
+            
             <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"> 
             {
                 ingredients.map((ingredient) => (
-                    ingredient.enabled?'':<ExistingIngredientList key={ingredient.id} ingredient={ingredient}/>
+                    ingredient.enabled?'':<ExistingIngredientList key={ingredient.id} ingredient={ingredient} auth={auth}/>
                 ))  
             }
             </div>
+            </>):''}
 
             <Typography variant="h2" className="mt-20">
                 All the ingredients
@@ -82,13 +86,12 @@ export default function AcceptIngredient({ingredients}) {
 
             <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               {ingredients.map((ingredient) => (
-                <ExistingIngredientList key={ingredient.id} ingredient={ingredient} />
+                <ExistingIngredientList key={ingredient.id} ingredient={ingredient} auth={auth}/>
               ))}
             </div>
 
             </CardBody>
         </Card>
-        
-        </>
+        </Dashboard>
     )
 }

@@ -3,8 +3,11 @@ import React from "react";
 import { Link } from "@inertiajs/react";
 import { Avatar, Typography, Chip } from "@material-tailwind/react";
 
-const UserTableRow = ({ id, username, email, type, enabled, handleDelete }) => {
-  const className = "py-3 px-5 border-b border-blue-gray-50";
+const UserTableRow = ({ id, username, email, type, enabled, handleDelete, num}) => {
+  var className = "py-3 px-5 border-t border-blue-gray-50";
+  if (num%2==0) {
+    className = "py-3 px-5 border-t border-blue-gray-50 bg-[#ff000005]";
+  }
 
   return (
     <tr key={username}>

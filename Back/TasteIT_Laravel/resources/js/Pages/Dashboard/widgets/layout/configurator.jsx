@@ -63,6 +63,16 @@ export function Configurator() {
       .then((data) => setStars(formatNumber(data.stargazers_count, 1)));
   }, []);
 
+  function handleSidenavColor(dispatch, color) {
+    localStorage.setItem('sidenavColor', color);
+    setSidenavColor(dispatch, color);
+  }
+
+  function handleSidenavType(dispatch, type) {
+    localStorage.setItem('sidenavType', type);
+    setSidenavType(dispatch, type);
+  }
+
   return (
     <aside
       className={`fixed top-0 right-0 z-50 h-screen w-96 bg-white px-2.5 shadow-lg transition-transform duration-300 ${
@@ -100,7 +110,7 @@ export function Configurator() {
                 } ${
                   sidenavColor === color ? "border-black" : "border-transparent"
                 }`}
-                onClick={() => setSidenavColor(dispatch, color)}
+                onClick={() => handleSidenavColor(dispatch, color)}
               />
             ))}
           </div>
@@ -115,19 +125,19 @@ export function Configurator() {
           <div className="mt-3 flex items-center gap-2">
             <Button
               variant={sidenavType === "dark" ? "gradient" : "outlined"}
-              onClick={() => setSidenavType(dispatch, "dark")}
+              onClick={() => handleSidenavType(dispatch, "dark")}
             >
               Dark
             </Button>
             <Button
               variant={sidenavType === "transparent" ? "gradient" : "outlined"}
-              onClick={() => setSidenavType(dispatch, "transparent")}
+              onClick={() => handleSidenavType(dispatch, "transparent")}
             >
               Transparent
             </Button>
             <Button
               variant={sidenavType === "white" ? "gradient" : "outlined"}
-              onClick={() => setSidenavType(dispatch, "white")}
+              onClick={() => handleSidenavType(dispatch, "white")}
             >
               White
             </Button>

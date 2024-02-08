@@ -49,14 +49,14 @@ function RecipeCard({ auth, savedRecipesIds, recipe }) {
   };
 
   return (
-    <Card key={title} color="transparent" shadow={false} className="border border-blue-gray-200 rounded-xl">
+    <Card key={title} color="transparent" className="border border-blue-gray-200 rounded-xl">
       <CardHeader floated={false} color="gray" className="mx-0 mt-0 mb-4 h-64 xl:h-40">
         <img src={image} alt={title} className="h-full w-full object-cover" />
       </CardHeader>
       <CardBody className="py-0 px-1">
         <div className="flex flex-row justify-between ">
           <Link href={`/dashboard/recipes/${id}`}>
-            <Typography variant="h5" color="blue-gray" className="mt-1 mb-2 ml-2">
+            <Typography variant="h5" className="mt-1 mb-2 ml-2">
               {title}
             </Typography>
           </Link>
@@ -95,7 +95,7 @@ function RecipeCard({ auth, savedRecipesIds, recipe }) {
       </CardBody>
       <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
         <Link href={`/dashboard/recipes/${id}`}>
-          <Button variant="outlined" size="sm" className="ml-3 mb-3">
+          <Button variant='gradient' size="sm" color="red" className="ml-3 mb-3">
             view recipe
             <i className="text-yellow-500 fas fa-star" />
           </Button>

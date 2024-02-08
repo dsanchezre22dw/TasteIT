@@ -7,14 +7,14 @@ import {
 
 export default function UserButton({ user }) {
     return (
-        <div className="hidden sm:flex sm:items-center sm:ms-6">
-            <div className="ms-3 relative">
+        <div className="hidden md:flex sm:items-center">
+            <div className="relative">
                 <Dropdown>
                     <Dropdown.Trigger>
                         <span className="inline-flex rounded-md">
                             <button
                                 type="button"
-                                className="inline-flex items-center gap-1 px-3 py-2 text-sm leading-4 font-medium rounded-md text-blue-gray-500 dark:text-blue-gray-400 dark:bg-gray-800 hover:text-blue-gray-700 dark:hover:text-blue-gray-300 focus:outline-none transition ease-in-out duration-150"
+                                className="inline-flex items-center gap-1 pl-3 pr-5 py-2 text-sm leading-4 font-medium rounded-md text-blue-gray-500 dark:text-blue-gray-400 dark:bg-gray-800 hover:text-blue-gray-700 dark:hover:text-blue-gray-300 focus:outline-none transition ease-in-out duration-150"
                             >
                                 
                                 { user.profileImg? (
