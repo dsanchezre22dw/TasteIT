@@ -6,16 +6,18 @@ import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { setupPasswordValidation, validateFirstName, validateSurname, validatePassword } from '../../../../../public/assets/js/validationUtils';
+import ImageUploader from "@/Pages/Dashboard/widgets/postRecipe/ImageUploader";
 
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
     const user = usePage().props.auth.user;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+    const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
         username: user.username,
         firstname: user.firstname,
         surname: user.surname,
         email: user.email,
+        image: null,
     });
 
     const [errorMessages, setErrorMessages] = useState({
@@ -27,13 +29,14 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     const submit = (e) => {
         e.preventDefault();
 
+
         var errors_exist = "";
 
         errors_exist += validateFirstName(data, setErrorMessages);
         errors_exist += validateSurname(data, setErrorMessages);
 
         if (errors_exist === ""){
-            patch(route('profile.update'));
+            post(route('profile.update'));
         }
 
     };
@@ -49,6 +52,9 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
+                <ImageUploader data={data} setData={setData} errors={errors} image={user.profileImg}/> 
+                <InputError className="mt-2" message={errors.image} />
+
                 <div>
                     <InputLabel htmlFor="username" value="Username" />
 
@@ -75,7 +81,6 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         value={data.firstname}
                         onChange={(e) => setData('firstname', e.target.value)}
                         required
-                        isFocused
                         autoComplete="name"
                     />
 
@@ -91,8 +96,6 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         className="mt-1 block w-full"
                         value={data.surname}
                         onChange={(e) => setData('surname', e.target.value)}
-                        required
-                        isFocused
                         autoComplete="name"
                     />
 
