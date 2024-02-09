@@ -23,10 +23,9 @@ return new class extends Migration
             $table->enum('type',['standard','chef','admin'])->default('standard');
             $table->boolean('enabled')->default(true);
             $table->rememberToken();
-
-            
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /*

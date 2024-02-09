@@ -25,8 +25,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with(['saves'])->get();
+        $users = User::withTrashed()->with(['saves'])->get();
 
+        foreach ($users as $user) {
+            $user->isSoftDeleted = $user->trashed();
+        }
 
         return Inertia::render('Dashboard/pages/Admin/Users/indexuser', [
             'users' => $users,
@@ -135,13 +138,46 @@ class UserController extends Controller
         $user->save();
     }
 
+    public function destroy($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+
+        if ($user->trashed()){
+            $user->forceDelete();
+        }else{
+            $user->delete();
+        }
+
+        return redirect()->back();
+    }
+
+    public function status($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+
+        if ($user->trashed()){
+            $user->restore();
+        }else{
+            $user->enabled = !$user->enabled;
+        }
+
+        $user->save();
+
+        return redirect()->back();
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function restore($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $user = User::withTrashed()->findOrFail($id);
+
+        if ($user->trashed()){
+            $user->restore();
+        }
+
         return redirect()->back();
     }
 

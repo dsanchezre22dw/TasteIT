@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import InputError from '@/Components/InputError';
 
-export default function ImageUploader({data, setData, errors, image}) {
+export default function ImageUploader({data, setData, errors, image, width=500, className=''}) {
 
     var imageUploader;
     var uploadInput;
@@ -85,7 +85,7 @@ export default function ImageUploader({data, setData, errors, image}) {
         // Otros campos que necesiten validación
     });
     return (
-        <span id="image-uploader" className="m-6 w-96 md:w-[500px] h-96 md:h-[500px]">
+        <span id="image-uploader" className={`m-6 w-96 md:w-[${width}px] h-96 md:h-[${width}px] ${className}`}>
 
             <input type="file" id="upload-input" accept="image/*" name="image" defaultValue={data.image} required={image? false : true}/>
             

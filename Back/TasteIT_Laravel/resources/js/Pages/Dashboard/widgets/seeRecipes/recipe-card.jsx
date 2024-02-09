@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import { Link } from "@inertiajs/react";
 import {
@@ -37,8 +37,13 @@ function RecipeCard({ auth, savedRecipesIds, recipe }) {
     user,
   } = recipe;
 
-  const { difficultyColor, difficultyText } = getDifficultyColorAndText(difficulty);
+  const [difficultyColor, setDifficultyColor] = useState("");
+  const [difficultyText, setDifficultyText] = useState("");
 
+  useEffect( () => {
+      setDifficultyColor(getDifficultyColorAndText(difficulty)[0]);
+      setDifficultyText(getDifficultyColorAndText(difficulty)[1]);
+  },[recipe.difficulty])
 
   const form = useForm({});
 

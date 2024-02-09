@@ -19,13 +19,25 @@ import { Link } from "@inertiajs/react";
 import { Dashboard } from "@/Pages/Dashboard/layouts";
 
 export function UsersIndex({ auth, users }) {  
-  const { data, setData, get, processing, errors, reset } = useForm({});
+  const { data, setData, put, processing, errors, reset } = useForm({});
 
   const form = useForm({});
+
+
+  const handleStatus = (userId) => {
+    put(route('users.status', userId));
+    
+  };
 
   const handleDelete = (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       form.delete(`/dashboard/users/delete/${userId}`);
+    }
+  };
+
+  const handleRestore = (userId) => {
+    if (window.confirm('Are you sure you want to restore this user?')) {
+      put(route('users.restore', userId));
     }
   };
 
@@ -68,7 +80,7 @@ export function UsersIndex({ auth, users }) {
               </thead>
               <tbody>
               {users.map((user, key) => (
-                <UserTableRow key={key} {...user} handleDelete={handleDelete} num={key}/>
+                <UserTableRow key={key} user={user} handleStatus={handleStatus} handleDelete={handleDelete} handleRestore={handleRestore}num={key}/>
               ))}
 
               </tbody>

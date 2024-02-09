@@ -49,6 +49,8 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
         Route::middleware('admin')->group(function (){
             Route::get('/', [UserController::class, 'index'])->name('users.index');
             Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+            Route::put('/status/{id}', [UserController::class, 'status'])->name('users.status');
+            Route::put('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
             Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
             Route::post('/edit/{id}', [UserController::class, 'update'])->name('users.update');
             Route::get('/create', [UserController::class, 'create'])->name('users.create');  

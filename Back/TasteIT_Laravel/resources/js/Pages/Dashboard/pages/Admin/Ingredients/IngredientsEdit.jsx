@@ -81,6 +81,7 @@ export default function IngredientsEdit({auth, ingredient}) {
                                         name="enabled"
                                         className="mt-2" 
                                         onChange={(e) => setData('enabled', e.target.checked)}
+                                        defaultChecked={ingredient.enabled}
                                     />
 
                                     <InputError message={errors.enabled} className="mt-2" />

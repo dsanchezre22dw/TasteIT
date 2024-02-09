@@ -214,5 +214,5 @@ export function getDifficultyColorAndText(difficulty) {
     difficultyText = 'Expert';
   }
 
-  return { difficultyColor, difficultyText };
+  return [ difficultyColor, difficultyText ];
 }

@@ -52,7 +52,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
-                <ImageUploader data={data} setData={setData} errors={errors} image={user.profileImg}/> 
+                <ImageUploader data={data} setData={setData} errors={errors} image={user.profileImg} width={200} className="m-auto"/> 
                 <InputError className="mt-2" message={errors.image} />
 
                 <div>
