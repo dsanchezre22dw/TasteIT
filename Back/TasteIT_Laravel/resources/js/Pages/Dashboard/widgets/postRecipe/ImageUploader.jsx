@@ -53,8 +53,11 @@ export default function ImageUploader({data, setData, errors, image}) {
             uploadInput.style.display = 'none';
             uploadError.style.display = 'none';
 
-            setData('image',file);
-
+            setData(prevData => ({
+                ...prevData,
+                image: file
+            }));
+     
         }
     }
 

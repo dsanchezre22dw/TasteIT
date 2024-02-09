@@ -118,6 +118,25 @@ export function validatePassword(data, setErrorMessages){
     }
 }
 
+export function validateIngredientDifficulty(data, setErrorMessages){
+  if (!['beginner', 'medium', 'expert'].includes(data.difficulty)) {
+    setErrorMessages((prevErrors) => ({
+      ...prevErrors,
+      difficulty: 'Please select a valid difficulty',
+  }));
+    return "yes";
+
+  }else{
+
+      setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          difficulty: '',
+      }));
+
+      return "";
+  }
+}
+
 export function validateStarRating(data, setErrorMessages){
 
   if ( !([1, 2, 3, 4, 5].includes(parseInt(data.rating)))) {

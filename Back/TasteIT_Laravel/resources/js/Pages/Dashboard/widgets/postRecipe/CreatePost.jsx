@@ -8,6 +8,7 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { Transition } from '@headlessui/react';
+import { validateIngredientDifficulty } from "../../../../../../public/assets/js/validationUtils";
 
 export default function CreatePost( {auth, recipe="", recipe_types} ) {
     const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
@@ -19,6 +20,10 @@ export default function CreatePost( {auth, recipe="", recipe_types} ) {
         image: null,
         recipetype: null,
         user_id: auth.user.id
+    });
+
+    const [errorMessages, setErrorMessages] = useState({
+        difficulty: '',
     });
 
     const [filteringTypes, setFilteringTypes] = useState([]);
@@ -55,11 +60,16 @@ export default function CreatePost( {auth, recipe="", recipe_types} ) {
     const submit = (e) => {
         e.preventDefault();
 
-        
-        if (recipe === "") {
-            post('/dashboard/recipes/store');
-        } else {
-            post(`/dashboard/recipes/update/${recipe.id}`);
+        var errors_exist = "";
+
+        errors_exist += validateIngredientDifficulty(data, setErrorMessages);
+
+        if (errors_exist === ""){
+            if (recipe === "") {
+                post('/dashboard/recipes/store');
+            } else {
+                post(`/dashboard/recipes/update/${recipe.id}`);
+            }
         }
         
     };
@@ -143,7 +153,7 @@ export default function CreatePost( {auth, recipe="", recipe_types} ) {
                         
 
                         <div className='mt-3'>
-                            <InputLabel htmlFor="description" value="Difficulty*" />
+                            <InputLabel htmlFor="difficulty" value="Difficulty*" />
                             <select name="difficulty" defaultValue={data.difficulty} id="" className="mt-1 block w-[100%] border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" 
                             onChange={(e) => setData('difficulty', e.target.value)} required>
                                 <option hidden value="selected">Select a Difficulty</option>
@@ -152,6 +162,9 @@ export default function CreatePost( {auth, recipe="", recipe_types} ) {
                                 <option value="expert">Expert</option>
                             </select>
                         </div>
+
+                        <InputError message={errorMessages.difficulty} className="mt-2" />
+                        <InputError message={errors.difficulty} className="mt-2" />
 
                         <AddIngredients setData={setData} data={data} errors={errors}/>
 
