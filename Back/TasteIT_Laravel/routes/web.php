@@ -35,7 +35,7 @@ Route::get('/', function () {
     return Redirect::route('dashboard');
 })->name('index');
 
-Route::middleware('auth')->prefix('dashboard')->group(function () {
+Route::middleware('auth', 'verified')->prefix('dashboard')->group(function () {
 
     Route::get('/', function () {
         return Redirect::route('statistics.index');
@@ -66,53 +66,64 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     });
 
     Route::prefix('recipes')->group(function () {
+
+
+        Route::middleware('standard')->group(function (){
+            Route::post('/save/{id}', [RecipeController::class, 'save'])->name('recipes.save'); 
+            Route::get('/valorate/{id}', [RecipeController::class, 'showValorate'])->name('recipes.showValorate');
+            Route::post('/valorate/{id}', [RecipeController::class, 'valorate'])->name('recipes.valorate'); 
+     
+        });
+
+
         Route::get('/', [RecipeController::class, 'index'])->name('recipes.index'); 
         Route::get('/create', [RecipeController::class, 'create'])->name('recipes.create'); 
         Route::get('/{id}', [RecipeController::class, 'show'])->name('recipes.show');
         Route::delete('/delete/{id}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); 
         Route::get('/edit/{id}', [RecipeController::class, 'edit'])->name('recipes.edit'); 
         Route::post('/update/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
-        Route::get('/prueba', [RecipeController::class, 'index'])->name('recipes.prueba');  
         Route::post('/store', [RecipeController::class, 'store'])->name('recipes.store'); 
-        Route::post('/save/{id}', [RecipeController::class, 'save'])->name('recipes.save'); 
-        Route::get('/valorate/{id}', [RecipeController::class, 'showValorate'])->name('recipes.showValorate');
-        Route::post('/valorate/{id}', [RecipeController::class, 'valorate'])->name('recipes.valorate'); 
- 
+
     });
 
     Route::prefix('shopping')->group(function (){
-        Route::get('/', [ShoppingListController::class,'index'])->name('shopping.index'); 
-        Route::post('/update', [ShoppingListController::class,'store']);
-        Route::post('/clear', [ShoppingListController::class,'update']);
-        Route::post('/add/{array}', [ShoppingListController::class,'add']);
+
+        Route::middleware('standard')->group(function (){
+            Route::get('/', [ShoppingListController::class,'index'])->name('shopping.index'); 
+            Route::post('/update', [ShoppingListController::class,'store']);
+            Route::post('/clear', [ShoppingListController::class,'update']);
+            Route::post('/add/{array}', [ShoppingListController::class,'add']);
+     
+        });
     });
 
     Route::prefix('fridge')->group(function (){
-        Route::get('/', [FridgeController::class,'index'])->name('fridge.index'); 
-        Route::post('/update', [FridgeController::class,'store']);
-        Route::post('/clear', [FridgeController::class,'update']);
+
+        Route::middleware('standard')->group(function (){
+            Route::get('/', [FridgeController::class,'index'])->name('fridge.index'); 
+            Route::post('/update', [FridgeController::class,'store']);
+            Route::post('/clear', [FridgeController::class,'update']);
+     
+        });
     });
 
-    //Ingredient admin
     Route::prefix('ingredients')->group(function (){
+
+        Route::middleware('admin')->group(function (){
+            Route::post('/accept/{id}', [IngredientController::class, 'accept'])->name('ingredients.accept'); 
+        });
+
         Route::get('/', [IngredientController::class,'index'])->name('ingredients.index'); 
         Route::post('/create', [IngredientController::class,'store']);
         Route::delete('/delete/{id}', [IngredientController::class, 'destroy'])->name('ingredients.destroy'); 
         Route::get('/edit/{id}', [IngredientController::class, 'edit'])->name('ingredients.edit'); 
         Route::post('/edit/{id}', [IngredientController::class, 'update'])->name('ingredients.update');
-        Route::post('/accept/{id}', [IngredientController::class, 'accept'])->name('ingredients.accept'); 
     });
 
 });
 
 
-
-
-
-
-
-
-Route::middleware('auth')->group(function () {
+Route::middleware('auth, verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

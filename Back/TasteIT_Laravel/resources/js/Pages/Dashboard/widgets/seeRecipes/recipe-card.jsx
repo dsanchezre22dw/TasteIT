@@ -21,7 +21,6 @@ import ClockIcon from '@/Components/ClockIcon';  // Asegúrate de importar Clock
 import StarIcon from '@/Components/StarIcon';
 import RecipeType from './recipetype-card';
 import SaveRecipe from '../saveRecipe/saveRecipe';
-import { getDifficultyColorAndText } from '../../../../../../public/assets/js/validationUtils';
 
 function RecipeCard({ auth, savedRecipesIds, recipe }) {
   const {
@@ -36,14 +35,6 @@ function RecipeCard({ auth, savedRecipesIds, recipe }) {
     ingredients,
     user,
   } = recipe;
-
-  const [difficultyColor, setDifficultyColor] = useState("");
-  const [difficultyText, setDifficultyText] = useState("");
-
-  useEffect( () => {
-      setDifficultyColor(getDifficultyColorAndText(difficulty)[0]);
-      setDifficultyText(getDifficultyColorAndText(difficulty)[1]);
-  },[recipe.difficulty])
 
   const form = useForm({});
 
@@ -76,9 +67,13 @@ function RecipeCard({ auth, savedRecipesIds, recipe }) {
 
         <div className="mt-3 flex flex-wrap items-center justify-between py-0 px-1">
           <div className="flex">
-            <span className={`bg-${difficultyColor}-100 text-${difficultyColor}-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-${difficultyColor}-900 dark:text-${difficultyColor}-300`}>
-              {difficultyText}
-            </span>
+          <span className={`text-sm font-medium me-2 px-2.5 py-0.5 rounded
+            ${difficulty === 'beginner' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
+              difficulty === 'medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300' :
+              difficulty === 'expert' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300' : ''}`}
+          >
+            {difficulty}
+          </span>
           </div>
           <div className="flex">
             <ClockIcon count={1} />

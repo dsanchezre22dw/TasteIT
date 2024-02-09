@@ -39,7 +39,7 @@ export function FollowingRecipes({ auth, user, recipes, savedRecipesIds, recipe_
   
   return (
     <>
-      <RecipesSection auth={auth} recipesToShow={followingRecipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types} ingredients={ingredients}></RecipesSection>       
+      <RecipesSection auth={auth} recipesToShow={followingRecipes} savedRecipesIds={savedRecipesIds} recipe_types={recipe_types} ingredients={ingredients} see= {true} text="Recipes uploaded by users you follow"></RecipesSection>       
     </>
   );
 }

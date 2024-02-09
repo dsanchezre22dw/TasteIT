@@ -32,7 +32,7 @@ import RecipeType from "@/Pages/Dashboard/widgets/seeRecipes/recipetype-card";
 import AllRecipes from "@/Pages/Dashboard/widgets/Standard/AllRecipes";
 import FollowingRecipes from "@/Pages/Dashboard/widgets/Standard/FollowingRecipes";
 
-export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_types, ingredients, show=true, see}) { 
+export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_types, ingredients, show=true, see, text}) { 
 
   const [searchText, setSearchText] = useState("");
   const [searchIngredientText, setSearchIngredientText] = useState("");
@@ -43,7 +43,7 @@ export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_typ
   const [filteredIngredients, setFilteredIngredients] = useState([]);
 
 
-  const difficulty = [{'level': 'begginer', 'color': 'green',},
+  const difficulty = [{'level': 'beginner', 'color': 'green',},
                     {'level': 'medium', 'color': 'yellow',},
                     {'level': 'expert', 'color': 'red',}
                   ]
@@ -164,7 +164,7 @@ export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_typ
             variant="small"
             className="font-normal text-blue-gray-500"
           >
-            Recipes uploaded by all users
+            {text}
           </Typography>
         </div>   
 

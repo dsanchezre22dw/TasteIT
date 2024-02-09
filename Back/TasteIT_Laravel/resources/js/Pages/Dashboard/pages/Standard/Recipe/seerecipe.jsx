@@ -70,7 +70,7 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
 
     http.open('GET', url);
 
-    http.setRequestHeader('X-RapidAPI-Key', 'f352493104msh7915e36f6ca17bdp119e28jsnc63eb77a9a83');
+    http.setRequestHeader('X-RapidAPI-Key', 'd053a50a43mshd0f510119c71772p171242jsnc8753e52914d');
     http.setRequestHeader('X-RapidAPI-Host', 'google-translate1.p.rapidapi.com');
 
     http.send(null);
