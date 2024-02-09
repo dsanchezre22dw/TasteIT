@@ -6,11 +6,12 @@ const Contact = () => {
     const mapRef = useRef(null);
     const MI_LATITUD = 43.327366;
     const MI_LONGITUD= -1.970511;
+    const API_KEY= 'AIzaSyCbHhSXBWBwecBO8ibnmTIYTEsAID-a4wk';
 
     useEffect(() => {
         // Cargar el script de Google Maps API
         const googleMapScript = document.createElement('script');
-        googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCbHhSXBWBwecBO8ibnmTIYTEsAID-a4wk&callback=initMap`;
+        googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap`;
         googleMapScript.async = true;
         window.initMap = initMap; // función de inicialización del mapa
         document.body.appendChild(googleMapScript);
