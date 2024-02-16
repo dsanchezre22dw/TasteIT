@@ -127,7 +127,7 @@ class RecipeController extends Controller
 
         if ($request->recipetype) {
             foreach ($request->recipetype as $key => $typeId) {
-                $type = Ingredient::find($typeId);
+                $type = Recipe_type::find($typeId);
 
                 $recipe->recipe_types()->attach($type);
             }
@@ -249,7 +249,7 @@ class RecipeController extends Controller
 
         if ($request->recipetype) {
             foreach ($request->recipetype as $key => $typeId) {
-                $type = Ingredient::find($typeId);
+                $type = Recipe_type::find($typeId);
 
                 $recipe->recipe_types()->attach($type);
             }
