@@ -7,9 +7,9 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { Transition } from '@headlessui/react';
-import { validateIngredientDifficulty } from "./../../../../../../../../public/assets/js/validationUtils";
+import { validateIngredientDifficulty, validateImage } from "../../../../../../../../public/assets/js/validationUtils";
 
-export default function CreatePost( {auth, recipe="", recipe_types} ) {
+export default function RecipeForm( {auth, recipe="", recipe_types} ) {
     const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
         title: recipe.title,
         duration_mins: recipe.duration_mins,
@@ -23,6 +23,7 @@ export default function CreatePost( {auth, recipe="", recipe_types} ) {
 
     const [errorMessages, setErrorMessages] = useState({
         difficulty: '',
+        image: '',
     });
 
     const [filteringTypes, setFilteringTypes] = useState([]);
@@ -62,6 +63,7 @@ export default function CreatePost( {auth, recipe="", recipe_types} ) {
         var errors_exist = "";
 
         errors_exist += validateIngredientDifficulty(data, setErrorMessages);
+        errors_exist += validateImage(data, setErrorMessages);
 
         if (errors_exist === ""){
             if (recipe === "") {
@@ -88,10 +90,10 @@ export default function CreatePost( {auth, recipe="", recipe_types} ) {
 
     return (
         <div>
-            <form onSubmit={submit} name="createPost" encType="multipart/form-data">
+            <form onSubmit={submit} name="recipeForm" encType="multipart/form-data">
                 <div className="flex flex-wrap">
                     
-                    <ImageUploader data={data} setData={setData} errors={errors} image={recipe.image}/>
+                    <ImageUploader data={data} setData={setData} errors={errors} errorMessages={errorMessages} setErrorMessages={setErrorMessages} image={recipe.image}/>
 
                     <span className="m-6 ml-16">
 

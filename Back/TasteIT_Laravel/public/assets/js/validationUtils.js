@@ -157,6 +157,26 @@ export function validateStarRating(data, setErrorMessages){
   }
 }
 
+export function validateImage(data, setErrorMessages){
+
+  if (!data.image ) {
+    setErrorMessages((prevErrors) => ({
+        ...prevErrors,
+        image: 'Upload an image, please',
+    }));
+
+    return "yes";
+  }else{
+
+      setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          image: '',
+      }));
+
+      return "";
+  }
+}
+
 
 function allLetter(inputtxt){
 

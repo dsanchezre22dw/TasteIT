@@ -3,7 +3,7 @@ import {
   CardBody,
 } from "@material-tailwind/react";
 import MainTitle from "@/Components/MainTitle";
-import CreatePost from './widgets/postRecipe/CreatePost';
+import RecipeForm from './widgets/postRecipe/RecipeForm';
 import "../../../../../../public/assets/css/test.css"
 import Dashboard from '@/Layouts/DashboardLayout';
 
@@ -18,7 +18,7 @@ export function RecipesEdit({auth, recipe, recipe_types}) {
         <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100">
           <CardBody className="p-4">
             <MainTitle title="Create a new recipe" />
-            <CreatePost auth={auth} recipe={recipe} recipe_types={recipe_types}/>
+            <RecipeForm auth={auth} recipe={recipe} recipe_types={recipe_types}/>
           </CardBody>
         </Card>
       </Dashboard>

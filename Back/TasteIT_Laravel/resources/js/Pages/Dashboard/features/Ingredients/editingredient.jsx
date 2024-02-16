@@ -15,6 +15,7 @@ import {
   import ToggleSwitch from "@/Components/ToggleSwitch";
   import { useState } from "react";
   import Dashboard from '@/Layouts/DashboardLayout';
+  import "../../../../../css/toggle.css"
 
 export default function IngredientsEdit({auth, ingredient}) {
 
