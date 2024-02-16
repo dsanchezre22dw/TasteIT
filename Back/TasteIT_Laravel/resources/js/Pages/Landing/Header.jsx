@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link, Head } from '@inertiajs/react';
+import ApplicationHorizontalLogo from '@/Components/ApplicationHorizontalLogo';
 
 export default function Header({ auth, laravelVersion, phpVersion }) {
     return(
         <header id="header" className="header fixed-top d-flex align-items-center">
             <div className="container d-flex align-items-center justify-content-between">
         
-            <a href="index.html" className="logo d-flex align-items-center me-auto me-lg-0">
-                <img src="assets/img/logoHorizontal.png" alt="TasteIT logo" title="TasteIT logo"/>
+            <a href={route('index')} className="logo d-flex align-items-center me-auto me-lg-0">
+                <ApplicationHorizontalLogo/>
             </a>
         
             <div>

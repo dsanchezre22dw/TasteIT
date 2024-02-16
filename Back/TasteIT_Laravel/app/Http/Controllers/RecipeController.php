@@ -40,7 +40,7 @@ class RecipeController extends Controller
         $ingredients = Ingredient::all();
 
     
-        return Inertia::render('Dashboard/pages/Standard/Recipe/indexrecipe', [
+        return Inertia::render('Dashboard/features/Recipes/indexrecipe', [
             'user' => \App\Models\User::with(['followers', 'following'])->findOrFail(Auth::id()),
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipes' => $recipesWithTypesAndAvgValorations,
@@ -60,7 +60,7 @@ class RecipeController extends Controller
         $recipe->avg_valoration = number_format($recipe->valorations->avg('pivot.valoration'), 2);
         $recipe->amount_valorations = $recipe->valorations->count();;
     
-        return Inertia::render('Dashboard/pages/Standard/Recipe/seerecipe', [
+        return Inertia::render('Dashboard/features/Recipes/seerecipe', [
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipe' => $recipe,
         ]);
@@ -73,7 +73,7 @@ class RecipeController extends Controller
     {
         $recipe_types = Recipe_type::all();
         
-        return Inertia::render('Dashboard/pages/Standard/Recipe/postrecipe', [
+        return Inertia::render('Dashboard/features/Recipes/postrecipe', [
             'recipe_types' => $recipe_types,
         ]);
     }
@@ -154,7 +154,7 @@ class RecipeController extends Controller
         
         $recipe = Recipe::with(['user'])->findOrFail($recipeId);
     
-        return Inertia::render('Dashboard/pages/Standard/Recipe/valoraterecipe', [
+        return Inertia::render('Dashboard/features/Recipes/valoraterecipe', [
             'recipe' => $recipe,
         ]);
     }
@@ -191,7 +191,7 @@ class RecipeController extends Controller
         $recipe = Recipe::with(['recipe_types', 'valorations', 'ingredients', 'user'])->findOrFail($recipeId);
         $recipe_types = Recipe_type::all();
 
-        return Inertia::render('Dashboard/pages/Standard/Recipe/editrecipe', [
+        return Inertia::render('Dashboard/features/Recipes/editrecipe', [
             'recipe' => $recipe,
             'recipe_types' => $recipe_types,
         ]);

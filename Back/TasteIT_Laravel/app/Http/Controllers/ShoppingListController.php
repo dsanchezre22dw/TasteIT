@@ -34,7 +34,7 @@ class ShoppingListController extends Controller
             return $recipe;
         });
     
-        return Inertia::render('Dashboard/pages/Standard/ShoppingList/shoppinglist', [
+        return Inertia::render('Dashboard/features/ShoppingList/shoppinglist', [
             'shoppingList' => $shopping_list
         ]);
     }

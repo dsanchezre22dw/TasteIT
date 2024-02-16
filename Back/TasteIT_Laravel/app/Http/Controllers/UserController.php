@@ -31,7 +31,7 @@ class UserController extends Controller
             $user->isSoftDeleted = $user->trashed();
         }
 
-        return Inertia::render('Dashboard/pages/Admin/Users/indexuser', [
+        return Inertia::render('Dashboard/features/Users/indexuser', [
             'users' => $users,
         ]);
     }
@@ -57,7 +57,7 @@ class UserController extends Controller
         $recipe_types = Recipe_type::all();
         $ingredients = Ingredient::all();
 
-        return Inertia::render('Dashboard/pages/Standard/Profile/profile', [
+        return Inertia::render('Dashboard/features/Profile/profile', [
             'actualUser' => \App\Models\User::with(['followers', 'following'])->findOrFail(Auth::id()),
             'user' => \App\Models\User::with(['followers', 'following'])->findOrFail($userId),
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
@@ -75,7 +75,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return Inertia::render('Dashboard/pages/Standard/Profile/profile', [
+        return Inertia::render('Dashboard/features/Profile/profile', [
         ]);
     }
 
@@ -107,7 +107,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = \App\Models\User::findOrFail($id);
-        return Inertia::render('Dashboard/pages/Admin/Users/edituser', [
+        return Inertia::render('Dashboard/features/Users/edituser', [
             'user' => $user,
         ]);
     }
@@ -240,13 +240,9 @@ class UserController extends Controller
 
     public function statistics()
     {
-        return Inertia::render('Dashboard/pages/dashboard/home');
+        return Inertia::render('Dashboard/features/Statistics/statistics');
     }
 
-    public function profilelayout()
-    {
-        return Inertia::render('Dashboard/pages/dashboard/profile');
-    }
 
     public function getTopUsers()
     {

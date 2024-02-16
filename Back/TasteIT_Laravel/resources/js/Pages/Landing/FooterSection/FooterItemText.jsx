@@ -1,6 +1,6 @@
 import React from 'react';
 import FooterItem from '@/Pages/Landing/FooterSection/FooterItem';
-import Icon from '@/Pages/Landing/Icon';
+import Icon from '@/Components/Icon';
 
 export default function FooterItemText(props){
     return (

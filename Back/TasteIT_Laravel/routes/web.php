@@ -28,7 +28,7 @@ Route::get('/', function () {
 
     if (!(auth()->check())) {
 
-        return Inertia::render("Landing", []);
+        return Inertia::render("Landing/Landing", []);
 
     }
 

@@ -1,35 +1,5 @@
-import {
-  HomeIcon,
-  UserCircleIcon,
-  TableCellsIcon,
-  InformationCircleIcon,
-  ServerStackIcon,
-  RectangleStackIcon,
-  AcademicCapIcon,
-  ShoppingCartIcon,
-} from "@heroicons/react/24/solid";
-import { Home, Tables, Notifications } from "./pages/dashboard";
-import { SignIn, SignUp } from "./pages/auth";
-import UsersIndex from "./pages/Admin/Users/indexuser";
-import UsersEdit from "./pages/Admin/Users/edituser";
-import UsersAdd from "./pages/Admin/Users/adduser";
-import PostRecipe from "./pages/Standard/Recipe/postrecipe";
-import { RecipesIndex } from "./pages/Standard/Recipe/indexrecipe";
-import SeeRecipe from "./pages/Standard/Recipe/seerecipe";
-import Profile from "./pages/Standard/Profile/profile";
-import ShoppingList from "./pages/Standard/ShoppingList/shoppinglist";
-import Fridge from "./pages/Standard/Fridge/fridge";
-import RecipesEdit from "./pages/Standard/Recipe/editrecipe";
-import ValorateRecipe from "./pages/Standard/Recipe/valoraterecipe";
-import CreateIngredients from "./pages/Standard/Ingredients/CreateIngredients";
-import AcceptIngredient from "./pages/Admin/Ingredients/AcceptIngredient";
-import IngredientsEdit from "./pages/Admin/Ingredients/IngredientsEdit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWheatAwn, faBowlFood, faCircleUser, faCartShopping, faChartPie, faSnowflake, faUsers } from "@fortawesome/free-solid-svg-icons";
-
-const icon = {
-  className: "w-5 h-5 text-inherit",
-};
 
 export const routes = [
   {

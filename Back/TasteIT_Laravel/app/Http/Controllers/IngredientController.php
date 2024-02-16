@@ -30,7 +30,7 @@ class IngredientController extends Controller
             return $recipe;
         });
 
-        return Inertia::render('Dashboard/pages/Admin/Ingredients/AcceptIngredient', [
+        return Inertia::render('Dashboard/features/Ingredients/AcceptIngredient', [
             'ingredients' => $ingredients,
             'users' => $users,
             'recipes' => $recipesWithTypesAndAvgValorations,
@@ -72,7 +72,7 @@ class IngredientController extends Controller
     {
         $ingredient = Ingredient::findOrFail($ingredientId);
         $ingredients = Ingredient::all();
-        return Inertia::render('Dashboard/pages/Admin/Ingredients/IngredientsEdit', [
+        return Inertia::render('Dashboard/features/Ingredients/IngredientsEdit', [
             'ingredient' => $ingredient,
             'ingredients' => $ingredients,
         ]);
