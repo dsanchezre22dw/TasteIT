@@ -1,27 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  Card,
-  CardBody,
-  CardHeader,
-  CardFooter,
-  Avatar,
   Typography,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Switch,
   Tooltip,
-  Button,
 } from "@material-tailwind/react";
 import {
-  HomeIcon,
-  ChatBubbleLeftEllipsisIcon,
-  Cog6ToothIcon,
   PencilIcon,
 } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
 import { ProfileInfoCard, MessageCard } from "../../Statistics/widgets/cards";
-import { platformSettingsData, conversationsData, projectsData } from "../../../data";
 import FollowUser from "./followUser/followUser";
 import BlockUser from "./blockUser/blockUser";
 

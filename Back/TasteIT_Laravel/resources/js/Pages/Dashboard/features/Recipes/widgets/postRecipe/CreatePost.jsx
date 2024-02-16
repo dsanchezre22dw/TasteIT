@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import ImageUploader from "./ImageUploader";
 import AddIngredients from "./AddIngredients";
 import { useForm } from "@inertiajs/react";
-import { Button } from "@material-tailwind/react";
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { Transition } from '@headlessui/react';
-import { validateIngredientDifficulty } from "../../../../../../public/assets/js/validationUtils";
+import { validateIngredientDifficulty } from "./../../../../../../../../public/assets/js/validationUtils";
 
 export default function CreatePost( {auth, recipe="", recipe_types} ) {
     const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
@@ -94,7 +93,7 @@ export default function CreatePost( {auth, recipe="", recipe_types} ) {
                     
                     <ImageUploader data={data} setData={setData} errors={errors} image={recipe.image}/>
 
-                    <span className="m-6">
+                    <span className="m-6 ml-16">
 
                         <div  className='mt-3'>
                             <InputLabel htmlFor="title" value="Title*" />

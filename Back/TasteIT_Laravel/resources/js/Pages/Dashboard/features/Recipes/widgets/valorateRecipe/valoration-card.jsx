@@ -1,25 +1,9 @@
 import React from 'react';
-import { Head, useForm } from '@inertiajs/react';
-import { Link } from 'react-router-dom';
 import {
-  Card,
-  CardBody,
-  CardHeader,
-  CardFooter,
   Typography,
-  Button,
-  Tooltip,
   Avatar,
 } from '@material-tailwind/react';
 
-import {
-    HomeIcon,
-    ChatBubbleLeftEllipsisIcon,
-    Cog6ToothIcon,
-    PencilIcon,
-    TrashIcon
-  } from "@heroicons/react/24/solid";
-import ClockIcon from '@/Components/ClockIcon';
 import StarIcon from '@/Components/StarIcon';
 
 function ValorationCard({ user }) {

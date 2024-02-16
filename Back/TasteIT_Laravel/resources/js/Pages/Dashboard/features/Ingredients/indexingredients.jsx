@@ -1,10 +1,10 @@
 import { Card, CardBody, Typography } from "@material-tailwind/react"
 import NewIngredient from "./NewIngredient";
 import { useState, useEffect } from "react"
-import ExistingIngredientList from "./ExistingIngredientList";
+import IngredientCard from "./widgets/ingredient-card";
 import Dashboard from '@/Layouts/DashboardLayout';
 
-export default function AcceptIngredient({auth, ingredients}) {
+export default function IngredientsIndex({auth, ingredients}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
@@ -73,7 +73,7 @@ export default function AcceptIngredient({auth, ingredients}) {
             <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"> 
             {
                 ingredients.map((ingredient) => (
-                    ingredient.enabled?'':<ExistingIngredientList key={ingredient.id} ingredient={ingredient} auth={auth}/>
+                    ingredient.enabled?'':<IngredientCard key={ingredient.id} ingredient={ingredient} auth={auth}/>
                 ))  
             }
             </div>
@@ -85,7 +85,7 @@ export default function AcceptIngredient({auth, ingredients}) {
 
             <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               {ingredients.map((ingredient) => (
-                <ExistingIngredientList key={ingredient.id} ingredient={ingredient} auth={auth}/>
+                <IngredientCard key={ingredient.id} ingredient={ingredient} auth={auth}/>
               ))}
             </div>
 

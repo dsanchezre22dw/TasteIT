@@ -1,30 +1,10 @@
-import { useParams } from 'react-router-dom';
 import {
   Card,
   CardBody,
-  CardHeader,
-  CardFooter,
-  Avatar,
-  Typography,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Switch,
-  Tooltip,
-  Button,
 } from "@material-tailwind/react";
-import {
-  HomeIcon,
-  ChatBubbleLeftEllipsisIcon,
-  Cog6ToothIcon,
-  PencilIcon,
-} from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
-import { ProfileInfoCard, MessageCard } from "../Statistics/widgets/cards";
-import { platformSettingsData, conversationsData, projectsData } from "../../data";
 import MainTitle from "@/Components/MainTitle";
-import CreatePost from "../../widgets/postRecipe/CreatePost";
-import "../../../../../../../public/assets/css/test.css"
+import CreatePost from './widgets/postRecipe/CreatePost';
+import "../../../../../../public/assets/css/test.css"
 import Dashboard from '@/Layouts/DashboardLayout';
 
 export function RecipesEdit({auth, recipe, recipe_types}) {

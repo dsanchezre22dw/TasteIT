@@ -5,7 +5,7 @@ import {
   Typography,
   Button
 } from "@material-tailwind/react";
-import '../../../../../../css/users.css';
+import '../../../../../css/users.css';
 import { useForm } from '@inertiajs/react';
 import { Link } from "@inertiajs/react";
 import Dashboard from '@/Layouts/DashboardLayout';

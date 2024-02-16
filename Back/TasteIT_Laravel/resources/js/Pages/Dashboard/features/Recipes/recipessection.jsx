@@ -6,8 +6,7 @@ import {
 } from "@material-tailwind/react";
 
 import { Link } from "@inertiajs/react";
-import RecipeCard from "@/Pages/Dashboard/widgets/seeRecipes/recipe-card";
-
+import RecipeCard from "./widgets/seeRecipes/recipe-card";
 export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_types, ingredients, show=true, see, text}) { 
 
   const [searchText, setSearchText] = useState("");

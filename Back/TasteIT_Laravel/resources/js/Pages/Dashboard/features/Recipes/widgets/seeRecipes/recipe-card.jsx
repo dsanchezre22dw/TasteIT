@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { Head, useForm } from '@inertiajs/react';
+import React from 'react';
+import { useForm } from '@inertiajs/react';
 import { Link } from "@inertiajs/react";
 import {
   Card,
@@ -11,9 +11,6 @@ import {
   Tooltip,
 } from '@material-tailwind/react';
 import {
-    HomeIcon,
-    ChatBubbleLeftEllipsisIcon,
-    Cog6ToothIcon,
     PencilIcon,
     TrashIcon
   } from "@heroicons/react/24/solid";

@@ -16,9 +16,9 @@ import {
 import { Link } from "@inertiajs/react";
 import StarIcon from "@/Components/StarIcon";
 import ClockIcon from "@/Components/ClockIcon";
-import RecipeType from "@/Pages/Dashboard/widgets/seeRecipes/recipetype-card";
+import RecipeType from './widgets/seeRecipes/recipetype-card';
 import ValorationCard from '@/Pages/Dashboard/features/Recipes/widgets/valorateRecipe/valoration-card';
-import SaveRecipe from '@/Pages/Dashboard/widgets/saveRecipe/saveRecipe';
+import SaveRecipe from './widgets/saveRecipe/saveRecipe';
 import Dashboard from '@/Layouts/DashboardLayout';
 import { getDifficultyColorAndText } from '../../../../../../public/assets/js/validationUtils';
 

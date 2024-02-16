@@ -75,7 +75,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return Inertia::render('Dashboard/features/Profile/profile', [
+        return Inertia::render('Dashboard/features/Users/adduser', [
         ]);
     }
 

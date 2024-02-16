@@ -5,7 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { useForm } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
-import { setupPasswordValidation, validateFirstName, validateSurname, validatePassword } from '../../../../public/assets/js/validationUtils'
+import { setupPasswordValidation, validatePassword } from '../../../../public/assets/js/validationUtils'
 
 export default function UpdatePasswordForm({ className = '' }) {
     const passwordInput = useRef();

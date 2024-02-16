@@ -14,8 +14,8 @@ import {
 } from "@heroicons/react/24/solid";
 
 import Dashboard from '@/Layouts/DashboardLayout';
-import AllRecipes from "@/Recipes/widgets/AllRecipes";
-import FollowingRecipes from "@/Pages/Dashboard/features/Profile/widgets/FollowingRecipes";
+import AllRecipes from "./widgets/AllRecipes";
+import FollowingRecipes from "./widgets/FollowingRecipes";
 
 export function RecipesIndex({auth, user, savedRecipesIds, recipes, recipe_types, ingredients}) { 
 

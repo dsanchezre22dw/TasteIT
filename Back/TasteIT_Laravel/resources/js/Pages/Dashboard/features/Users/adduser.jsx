@@ -13,8 +13,8 @@ import TextInput from '@/Components/TextInput';
 import SelectInput from "@/Components/SelectInput";
 import ToggleSwitch from "@/Components/ToggleSwitch";
 import { useForm } from '@inertiajs/react';
-import '../../../../../../css/password.css'
-import '../../../../../../css/toggle.css'
+import '../../../../../css/password.css'
+import '../../../../../css/toggle.css'
 import { setupPasswordValidation, validateFirstName, validateSurname, validatePassword } from '../../../../../../public/assets/js/validationUtils'
 import Dashboard from '@/Layouts/DashboardLayout';
 

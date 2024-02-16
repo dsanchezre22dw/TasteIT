@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -8,7 +7,7 @@ import { useForm } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import SelectInput from "@/Components/SelectInput";
 import ToggleSwitch from "@/Components/ToggleSwitch";
-import { setupPasswordValidation, validateFirstName, validateSurname, validatePassword } from '../../../../public/assets/js/validationUtils'
+import { validateFirstName, validateSurname } from '../../../../public/assets/js/validationUtils'
 
 
 export default function UpdateUserForm({ className = '', user}) {

@@ -2,35 +2,25 @@ import React, { useState } from "react";
 import {
   Card,
   CardBody,
-  CardHeader,
-  CardFooter,
   Avatar,
   Typography,
   Tabs,
   TabsHeader,
   Tab,
-  Switch,
-  Tooltip,
-  Button,
 } from "@material-tailwind/react";
 import {
   HomeIcon,
-  ChatBubbleLeftEllipsisIcon,
   Cog6ToothIcon,
-  PencilIcon,
   BookmarkIcon,
   PlusIcon,
   NoSymbolIcon
 } from "@heroicons/react/24/solid";
-import { ProfileInfoCard, MessageCard } from "../Statistics/widgets/cards";
-import { platformSettingsData, conversationsData, projectsData } from "../../data";
 import UserInformation from "./widgets/UserInformation";
 import UserSettings from "./widgets/UserSettings";
-import MyRecipes from "./widgets/MyRecipes";
-import SavedRecipes from "./widgets/SavedRecipes";
+import MyRecipes from "../Recipes/widgets/MyRecipes";
+import SavedRecipes from "../Recipes/widgets/SavedRecipes";
 import EditUserInformation from "./widgets/EditUserInformation";
-import BlockedUsers from "@/Pages/Dashboard/widgets/Standard/BlockedUsers";
-import { useEffect } from "react";
+import BlockedUsers from "./widgets/BlockedUsers";
 import { Link } from "@inertiajs/react";
 import Dashboard from '@/Layouts/DashboardLayout';
 import FollowUser from "@/Pages/Dashboard/features/Profile/widgets/followUser/followUser";

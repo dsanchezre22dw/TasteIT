@@ -56,6 +56,7 @@ Route::middleware('auth', 'verified')->prefix('dashboard')->group(function () {
             Route::get('/create', [UserController::class, 'create'])->name('users.create');  
             Route::post('/store', [UserController::class, 'store'])->name('users.store');  
         });
+        
 
         Route::middleware('standard')->group(function (){
             Route::post('/follow/{id}', [UserController::class, 'follow'])->name('users.follow'); 
@@ -123,7 +124,7 @@ Route::middleware('auth', 'verified')->prefix('dashboard')->group(function () {
 });
 
 
-Route::middleware('auth, verified')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -140,6 +141,6 @@ Route::post('/upload', function (Request $request) {
     }
 
     return response()->json(['error' => 'No se proporcionó ninguna imagen'], 400);
-})->middleware(['auth', 'verified']);
+})->middleware('auth', 'verified');
 
 require __DIR__.'/auth.php';
