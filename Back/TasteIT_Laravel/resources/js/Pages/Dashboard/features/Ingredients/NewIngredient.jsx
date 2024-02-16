@@ -7,7 +7,7 @@ export default function NewIngredient() {
     })
     const submit = (e) => {
         e.preventDefault();
-        post('/dashboard/ingredients/create');
+        post('/dashboard/ingredients/store');
     }
 
     return (

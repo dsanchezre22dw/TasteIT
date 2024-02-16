@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ImageUploader from "./ImageUploader";
+import ImageUploader from "@/Components/ImageUploader";
 import AddIngredients from "./AddIngredients";
 import { useForm } from "@inertiajs/react";
 import InputError from '@/Components/InputError';

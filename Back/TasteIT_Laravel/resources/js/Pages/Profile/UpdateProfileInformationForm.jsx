@@ -6,7 +6,7 @@ import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { validateFirstName, validateSurname } from '../../../../public/assets/js/validationUtils';
-import ImageUploader from "../Dashboard/features/Recipes/widgets/postRecipe/ImageUploader";
+import ImageUploader from "../../Components/ImageUploader";
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
     const user = usePage().props.auth.user;

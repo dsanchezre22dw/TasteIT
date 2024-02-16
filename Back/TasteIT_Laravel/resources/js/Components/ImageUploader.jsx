@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import InputError from '@/Components/InputError';
 
 export default function ImageUploader({data, setData, errors, errorMessages, setErrorMessages, image, width=500, className=''}) {

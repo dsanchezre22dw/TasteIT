@@ -30,7 +30,8 @@ class IngredientController extends Controller
      */
     public function create()
     {
-        //
+        
+        return Inertia::render('Dashboard/features/Ingredients/postingredient');
     }
 
     /**

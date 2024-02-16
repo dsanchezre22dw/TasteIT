@@ -78,12 +78,12 @@ Route::middleware('auth', 'verified')->prefix('dashboard')->group(function () {
 
 
         Route::get('/', [RecipeController::class, 'index'])->name('recipes.index'); 
-        Route::get('/create', [RecipeController::class, 'create'])->name('recipes.create'); 
+        Route::get('/create', [RecipeController::class, 'create'])->name('recipes.create');
+        Route::post('/store', [RecipeController::class, 'store'])->name('recipes.store');  
         Route::get('/{id}', [RecipeController::class, 'show'])->name('recipes.show');
         Route::delete('/delete/{id}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); 
         Route::get('/edit/{id}', [RecipeController::class, 'edit'])->name('recipes.edit'); 
         Route::post('/update/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
-        Route::post('/store', [RecipeController::class, 'store'])->name('recipes.store'); 
 
     });
 
@@ -115,7 +115,9 @@ Route::middleware('auth', 'verified')->prefix('dashboard')->group(function () {
         });
 
         Route::get('/', [IngredientController::class,'index'])->name('ingredients.index'); 
-        Route::post('/create', [IngredientController::class,'store']);
+        Route::post('/store', [IngredientController::class,'store'])->name('ingredients.store'); 
+        Route::get('/create', [IngredientController::class, 'create'])->name('ingredients.create');
+
         Route::delete('/delete/{id}', [IngredientController::class, 'destroy'])->name('ingredients.destroy'); 
         Route::get('/edit/{id}', [IngredientController::class, 'edit'])->name('ingredients.edit'); 
         Route::post('/edit/{id}', [IngredientController::class, 'update'])->name('ingredients.update');

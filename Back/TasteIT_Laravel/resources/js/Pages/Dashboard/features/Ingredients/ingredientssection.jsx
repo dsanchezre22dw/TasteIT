@@ -82,7 +82,7 @@ export function IngredientSection({auth, ingredients}) {
 
                   </div>
 
-                  <Link href={'/dashboard/recipes'} className="ml-10">
+                  <Link href={'/dashboard/ingredients/create'} className="ml-10">
                     <Button variant="gradient" color='red'>Request Ingredient</Button>
                   </Link>
 
