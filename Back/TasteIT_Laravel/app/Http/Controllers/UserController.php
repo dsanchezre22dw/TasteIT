@@ -240,16 +240,12 @@ class UserController extends Controller
 
     public function statistics()
     {
-
-        return Inertia::render('Dashboard/pages/dashboard/home', [
-        ]);
+        return Inertia::render('Dashboard/pages/dashboard/home');
     }
 
     public function profilelayout()
     {
-
-        return Inertia::render('Dashboard/pages/dashboard/profile', [
-        ]);
+        return Inertia::render('Dashboard/pages/dashboard/profile');
     }
 
     public function getTopUsers()
