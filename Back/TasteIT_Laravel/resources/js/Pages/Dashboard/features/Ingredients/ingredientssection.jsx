@@ -11,6 +11,7 @@ import {
 import { Link } from "@inertiajs/react";
 import IngredientCard from "./widgets/ingredient-card";
 import Dashboard from '@/Layouts/DashboardLayout';
+import RequestedIngredientTableRow from "./widgets/requestedingredienttablerow";
 
 export function IngredientSection({auth, ingredients}) { 
 
@@ -53,24 +54,70 @@ export function IngredientSection({auth, ingredients}) {
 
 
               <div className="px-4 pb-4">
-                <div>
+                <div className="flex justify-between">
                   <Typography variant="h6" color="blue-gray" className="mb-2">
                     Ingredients
                   </Typography>
+
+                  <Link href={'/dashboard/ingredients/create'} className="ml-10 mt-10">
+                    <Button variant="gradient" color='red'>Request Ingredient</Button>
+                  </Link>
+                </div>   
+
+
+                { auth.user.type === "admin" && (
+                  <>
+                    <div className="mb-12">
+                      <Typography
+                        variant="small"
+                        className="font-normal text-blue-gray-500"
+                      >
+                        Ingredients requested by users
+                      </Typography>
+
+                      <table className="w-full min-w-[640px] table-auto mt-8">
+                        <thead>
+                          <tr>
+                            {["ingredient", "user"].map((el) => (
+                              <th
+                                key={el}
+                                className="border-b border-blue-gray-50 py-3 px-5 text-left"
+                              >
+                                <Typography
+                                  variant="small"
+                                  className="text-[11px] font-bold uppercase text-blue-gray-400"
+                                >
+                                  {el}
+                                </Typography>
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {ingredients
+                        .filter((ingredient) => ingredient.enabled === null)
+                        .map((ingredient, key) => (
+                          <RequestedIngredientTableRow key={key} ingredient={ingredient} num={key}/>
+                        ))}
+
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </>
+                )}
+
+                <div>
+
                   <Typography
                     variant="small"
                     className="font-normal text-blue-gray-500"
                   >
                     Ingredients available for your recipes
                   </Typography>
-                </div>   
-
-
-                <div className="flex justify-between">
 
                   <div>
-
-                    <div className="mt-12 mb-4 ml-4">
+                    <div className="mt-10 mb-4 ml-4">
                       <input
                         type="text"
                         value={searchText}
@@ -79,25 +126,20 @@ export function IngredientSection({auth, ingredients}) {
                         className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                       />
                     </div>
-
                   </div>
 
-                  <Link href={'/dashboard/ingredients/create'} className="ml-10">
-                    <Button variant="gradient" color='red'>Request Ingredient</Button>
-                  </Link>
+                  <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
 
+
+                    {filteredIngredients
+                    .filter((ingredient) => ingredient.enabled === 1)
+                    .map((ingredient) => (
+                      <IngredientCard key={ingredient.id} auth={auth} ingredient={ingredient}/>
+                    ))}   
+
+                
+                  </div>
                 </div>
-
-                <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-
-                  {filteredIngredients
-                  .map((ingredient) => (
-                    <IngredientCard key={ingredient.id} auth={auth} ingredient={ingredient}/>
-                  ))}   
-
-              
-                </div>
-
               </div>
 
 

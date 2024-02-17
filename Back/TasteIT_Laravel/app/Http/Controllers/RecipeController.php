@@ -85,7 +85,7 @@ class RecipeController extends Controller
     {
 
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:60',
             'duration_mins' => 'required|numeric',
             'difficulty' => 'required|in:beginner,medium,expert',
             'description' => 'required|string|max:1024',
@@ -105,19 +105,17 @@ class RecipeController extends Controller
         $recipe->description = $request->description;
         $recipe->user_id = $request->user_id;
         
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $path = 'assets/img/recipes';
+        $file = $request->file('image');
+        $path = 'assets/img/recipes';
 
-            $imageName = time() . '.' . $file->getClientOriginalExtension();
+        $imageName = time() . '.' . $file->getClientOriginalExtension();
 
-            // Guardar la imagen en la carpeta 'public/img'
-            $file->move(public_path('assets/img/recipes'), $imageName);
+        // Guardar la imagen en la carpeta 'public/img'
+        $file->move(public_path($path), $imageName);
 
-            $recipe->image = "/".$path."/".$imageName;
+        $recipe->image = "/".$path."/".$imageName;
 
-            $recipe->save();
-        }
+        $recipe->save();
 
         foreach ($request->amount as $ingredient => $amount) {
             $ing = Ingredient::where('name','like',$ingredient)->first();

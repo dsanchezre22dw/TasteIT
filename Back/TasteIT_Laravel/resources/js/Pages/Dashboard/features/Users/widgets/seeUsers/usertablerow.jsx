@@ -1,9 +1,27 @@
 // UserTableRow.js
 import React from "react";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import { Avatar, Typography, Chip } from "@material-tailwind/react";
 
-const UserTableRow = ({ user, handleDelete, handleStatus, handleRestore, num}) => {
+const UserTableRow = ({ user, num}) => {
+
+  const { data, setData, put, processing, errors, reset } = useForm({});
+
+  const form = useForm({});
+
+
+  const handleStatus = (userId) => {
+    put(route('users.status', userId));
+    
+  };
+
+  const handleDelete = (userId) => {
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      form.delete(`/dashboard/users/delete/${userId}`);
+    }
+  };
+
+
   var className = "py-3 px-5 border-t border-blue-gray-50";
   if (num%2==0) {
     className = "py-3 px-5 border-t border-blue-gray-50 bg-[#ff000005]";
@@ -28,7 +46,7 @@ const UserTableRow = ({ user, handleDelete, handleStatus, handleRestore, num}) =
         <Typography className="text-xs font-semibold text-blue-gray-600">{user.type}</Typography>
       </td>
       <td className={className}>
-        <button type="button" onClick={() => handleStatus(user.id)}>
+        <button onClick={() => handleStatus(user.id)}>
           <Chip
             variant="gradient"
             color={user.isSoftDeleted ? "red" : (user.enabled ? "green" : "blue-gray")}
@@ -46,7 +64,7 @@ const UserTableRow = ({ user, handleDelete, handleStatus, handleRestore, num}) =
 
       <td className={className}>
         { user.type !== "admin" && (
-          <button type="button" onClick={() => handleDelete(user.id)}>
+          <button onClick={() => handleDelete(user.id)}>
             <span><i className="material-icons delete">&#xE5C9;</i></span>
           </button>
         )}

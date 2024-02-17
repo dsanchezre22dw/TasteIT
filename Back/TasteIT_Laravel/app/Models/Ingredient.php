@@ -26,4 +26,8 @@ class Ingredient extends Model
         return $this->belongsToMany('App\Models\Shopping_list')->withPivot('amount');
     }
 
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
+
 }

@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ingredients', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('image')->nullable(); 
-            $table->boolean('enabled')->default(null)->nullable();
-
-            $table->timestamps();
+        Schema::table('ingredients', function (Blueprint $table) {
+            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
         });
     }
 
@@ -26,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ingredients');
+        Schema::table('ingredients', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
+        });
     }
 };

@@ -5,7 +5,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 
-export default function AddIngredients({data, setData, errors}){
+export default function AddIngredients({data, setData, errors, errorMessages}){
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
@@ -69,6 +69,7 @@ export default function AddIngredients({data, setData, errors}){
                     ))}
                 </ul>
 
+                <InputError message={errorMessages.amount} className="mt-2" />
                 <InputError message={errors.amount} className="mt-2" />
 
             </div>

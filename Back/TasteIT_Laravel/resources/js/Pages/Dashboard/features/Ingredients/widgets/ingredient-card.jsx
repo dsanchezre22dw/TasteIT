@@ -1,43 +1,32 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import {
   Card,
   CardBody,
   CardHeader,
   CardFooter,
   Typography,
-  Button,
   Tooltip,
 } from '@material-tailwind/react';
 import {
     PencilIcon,
     TrashIcon,
-    CheckIcon,
-    XMarkIcon
   } from "@heroicons/react/24/solid";
-  import { useForm } from '@inertiajs/inertia-react';
 
 export default function IngredientCard({auth, ingredient}) {
     const {
         id,
         name,
         image,
-        enabled
       } = ingredient;
 
-      const form = useForm({});
+    const form = useForm({});
 
-      const handleAccept = () => {
-        if (window.confirm(`Are you sure you want to accept the ingredient ${name}?`)) {
-          form.post(`/dashboard/ingredients/accept/${id}`);
-        }
-      };
-
-      const handleDelete = () => {
-        if (window.confirm(`Are you sure you want to delete the ingredient ${name}?`)) {
-          form.delete(`/dashboard/ingredients/delete/${id}`);
-        }
-      };
+    const handleDelete = () => {
+      if (window.confirm(`Are you sure you want to delete the ingredient '${name}'?`)) {
+        form.delete(`/dashboard/ingredients/delete/${id}`);
+      }
+    };
 
     return (
       <Card key={id} color="transparent" shadow={false} className="border border-blue-gray-200 rounded-xl">
@@ -49,19 +38,9 @@ export default function IngredientCard({auth, ingredient}) {
             {name}
           </Typography>
         </CardBody>
-        {auth.user.type == 'admin'? (
+        {auth.user.type == 'admin' && (
         <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
             <div className="flex justify-around w-full">
-
-              <div>
-                  {!enabled && (
-                      <button onClick={handleAccept}>
-                          <Tooltip content="Accept Ingredient">
-                              <CheckIcon className="h-5 w-5 text-green-500 cursor-pointer mb-3" />
-                          </Tooltip>
-                      </button>
-                )}
-              </div>
               
               <div>
                   <Link href={`/dashboard/ingredients/edit/${id}`}>
@@ -70,22 +49,17 @@ export default function IngredientCard({auth, ingredient}) {
                       </Tooltip>
                   </Link>
               </div>
+              
               <div>
                 <button onClick={handleDelete}>
-                {enabled? (
                   <Tooltip content="Delete Ingredient">
-                      <TrashIcon className="h-5 w-5 text-red-500 cursor-pointer mb-3" />
+                    <TrashIcon className="h-5 w-5 text-red-500 cursor-pointer mb-3" />
                   </Tooltip>
-                ):(  
-                  <Tooltip content="Deny Ingredient">
-                      <XMarkIcon className="h-5 w-5 text-red-500 cursor-pointer mb-3" />
-                  </Tooltip> 
-                )}
                 </button>
               </div>
             </div>
         </CardFooter>
-        ):''}
+        )}
       </Card>
     );
 }

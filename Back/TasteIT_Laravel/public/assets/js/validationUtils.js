@@ -118,7 +118,7 @@ export function validatePassword(data, setErrorMessages){
     }
 }
 
-export function validateIngredientDifficulty(data, setErrorMessages){
+export function validateRecipeDifficulty(data, setErrorMessages){
   if (!['beginner', 'medium', 'expert'].includes(data.difficulty)) {
     setErrorMessages((prevErrors) => ({
       ...prevErrors,
@@ -171,6 +171,86 @@ export function validateImage(data, setErrorMessages){
       setErrorMessages((prevErrors) => ({
           ...prevErrors,
           image: '',
+      }));
+
+      return "";
+  }
+}
+
+export function validateRecipeTitle(data, setErrorMessages){
+  if (!(allLetter(data.title))){
+      setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          title: 'Field title can only contain letters',
+      }));
+
+      return "yes";
+
+  }else{
+
+      setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          title: '',
+      }));
+
+      return "";
+  }
+}
+
+export function validateRecipeDescription(data, setErrorMessages){
+  if (!(allLetter(data.description))){
+      setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          description: 'Field description can only contain letters',
+      }));
+
+      return "yes";
+
+  }else{
+
+      setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          description: '',
+      }));
+
+      return "";
+  }
+}
+
+export function validateRecipeIngredients(data, setErrorMessages){
+  if (Object.keys(data.amount).length === 0) {
+      setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          amount: 'Select at least 1 ingredient, please',
+      }));
+
+      return "yes";
+
+  }else{
+
+      setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          amount: '',
+      }));
+
+      return "";
+  }
+}
+
+export function validateIngredientName(data, setErrorMessages){
+  if (!(allLetter(data.name))){
+      setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          name: 'Field name can only contain letters',
+      }));
+
+      return "yes";
+
+  }else{
+
+      setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          name: '',
       }));
 
       return "";

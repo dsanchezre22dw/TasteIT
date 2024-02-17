@@ -1,8 +1,9 @@
 import {
   Card,
   CardBody,
+  CardHeader,
+  Typography,
 } from "@material-tailwind/react";
-import MainTitle from "@/Components/MainTitle";
 import RecipeForm from './widgets/postRecipe/RecipeForm';
 import "../../../../../../public/assets/css/test.css"
 import Dashboard from '@/Layouts/DashboardLayout';
@@ -12,15 +13,20 @@ export function RecipesEdit({auth, recipe, recipe_types}) {
   return (
     <>
       <Dashboard auth={auth}>
-        <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
-          <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
+        <div className="mt-12 mb-8 flex flex-col gap-12">
+          <Card>
+
+            <CardHeader variant="gradient" color="red" className="mb-8 p-6 flex items-center justify-between">
+              <Typography variant="h6" color="white">
+                Edit Recipe
+              </Typography>
+            </CardHeader>
+
+            <CardBody className="p-4">
+              <RecipeForm auth={auth} recipe={recipe} recipe_types={recipe_types}/>
+            </CardBody>
+          </Card>
         </div>
-        <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100">
-          <CardBody className="p-4">
-            <MainTitle title="Create a new recipe" />
-            <RecipeForm auth={auth} recipe={recipe} recipe_types={recipe_types}/>
-          </CardBody>
-        </Card>
       </Dashboard>
     </>
   );

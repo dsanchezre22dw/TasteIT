@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Recipe;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
-use Carbon\Carbon;
 
 class IngredientController extends Controller
 {
@@ -18,7 +19,9 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        $ingredients = Ingredient::all();
+
+        $ingredients = Ingredient::with(['user'])->get();
+
 
         return Inertia::render('Dashboard/features/Ingredients/ingredientssection', [
             'ingredients' => $ingredients,
@@ -39,11 +42,38 @@ class IngredientController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'image' => 'required|image'
+        ],[
+            'image.image' => 'The file must be an image.'
+        ]);
+
+
         $ingredient = new Ingredient;
         $ingredient->name = $request->name;
-        $ingredient->save();
 
-        return redirect()->back();
+        $file = $request->file('image');
+        $path = 'assets/img/ingredients';
+
+        $imageName = time() . '.' . $file->getClientOriginalExtension();
+
+        // Guardar la imagen en la carpeta 'public/img'
+        $file->move(public_path($path), $imageName);
+
+        $ingredient->image = "/".$path."/".$imageName;
+
+
+        if (Auth::user()->type === 'admin'){
+            $ingredient->enabled = 1;
+        }else{
+            $ingredient->enabled = null;
+        }
+
+        Auth::user()->ingredients()->save($ingredient);
+
+        return redirect()->route('ingredients.index');
     }
 
     /**
@@ -72,17 +102,32 @@ class IngredientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ingredient = Ingredient::findOrFail($id);
 
         $request->validate([
             'name' => 'required|string|max:50',
-            'enabled' => 'required|boolean',
+            'image' => 'nullable|image'
+        ],[
+            'image.image' => 'The file must be an image.'
         ]);
 
-        $ingredient->name = $request->input('name');
-        $ingredient->enabled = $request->input('enabled');
 
+        $ingredient = Ingredient::findOrFail($id);
+        $ingredient->name = $request->name;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = 'assets/img/ingredients';
+
+            $imageName = time() . '.' . $file->getClientOriginalExtension();
+
+            // Guardar la imagen en la carpeta 'public/img'
+            $file->move(public_path($path), $imageName);
+
+            $ingredient->image = "/".$path."/".$imageName;
+        }
         $ingredient->save();
+
+        return redirect()->route('ingredients.index');
     }
 
     /**
@@ -90,7 +135,8 @@ class IngredientController extends Controller
      */
     public function destroy($ingredientId)
     {
-        Ingredient::destroy($ingredientId);
+        $ingredient = Ingredient::findOrFail($ingredientId);
+        $ingredient->delete();
 
         return redirect()->back();
     }
@@ -99,6 +145,15 @@ class IngredientController extends Controller
     {
         $ingredient = Ingredient::findOrFail($ingredientId);
         $ingredient->enabled = true;
+        $ingredient->save();
+
+        return redirect()->back();
+    }
+
+    public function deny($ingredientId)
+    {
+        $ingredient = Ingredient::findOrFail($ingredientId);
+        $ingredient->enabled = false;
         $ingredient->save();
 
         return redirect()->back();

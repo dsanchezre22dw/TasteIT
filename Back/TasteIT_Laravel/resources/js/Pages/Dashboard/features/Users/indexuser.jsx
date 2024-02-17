@@ -6,33 +6,12 @@ import {
   Button
 } from "@material-tailwind/react";
 import '../../../../../css/users.css';
-import { useForm } from '@inertiajs/react';
 import { Link } from "@inertiajs/react";
 import Dashboard from '@/Layouts/DashboardLayout';
 import UserTableRow from "@/Pages/Dashboard/features/Users/widgets/seeUsers/usertablerow";
 
 export function UsersIndex({ auth, users }) {  
-  const { data, setData, put, processing, errors, reset } = useForm({});
 
-  const form = useForm({});
-
-
-  const handleStatus = (userId) => {
-    put(route('users.status', userId));
-    
-  };
-
-  const handleDelete = (userId) => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
-      form.delete(`/dashboard/users/delete/${userId}`);
-    }
-  };
-
-  const handleRestore = (userId) => {
-    if (window.confirm('Are you sure you want to restore this user?')) {
-      put(route('users.restore', userId));
-    }
-  };
 
   return (
     <Dashboard auth={auth}>
@@ -73,7 +52,7 @@ export function UsersIndex({ auth, users }) {
               </thead>
               <tbody>
               {users.map((user, key) => (
-                <UserTableRow key={key} user={user} handleStatus={handleStatus} handleDelete={handleDelete} handleRestore={handleRestore}num={key}/>
+                <UserTableRow key={key} user={user} num={key}/>
               ))}
 
               </tbody>

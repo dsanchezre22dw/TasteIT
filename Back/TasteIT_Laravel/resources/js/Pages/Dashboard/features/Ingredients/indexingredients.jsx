@@ -58,36 +58,38 @@ export default function IngredientsIndex({auth, ingredients}) {
                     ))}
                 </ul>
             </CardBody>
-            <CardBody className="p-4">
-            <Typography variant="h2">
-                Add new ingredient
-            </Typography>
-            <NewIngredient  />
-            </CardBody>
-            <CardBody className="p-4">
-            {auth.user.type == 'admin'?(<>
-            <Typography variant="h2" className="mt-20">
-                Requested ingredients
-            </Typography>
             
-            <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"> 
-            {
-                ingredients.map((ingredient) => (
-                    ingredient.enabled?'':<IngredientCard key={ingredient.id} ingredient={ingredient} auth={auth}/>
-                ))  
-            }
-            </div>
-            </>):''}
+            <CardBody className="p-4">
+                <Typography variant="h2">
+                    Add new ingredient
+                </Typography>
+                <NewIngredient />
+            </CardBody>
 
-            <Typography variant="h2" className="mt-20">
-                All the ingredients
-            </Typography>
+            <CardBody className="p-4">
+                {auth.user.type == 'admin'?(<>
+                    <Typography variant="h2" className="mt-20">
+                        Requested ingredients
+                    </Typography>
+                    
+                    <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"> 
+                    {
+                        ingredients.map((ingredient) => (
+                            ingredient.enabled?'':<IngredientCard key={ingredient.id} ingredient={ingredient} auth={auth}/>
+                        ))  
+                    }
+                    </div>
+                </>):''}
 
-            <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-              {ingredients.map((ingredient) => (
-                <IngredientCard key={ingredient.id} ingredient={ingredient} auth={auth}/>
-              ))}
-            </div>
+                <Typography variant="h2" className="mt-20">
+                    All the ingredients
+                </Typography>
+
+                <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                    {ingredients.map((ingredient) => (
+                        <IngredientCard key={ingredient.id} ingredient={ingredient} auth={auth}/>
+                    ))}
+                </div>
 
             </CardBody>
         </Card>

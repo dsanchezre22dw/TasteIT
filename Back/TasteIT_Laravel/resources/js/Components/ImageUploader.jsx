@@ -25,6 +25,7 @@ export default function ImageUploader({data, setData, errors, errorMessages, set
     },[]) 
     useEffect( () => {
         if (image) {
+            console.log(image);
             handleFileSelected(image);
         }
         

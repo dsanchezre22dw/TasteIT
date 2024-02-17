@@ -112,15 +112,15 @@ Route::middleware('auth', 'verified')->prefix('dashboard')->group(function () {
 
         Route::middleware('admin')->group(function (){
             Route::post('/accept/{id}', [IngredientController::class, 'accept'])->name('ingredients.accept'); 
+            Route::post('/deny/{id}', [IngredientController::class, 'deny'])->name('ingredients.accept');
+            Route::delete('/delete/{id}', [IngredientController::class, 'destroy'])->name('ingredients.destroy'); 
+            Route::get('/edit/{id}', [IngredientController::class, 'edit'])->name('ingredients.edit'); 
+            Route::post('/update/{id}', [IngredientController::class, 'update'])->name('ingredients.update'); 
         });
 
         Route::get('/', [IngredientController::class,'index'])->name('ingredients.index'); 
         Route::post('/store', [IngredientController::class,'store'])->name('ingredients.store'); 
         Route::get('/create', [IngredientController::class, 'create'])->name('ingredients.create');
-
-        Route::delete('/delete/{id}', [IngredientController::class, 'destroy'])->name('ingredients.destroy'); 
-        Route::get('/edit/{id}', [IngredientController::class, 'edit'])->name('ingredients.edit'); 
-        Route::post('/edit/{id}', [IngredientController::class, 'update'])->name('ingredients.update');
     });
 
 });

@@ -5,18 +5,17 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
-import { Transition } from '@headlessui/react';
-import { validateIngredientDifficulty, validateImage } from "../../../../../../../public/assets/js/validationUtils";
-import ToggleSwitch from "@/Components/ToggleSwitch";
+import { validateIngredientName, validateImage } from "../../../../../../../public/assets/js/validationUtils";
 import "../../../../../../css/toggle.css"
 
-export default function IngredientForm( {auth, recipe="", recipe_types} ) {
+export default function IngredientForm( {ingredient=""} ) {
     const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
-        title: recipe.title,
+        name: ingredient.name,
         image: null,
     });
 
     const [errorMessages, setErrorMessages] = useState({
+        name: '',
         image: '',
     });
 
@@ -25,13 +24,17 @@ export default function IngredientForm( {auth, recipe="", recipe_types} ) {
         e.preventDefault();
 
         var errors_exist = "";
-        errors_exist += validateImage(data, setErrorMessages);
+        errors_exist += validateIngredientName(data, setErrorMessages);
 
+        if (ingredient === "") {
+            errors_exist += validateImage(data, setErrorMessages);
+        }
+        
         if (errors_exist === ""){
-            if (recipe === "") {
-                post('/dashboard/recipes/store');
+            if (ingredient === "") {
+                post('/dashboard/ingredients/store');
             } else {
-                post(`/dashboard/recipes/update/${recipe.id}`);
+                post(`/dashboard/ingredients/update/${ingredient.id}`);
             }
         }
         
@@ -40,42 +43,37 @@ export default function IngredientForm( {auth, recipe="", recipe_types} ) {
     return (
         <div>
 
-            <form name="form_register" onSubmit={submit} className="space-y-4">
-                <div style={{ display: 'flex' }}>
+            <form name="ingredientForm" onSubmit={submit} className="space-y-4">
+                <div className="flex flex-wrap">
 
-                    <div style={{ flex: 1}}>
-                        <InputLabel htmlFor="name" value="Ingredient Name*" />
-                        <TextInput
-                            id="name"
-                            name="name"
-                            value={data.name}
-                            className="mt-1 block w-[100%]"
-                            autoComplete="name"
-                            isFocused={true}
-                            onChange={(e) => setData('name', e.target.value)}
-                            required
-                            maxLength='50'
-                        />
+                    <ImageUploader data={data} setData={setData} errors={errors} errorMessages={errorMessages} setErrorMessages={setErrorMessages} image={ingredient.image}/>
 
-                        <InputError message={errorMessages.name} className="mt-2" />
-                        <InputError message={errors.name} className="mt-2" />
+                    <span className="m-6 ml-16">
 
-                    </div>
+                        <div  className='mt-3'>
+                            <InputLabel htmlFor="name" value="Ingredient Name*" />
+                            <TextInput
+                                id="name"
+                                name="name"
+                                value={data.name}
+                                className="mt-1 block w-[100%]"
+                                autoComplete="name"
+                                isFocused={true}
+                                onChange={(e) => setData('name', e.target.value)}
+                                required
+                                maxLength='50'
+                            />
+
+                            <InputError message={errorMessages.name} className="mt-2" />
+                            <InputError message={errors.name} className="mt-2" />
+                        </div>
+
+                    </span>
 
                 </div>
 
-                <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
-
-                    <Transition
-                        show={recentlySuccessful}
-                        enter="transition ease-in-out"
-                        enterFrom="opacity-0"
-                        leave="transition ease-in-out"
-                        leaveTo="opacity-0"
-                    >
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Saved.</p>
-                    </Transition>
+                <div className="flex items-center gap-4 ml-5">
+                    <PrimaryButton disabled={processing}>Create</PrimaryButton>
                 </div>
 
             </form>

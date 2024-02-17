@@ -6,8 +6,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
-import { Transition } from '@headlessui/react';
-import { validateIngredientDifficulty, validateImage } from "../../../../../../../../public/assets/js/validationUtils";
+import { validateRecipeTitle, validateRecipeDescription, validateRecipeDifficulty, validateImage, validateRecipeIngredients } from "../../../../../../../../public/assets/js/validationUtils";
 
 export default function RecipeForm( {auth, recipe="", recipe_types} ) {
     const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
@@ -22,21 +21,20 @@ export default function RecipeForm( {auth, recipe="", recipe_types} ) {
     });
 
     const [errorMessages, setErrorMessages] = useState({
+        title: '',
+        description: '',
+        amount: '',
         difficulty: '',
         image: '',
     });
 
     const [filteringTypes, setFilteringTypes] = useState([]);
 
-    var create;
 
     useEffect( () => {
 
-        create = true;
 
         if(recipe !== ""){
-
-            create = false;
 
             let obj = {};
             let array = [];
@@ -62,9 +60,16 @@ export default function RecipeForm( {auth, recipe="", recipe_types} ) {
 
         var errors_exist = "";
 
-        errors_exist += validateIngredientDifficulty(data, setErrorMessages);
-        errors_exist += validateImage(data, setErrorMessages);
+        errors_exist += validateRecipeTitle(data, setErrorMessages);
+        errors_exist += validateRecipeDescription(data, setErrorMessages);
+        errors_exist += validateRecipeIngredients(data, setErrorMessages);
+        errors_exist += validateRecipeDifficulty(data, setErrorMessages);
 
+        if (recipe === "") {
+            errors_exist += validateImage(data, setErrorMessages);
+        }
+
+        console.log(data.image);
         if (errors_exist === ""){
             if (recipe === "") {
                 post('/dashboard/recipes/store');
@@ -111,6 +116,7 @@ export default function RecipeForm( {auth, recipe="", recipe_types} ) {
                                 maxLength='255'
                             />
 
+                            <InputError message={errorMessages.title} className="mt-2" />
                             <InputError message={errors.title} className="mt-2" />
 
                         </div>
@@ -167,7 +173,9 @@ export default function RecipeForm( {auth, recipe="", recipe_types} ) {
                         <InputError message={errorMessages.difficulty} className="mt-2" />
                         <InputError message={errors.difficulty} className="mt-2" />
 
-                        <AddIngredients setData={setData} data={data} errors={errors}/>
+                        <div className='mt-3'>
+                            <AddIngredients setData={setData} data={data} errors={errors} errorMessages={errorMessages}/>
+                        </div>
 
                     </span>
                 </div>
@@ -178,22 +186,13 @@ export default function RecipeForm( {auth, recipe="", recipe_types} ) {
                     <textarea name="description" id="" className="mt-1 block w-[100%] border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"  
                     rows="10" placeholder="How to prepare the recipe..." defaultValue={data.description} onChange={(e) => setData('description', e.target.value)} required></textarea>
             
+                    <InputError message={errorMessages.description} className="mt-2" />
                     <InputError message={errors.description} className="mt-2" />
 
                 </div>
 
                 <div className="flex items-center gap-4 ml-5">
                     <PrimaryButton disabled={processing}>Create</PrimaryButton>
-
-                    <Transition
-                        show={recentlySuccessful}
-                        enter="transition ease-in-out"
-                        enterFrom="opacity-0"
-                        leave="transition ease-in-out"
-                        leaveTo="opacity-0"
-                    >
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Created.</p>
-                    </Transition>
                 </div>
 
             </form>
