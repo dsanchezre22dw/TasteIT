@@ -4,9 +4,10 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-
 import { Link } from "@inertiajs/react";
 import RecipeCard from "./widgets/seeRecipes/recipe-card";
+import TextInput from "@/Components/TextInput";
+
 export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_types, ingredients, show=true, see, text}) { 
 
   const [searchText, setSearchText] = useState("");
@@ -125,9 +126,30 @@ export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_typ
   };
 
   const handleIngredientSearchTextChange = (e) => {
+    console.log(e.target.value)
     setSearchIngredientText(e.target.value);
   };
   
+  const [showFilteredIngredients, setShowFilteredIngredients] = useState(false);
+
+  const handleIngredientInputClick = () => {
+    setShowFilteredIngredients(true);
+  };
+
+  const handleOutsideIngredientClick = (e) => {
+    if (e.target.closest("#ingredient-input")) {
+      return;
+    }
+    setShowFilteredIngredients(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleOutsideIngredientClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideIngredientClick);
+    };
+  }, []);
+
   return (
     <>
       <div className="px-4 pb-4">
@@ -190,24 +212,35 @@ export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_typ
               {/* Filtro de ingredientes */}
               <div className="flex mt-10 ml-4">
                 
-                <input
-                  type="text"
-                  value={searchIngredientText}
-                  onChange={handleIngredientSearchTextChange}
-                  placeholder="Filter by ingredients of the recipe..."
-                  className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-                />
-                
-                <div className="flex flex-wrap gap-4">
-                  {filteredIngredients
-                  .map((ingredient, index) => (
-                    <div key={index} onClick={() => handleIngredientFilter(ingredient.id)}>
-                      {ingredient.name}
-                    </div>
-                  ))}  
-                </div>
 
-                <div className="flex flex-wrap gap-4 mt-20">
+                <div>
+                  <TextInput
+                    id="ingredient-input"
+                    value={searchIngredientText}
+                    onChange={handleIngredientSearchTextChange}
+                    onClick={handleIngredientInputClick}
+                    placeholder="Filter by ingredients..."
+                    className="mt-1 block w-[100%] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                    maxLength='80'
+                  />
+                  
+                  {showFilteredIngredients && (
+                    <ul className='w-full bg-gray-100'>
+                      {filteredIngredients.map((ingredient) => (
+                        <li key={ingredient.id} onClick={() => handleIngredientFilter(ingredient.id)} className='hover:bg-gray-300 p-2'>
+                          {ingredient.name}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>                
+
+                <div className="flex flex-wrap gap-4 ml-10">
+                  <Typography
+                    variant="h5"
+                  >
+                    Selected ingredients:
+                  </Typography>
                   {ingredients
                   .filter((ingredient) => filteringIngredients.includes(ingredient.id))
                   .map((ingredient, index) => (

@@ -62,7 +62,7 @@ class UserController extends Controller
 
         return Inertia::render('Dashboard/features/Profile/profile', [
             'actualUser' => User::with(['followers', 'following', 'configuration'])->findOrFail(Auth::id()),
-            'user' => User::with(['followers', 'following'])->findOrFail($userId),
+            'user' => User::with(['followers', 'following', 'ingredients'])->findOrFail($userId),
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipes' => $recipesWithTypesAndAvgValorations,
             'recipe_types' => $recipe_types,

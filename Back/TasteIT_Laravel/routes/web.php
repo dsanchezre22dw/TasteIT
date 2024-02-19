@@ -42,7 +42,7 @@ Route::middleware('auth', 'verified')->prefix('dashboard')->group(function () {
     })->name('dashboard')->middleware('admin');
 
     Route::get('/profile', [UserController::class, 'profile'])->name('profile'); 
-    Route::get('/statistics', [UserController::class, 'statistics'])->name('statistics.index');
+    Route::get('/statistics', [UserController::class, 'statistics'])->name('statistics.index')->middleware('admin');
 
     Route::prefix('users')->group(function () {
 

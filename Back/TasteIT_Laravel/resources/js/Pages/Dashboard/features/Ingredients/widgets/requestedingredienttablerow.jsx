@@ -34,11 +34,9 @@ const RequestedIngredientTableRow = ({ ingredient, num}) => {
         <div className="flex items-center gap-4">
           <Avatar src={ingredient.image} alt={ingredient.name} size="sm" variant="rounded" />
           <div>
-            <Link href={`/dashboard/users/${ingredient.id}`}>
-              <Typography variant="small" color="blue-gray" className="font-semibold">
-                {ingredient.name}
-              </Typography>
-            </Link>
+            <Typography variant="small" color="blue-gray" className="font-semibold">
+              {ingredient.name}
+            </Typography>
           </div>
         </div>
       </td>
