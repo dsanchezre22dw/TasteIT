@@ -1,5 +1,5 @@
 import React from 'react';
-import IconButton from '@/Pages/Landing/IconButton';
+import IconButton from '@/Components/IconButton';
 
 export default function ChefsItem(props){
     return (

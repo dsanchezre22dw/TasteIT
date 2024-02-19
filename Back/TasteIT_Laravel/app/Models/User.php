@@ -61,4 +61,13 @@ class User extends AuthenticatableUser implements MustVerifyEmail
         return $this->belongsToMany('App\Models\User','follows','follower_id','followed_id')->withPivot('blocked')->withTimestamps();
     }
 
+    public function ingredients() {
+        return $this->hasMany('App\Models\Ingredient');
+    }
+
+    public function configuration() {
+        return $this->belongsTo('App\Models\Configuration');
+    }
+
+
 }

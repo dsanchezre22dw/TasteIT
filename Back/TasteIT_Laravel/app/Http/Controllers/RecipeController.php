@@ -40,7 +40,7 @@ class RecipeController extends Controller
         $ingredients = Ingredient::all();
 
     
-        return Inertia::render('Dashboard/pages/Standard/Recipe/indexrecipe', [
+        return Inertia::render('Dashboard/features/Recipes/indexrecipe', [
             'user' => \App\Models\User::with(['followers', 'following'])->findOrFail(Auth::id()),
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipes' => $recipesWithTypesAndAvgValorations,
@@ -60,7 +60,7 @@ class RecipeController extends Controller
         $recipe->avg_valoration = number_format($recipe->valorations->avg('pivot.valoration'), 2);
         $recipe->amount_valorations = $recipe->valorations->count();;
     
-        return Inertia::render('Dashboard/pages/Standard/Recipe/seerecipe', [
+        return Inertia::render('Dashboard/features/Recipes/seerecipe', [
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipe' => $recipe,
         ]);
@@ -73,7 +73,7 @@ class RecipeController extends Controller
     {
         $recipe_types = Recipe_type::all();
         
-        return Inertia::render('Dashboard/pages/Standard/Recipe/postrecipe', [
+        return Inertia::render('Dashboard/features/Recipes/postrecipe', [
             'recipe_types' => $recipe_types,
         ]);
     }
@@ -85,7 +85,7 @@ class RecipeController extends Controller
     {
 
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:60',
             'duration_mins' => 'required|numeric',
             'difficulty' => 'required|in:beginner,medium,expert',
             'description' => 'required|string|max:1024',
@@ -105,19 +105,17 @@ class RecipeController extends Controller
         $recipe->description = $request->description;
         $recipe->user_id = $request->user_id;
         
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $path = 'assets/img/recipes';
+        $file = $request->file('image');
+        $path = 'assets/img/recipes';
 
-            $imageName = time() . '.' . $file->getClientOriginalExtension();
+        $imageName = time() . '.' . $file->getClientOriginalExtension();
 
-            // Guardar la imagen en la carpeta 'public/img'
-            $file->move(public_path('assets/img/recipes'), $imageName);
+        // Guardar la imagen en la carpeta 'public/img'
+        $file->move(public_path($path), $imageName);
 
-            $recipe->image = "/".$path."/".$imageName;
+        $recipe->image = "/".$path."/".$imageName;
 
-            $recipe->save();
-        }
+        $recipe->save();
 
         foreach ($request->amount as $ingredient => $amount) {
             $ing = Ingredient::where('name','like',$ingredient)->first();
@@ -153,9 +151,15 @@ class RecipeController extends Controller
     {
         
         $recipe = Recipe::with(['user'])->findOrFail($recipeId);
-    
-        return Inertia::render('Dashboard/pages/Standard/Recipe/valoraterecipe', [
+        
+        $valoration = "";
+        if (Auth::user()->valorations()->where('recipe_id', $recipeId)->count() > 0){
+            $valoration = Auth::user()->valorations()->where('recipe_id', $recipeId)->first()->pivot;
+        }
+
+        return Inertia::render('Dashboard/features/Recipes/valoraterecipe', [
             'recipe' => $recipe,
+            'valoration' => $valoration,
         ]);
     }
 
@@ -164,6 +168,7 @@ class RecipeController extends Controller
     {
 
         $request->validate([
+            'recipe_id' => 'required|integer|exists:recipes,id',
             'rating' => 'required|integer|between:1,5',
             'title' => 'nullable|string|max:50',
             'message' => 'nullable|string|max:250',
@@ -174,12 +179,15 @@ class RecipeController extends Controller
         
         $user = Auth::user();
 
-        if ($user->valorations()){
-            $user->valorations()->detach();
+        if ($user->valorations()->where('recipe_id', $request->recipe_id)->count() > 0){
+            $user->valorations()->updateExistingPivot($request->recipe_id, ['valoration'=>$request->rating, 'title'=>$request->title, 'description'=>$request->message]);
+        }else{
+            $user->valorations()->attach($request->recipe_id, ["valoration" => $request->rating, "title" => $request->title, "description" => $request->message]);  
         }
 
-        $user->valorations()->attach($request->recipe_id, ["valoration" => $request->rating, "title" => $request->title, "description" => $request->message]);  
         $user->save(); 
+
+        return redirect()->route('recipes.index');
     }
 
 
@@ -191,7 +199,7 @@ class RecipeController extends Controller
         $recipe = Recipe::with(['recipe_types', 'valorations', 'ingredients', 'user'])->findOrFail($recipeId);
         $recipe_types = Recipe_type::all();
 
-        return Inertia::render('Dashboard/pages/Standard/Recipe/editrecipe', [
+        return Inertia::render('Dashboard/features/Recipes/editrecipe', [
             'recipe' => $recipe,
             'recipe_types' => $recipe_types,
         ]);

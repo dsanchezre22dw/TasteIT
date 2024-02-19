@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('image')->nullable(); 
-            $table->boolean('enabled')->default(false);
+            $table->boolean('enabled')->default(null)->nullable();
 
             $table->timestamps();
         });

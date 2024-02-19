@@ -28,7 +28,7 @@ Route::get('/', function () {
 
     if (!(auth()->check())) {
 
-        return Inertia::render("Landing", []);
+        return Inertia::render("Landing/Landing", []);
 
     }
 
@@ -56,10 +56,12 @@ Route::middleware('auth', 'verified')->prefix('dashboard')->group(function () {
             Route::get('/create', [UserController::class, 'create'])->name('users.create');  
             Route::post('/store', [UserController::class, 'store'])->name('users.store');  
         });
+        
 
         Route::middleware('standard')->group(function (){
             Route::post('/follow/{id}', [UserController::class, 'follow'])->name('users.follow'); 
             Route::post('/block/{id}', [UserController::class, 'block'])->name('users.block'); 
+            Route::post('/configuration', [UserController::class, 'configuration'])->name('users.configuration');
         });
 
         Route::get('/{id}', [UserController::class, 'show'])->name('users.show'); 
@@ -77,12 +79,12 @@ Route::middleware('auth', 'verified')->prefix('dashboard')->group(function () {
 
 
         Route::get('/', [RecipeController::class, 'index'])->name('recipes.index'); 
-        Route::get('/create', [RecipeController::class, 'create'])->name('recipes.create'); 
+        Route::get('/create', [RecipeController::class, 'create'])->name('recipes.create');
+        Route::post('/store', [RecipeController::class, 'store'])->name('recipes.store');  
         Route::get('/{id}', [RecipeController::class, 'show'])->name('recipes.show');
         Route::delete('/delete/{id}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); 
         Route::get('/edit/{id}', [RecipeController::class, 'edit'])->name('recipes.edit'); 
         Route::post('/update/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
-        Route::post('/store', [RecipeController::class, 'store'])->name('recipes.store'); 
 
     });
 
@@ -111,19 +113,21 @@ Route::middleware('auth', 'verified')->prefix('dashboard')->group(function () {
 
         Route::middleware('admin')->group(function (){
             Route::post('/accept/{id}', [IngredientController::class, 'accept'])->name('ingredients.accept'); 
+            Route::post('/deny/{id}', [IngredientController::class, 'deny'])->name('ingredients.accept');
+            Route::delete('/delete/{id}', [IngredientController::class, 'destroy'])->name('ingredients.destroy'); 
+            Route::get('/edit/{id}', [IngredientController::class, 'edit'])->name('ingredients.edit'); 
+            Route::post('/update/{id}', [IngredientController::class, 'update'])->name('ingredients.update'); 
         });
 
         Route::get('/', [IngredientController::class,'index'])->name('ingredients.index'); 
-        Route::post('/create', [IngredientController::class,'store']);
-        Route::delete('/delete/{id}', [IngredientController::class, 'destroy'])->name('ingredients.destroy'); 
-        Route::get('/edit/{id}', [IngredientController::class, 'edit'])->name('ingredients.edit'); 
-        Route::post('/edit/{id}', [IngredientController::class, 'update'])->name('ingredients.update');
+        Route::post('/store', [IngredientController::class,'store'])->name('ingredients.store'); 
+        Route::get('/create', [IngredientController::class, 'create'])->name('ingredients.create');
     });
 
 });
 
 
-Route::middleware('auth, verified')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -140,6 +144,6 @@ Route::post('/upload', function (Request $request) {
     }
 
     return response()->json(['error' => 'No se proporcionó ninguna imagen'], 400);
-})->middleware(['auth', 'verified']);
+})->middleware('auth', 'verified');
 
 require __DIR__.'/auth.php';
