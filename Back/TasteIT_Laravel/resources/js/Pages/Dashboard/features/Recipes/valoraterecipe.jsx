@@ -13,12 +13,12 @@ import "../../../../../../public/assets/css/starrating.css"
 import { setupStarRating, validateStarRating } from '../../../../../../public/assets/js/validationUtils'
 import Dashboard from '@/Layouts/DashboardLayout';
 
-export function ValorateRecipe({auth, recipe}) {
+export function ValorateRecipe({auth, recipe, valoration}) {
 
   const { data, setData, post, processing, errors, reset } = useForm({
-    rating: null,
-    title: "",
-    message: "",
+    rating: valoration.valoration,
+    title: valoration.title,
+    message: valoration.description,
     recipe_id: recipe.id,
   });
 
@@ -66,16 +66,11 @@ export function ValorateRecipe({auth, recipe}) {
               </Typography>
 
               <div className="flex justify-center">
-                <span className="star">★
-                </span>
-                <span className="star">★
-                </span>
-                <span className="star">★
-                </span>
-                <span className="star">★
-                </span>
-                <span className="star">★
-                </span>
+                <span className={`star ${valoration.valoration >= 1 ? 'yellow' : ''}`}>★</span>
+                <span className={`star ${valoration.valoration >= 2 ? 'yellow' : ''}`}>★</span>
+                <span className={`star ${valoration.valoration >= 3 ? 'yellow' : ''}`}>★</span>
+                <span className={`star ${valoration.valoration >= 4 ? 'yellow' : ''}`}>★</span>
+                <span className={`star ${valoration.valoration >= 5 ? 'yellow' : ''}`}>★</span>
               </div>
               <InputError message={errorMessages.rating} className="mt-2 self-center"/>
               <InputError message={errors.rating} className="mt-2 self-center"/>
@@ -88,6 +83,7 @@ export function ValorateRecipe({auth, recipe}) {
                   <input 
                     type="text" 
                     id="title" 
+                    value={data.title}
                     className="my-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-5/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                     placeholder="Write your title here..." 
                     onChange={(e) => setData('title', e.target.value)}
@@ -99,6 +95,7 @@ export function ValorateRecipe({auth, recipe}) {
                   <textarea 
                     id="comment" 
                     rows="4" 
+                    value={data.message}
                     className="block self-center p-2.5 w-11/12 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                     placeholder="Write your thoughts here..." 
                     onChange={(e) => setData('message', e.target.value)}

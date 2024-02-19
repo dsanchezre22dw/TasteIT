@@ -3,33 +3,16 @@ export const platformSettingsData = [
     title: "account",
     options: [
       {
-        checked: true,
         label: "Email me when someone follows me",
+        type: "follow",
       },
       {
-        checked: false,
-        label: "Email me when someone answers on my post",
+        label: "Email me when someone valorates one of my recipes",
+        type: "valorate",
       },
       {
-        checked: true,
-        label: "Email me when someone mentions me",
-      },
-    ],
-  },
-  {
-    title: "application",
-    options: [
-      {
-        checked: false,
-        label: "New launches and projects",
-      },
-      {
-        checked: true,
-        label: "Monthly product updates",
-      },
-      {
-        checked: false,
-        label: "Subscribe to newsletter",
+        label: "Email me when one of the users I follow posts a recipe",
+        type: "post",
       },
     ],
   },

@@ -112,7 +112,7 @@ export function Profile({auth, actualUser, user, savedRecipesIds, recipes, recip
             {activeTab === "info" && <UserInformation auth={auth} user={user} followers={user.followers} following={user.following} setActiveTab={setActiveTab}/>}
             {activeTab === "mine" && <MyRecipes auth={auth} user={user} savedRecipesIds={savedRecipesIds} recipes={recipes} recipe_types={recipe_types} ingredients={ingredients} show={user.id === auth.user.id}/>}
             {activeTab === "saved" && <SavedRecipes auth={auth} savedRecipesIds={savedRecipesIds} recipes={recipes} recipe_types={recipe_types} ingredients={ingredients}/>}
-            {activeTab === "settings" && <UserSettings/>}
+            {activeTab === "settings" && <UserSettings actualUser={actualUser}/>}
             {activeTab === "blocked" && <BlockedUsers user={user} followers={user.followers} following={user.following} setActiveTab={setActiveTab}/>}
             {activeTab === "edit" && <EditUserInformation user={user}/>}
 

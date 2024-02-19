@@ -151,9 +151,15 @@ class RecipeController extends Controller
     {
         
         $recipe = Recipe::with(['user'])->findOrFail($recipeId);
-    
+        
+        $valoration = "";
+        if (Auth::user()->valorations()->where('recipe_id', $recipeId)->count() > 0){
+            $valoration = Auth::user()->valorations()->where('recipe_id', $recipeId)->first()->pivot;
+        }
+
         return Inertia::render('Dashboard/features/Recipes/valoraterecipe', [
             'recipe' => $recipe,
+            'valoration' => $valoration,
         ]);
     }
 
@@ -162,6 +168,7 @@ class RecipeController extends Controller
     {
 
         $request->validate([
+            'recipe_id' => 'required|integer|exists:recipes,id',
             'rating' => 'required|integer|between:1,5',
             'title' => 'nullable|string|max:50',
             'message' => 'nullable|string|max:250',
@@ -172,12 +179,15 @@ class RecipeController extends Controller
         
         $user = Auth::user();
 
-        if ($user->valorations()){
-            $user->valorations()->detach();
+        if ($user->valorations()->where('recipe_id', $request->recipe_id)->count() > 0){
+            $user->valorations()->updateExistingPivot($request->recipe_id, ['valoration'=>$request->rating, 'title'=>$request->title, 'description'=>$request->message]);
+        }else{
+            $user->valorations()->attach($request->recipe_id, ["valoration" => $request->rating, "title" => $request->title, "description" => $request->message]);  
         }
 
-        $user->valorations()->attach($request->recipe_id, ["valoration" => $request->rating, "title" => $request->title, "description" => $request->message]);  
         $user->save(); 
+
+        return redirect()->route('recipes.index');
     }
 
 

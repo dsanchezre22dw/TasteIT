@@ -2,21 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 use App\Models\User;
+use Inertia\Inertia;
 use App\Models\Fridge;
 use App\Models\Recipe;
-use App\Models\Shopping_list;
-use App\Models\Recipe_type;
+use App\Mail\NewFollower;
 use App\Models\Ingredient;
-use Inertia\Inertia;
-use Illuminate\Validation\Rules\Password;
+use App\Models\Recipe_type;
+use Illuminate\Http\Request;
+use App\Models\Configuration;
+use App\Models\Shopping_list;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -58,8 +61,8 @@ class UserController extends Controller
         $ingredients = Ingredient::all();
 
         return Inertia::render('Dashboard/features/Profile/profile', [
-            'actualUser' => \App\Models\User::with(['followers', 'following'])->findOrFail(Auth::id()),
-            'user' => \App\Models\User::with(['followers', 'following'])->findOrFail($userId),
+            'actualUser' => User::with(['followers', 'following', 'configuration'])->findOrFail(Auth::id()),
+            'user' => User::with(['followers', 'following'])->findOrFail($userId),
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipes' => $recipesWithTypesAndAvgValorations,
             'recipe_types' => $recipe_types,
@@ -216,9 +219,18 @@ class UserController extends Controller
     public function follow(Request $request, $following_id)
     {
         $user = Auth::user();
+        $followingUser = User::findOrFail($following_id);
 
         if (!$request->following){
             $user->following()->attach($following_id, ['blocked' => false]);
+            if ($followingUser->configuration->follow){
+
+                $data = [
+                    'followingUser' => $user,
+                ];
+
+                Mail::to("dsanchezre22dw@ikzubirimanteo.com")->send(new NewFollower($data));
+            }
         }else{
             $user->following()->detach($following_id);
         }
@@ -236,6 +248,42 @@ class UserController extends Controller
             $user->followers()->updateExistingPivot($follower_id, ['blocked' => false]);
         }
 
+    }
+
+    public function configuration(Request $request)
+    {
+        $request->validate([
+            'configuration' => 'required|boolean',
+            'type' => 'required|in:follow,valorate,post',
+        ]);
+
+
+        $currentConfiguration = Auth::user()->configuration;
+
+        if ($request->type === 'follow'){
+            $configuration = Configuration::where([
+                ['follow', $request->configuration],
+                ['valorate', $currentConfiguration->valorate],
+                ['post', $currentConfiguration->post],
+            ])->first();
+        }elseif ($request->type === 'valorate'){
+            $configuration = Configuration::where([
+                ['follow', $currentConfiguration->follow],
+                ['valorate', $request->configuration],
+                ['post', $currentConfiguration->post],
+            ])->first();
+        }else{
+            $configuration = Configuration::where([
+                ['follow', $currentConfiguration->follow],
+                ['valorate', $currentConfiguration->valorate],
+                ['post', $request->configuration],
+            ])->first();
+        }
+
+        Auth::user()->configuration()->associate($configuration);
+        Auth::user()->save();
+
+        return redirect()->back();
     }
 
     public function statistics()

@@ -144,81 +144,87 @@ export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_typ
         </div>   
 
 
-        <div className="flex justify-between">
+        <div className="flex">
 
-          <div>
+          {recipesToShow.length > 0 && 
 
-            <div className="mt-6 mb-4 ml-4">
-              <input
-                type="text"
-                value={searchText}
-                onChange={handleSearchTextChange}
-                placeholder="Search recipes..."
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-              />
-            </div>
+            <div>
 
-            <div className="mt-10 flex flex-wrap gap-4 ml-4">
-              {recipe_types.map((type, index) => (
-                <div 
-                  key={`${type.id}_${index}`} 
-                  className={`rounded-full cursor-pointer hover:bg-blue-200 px-3 py-1 ${filteringTypes.includes(type.id) ? 'bg-blue-200' : 'bg-blue-100'}`}
-                  onClick={() => handleTypeFilter(type.id)} // Pasa el id del tipo al handler
-                  >
-                  {type.name}
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 flex flex-wrap gap-4 ml-4">
-              {difficulty.map(({ level, color }, index) => (
-                <div 
-                  key={`${level}_${index}`} 
-                  className={`rounded-full cursor-pointer hover:bg-${color}-200 px-3 py-1 ${filteringDifficulties.includes(level) ? `bg-${color}-200` : `bg-${color}-100`}`}
-                  onClick={() => handleDifficultyFilter(level)}
-                  >
-                  {level}
-                </div>
-              ))}
-            </div>
-
-            {/* Filtro de ingredientes */}
-            <div className="flex mt-10 ml-4">
-              
-              <input
-                type="text"
-                value={searchIngredientText}
-                onChange={handleIngredientSearchTextChange}
-                placeholder="Filter by ingredients of the recipe..."
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-              />
-              
-              <div className="flex flex-wrap gap-4">
-                {filteredIngredients
-                .map((ingredient, index) => (
-                  <div key={index} onClick={() => handleIngredientFilter(ingredient.id)}>
-                    {ingredient.name}
-                  </div>
-                ))}  
+              {/* Filtro de búsqueda */}
+              <div className="mt-6 mb-4 ml-4">
+                <input
+                  type="text"
+                  value={searchText}
+                  onChange={handleSearchTextChange}
+                  placeholder="Search recipes..."
+                  className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                />
               </div>
 
-              <div className="flex flex-wrap gap-4 mt-20">
-                {ingredients
-                .filter((ingredient) => filteringIngredients.includes(ingredient.id))
-                .map((ingredient, index) => (
-                  <div key={index} onClick={() => handleIngredientFilter(ingredient.id)}>
-                    {ingredient.name}
+              {/* Filtro de tipo de recetas */}
+              <div className="mt-10 flex flex-wrap gap-4 ml-4">
+                {recipe_types.map((type, index) => (
+                  <div 
+                    key={`${type.id}_${index}`} 
+                    className={`rounded-full cursor-pointer hover:bg-blue-200 px-3 py-1 ${filteringTypes.includes(type.id) ? 'bg-blue-200' : 'bg-blue-100'}`}
+                    onClick={() => handleTypeFilter(type.id)} // Pasa el id del tipo al handler
+                    >
+                    {type.name}
                   </div>
-                ))}  
+                ))}
+              </div>
+
+              {/* Filtro de dificultad */}
+              <div className="mt-10 flex flex-wrap gap-4 ml-4">
+                {difficulty.map(({ level, color }, index) => (
+                  <div 
+                    key={`${level}_${index}`} 
+                    className={`rounded-full cursor-pointer hover:bg-${color}-200 px-3 py-1 ${filteringDifficulties.includes(level) ? `bg-${color}-200` : `bg-${color}-100`}`}
+                    onClick={() => handleDifficultyFilter(level)}
+                    >
+                    {level}
+                  </div>
+                ))}
+              </div>
+
+              {/* Filtro de ingredientes */}
+              <div className="flex mt-10 ml-4">
+                
+                <input
+                  type="text"
+                  value={searchIngredientText}
+                  onChange={handleIngredientSearchTextChange}
+                  placeholder="Filter by ingredients of the recipe..."
+                  className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                />
+                
+                <div className="flex flex-wrap gap-4">
+                  {filteredIngredients
+                  .map((ingredient, index) => (
+                    <div key={index} onClick={() => handleIngredientFilter(ingredient.id)}>
+                      {ingredient.name}
+                    </div>
+                  ))}  
+                </div>
+
+                <div className="flex flex-wrap gap-4 mt-20">
+                  {ingredients
+                  .filter((ingredient) => filteringIngredients.includes(ingredient.id))
+                  .map((ingredient, index) => (
+                    <div key={index} onClick={() => handleIngredientFilter(ingredient.id)}>
+                      {ingredient.name}
+                    </div>
+                  ))}  
+                </div>
+
+
               </div>
 
 
             </div>
+          }
 
-
-          </div>
-
-          <div>
+          <div className="ml-auto">
             {show ? ( 
               see ? ( 
                 <Link href={'/dashboard/recipes'} className="ml-10">

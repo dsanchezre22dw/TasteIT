@@ -61,6 +61,7 @@ Route::middleware('auth', 'verified')->prefix('dashboard')->group(function () {
         Route::middleware('standard')->group(function (){
             Route::post('/follow/{id}', [UserController::class, 'follow'])->name('users.follow'); 
             Route::post('/block/{id}', [UserController::class, 'block'])->name('users.block'); 
+            Route::post('/configuration', [UserController::class, 'configuration'])->name('users.configuration');
         });
 
         Route::get('/{id}', [UserController::class, 'show'])->name('users.show'); 
