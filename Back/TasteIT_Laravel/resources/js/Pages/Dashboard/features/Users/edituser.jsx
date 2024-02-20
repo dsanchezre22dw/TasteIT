@@ -6,9 +6,8 @@ import {
   } from "@material-tailwind/react";
 
 
-import '../../../../../../css/password.css'
-import '../../../../../../css/toggle.css'
-import UpdatePasswordForm from "@/Pages/Profile/UpdatePasswordForm";
+import '../../../../../css/password.css'
+import '../../../../../css/toggle.css'
 import UpdateUserForm from "@/Pages/Profile/UpdateUserForm";
 import Dashboard from '@/Layouts/DashboardLayout';
 
@@ -29,7 +28,6 @@ export default function UsersEdit({ auth, user }) {
 
                     <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
                         <UpdateUserForm user={user}/>
-                        <UpdatePasswordForm className="max-w-xl" />
                     </CardBody>
                 </Card>
             </div>

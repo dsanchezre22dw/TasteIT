@@ -28,7 +28,8 @@ Route::get('/', function () {
 
     if (!(auth()->check())) {
 
-        return Inertia::render("Landing/Landing", []);
+        $reload = session('reload') ?? "";
+        return Inertia::render("Landing/Landing", ["reload"=>$reload]);
 
     }
 

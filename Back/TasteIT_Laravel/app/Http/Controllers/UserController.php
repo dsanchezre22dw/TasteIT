@@ -34,8 +34,11 @@ class UserController extends Controller
             $user->isSoftDeleted = $user->trashed();
         }
 
+        $successMessage = session('success') ?? "";
+
         return Inertia::render('Dashboard/features/Users/indexuser', [
             'users' => $users,
+            'successMessage' => $successMessage,
         ]);
     }
 
@@ -101,6 +104,9 @@ class UserController extends Controller
 
         $user->fridge()->create();
         $user->shopping_list()->create();
+
+        return redirect()->route('users.index')->with('success', ['message' => 'User ' . "'" . $request->username . "'" . ' created successfully', 'type' => 'User Created']);
+
     }
 
 

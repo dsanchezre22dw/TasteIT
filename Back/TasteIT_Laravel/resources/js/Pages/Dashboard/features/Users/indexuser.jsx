@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -9,9 +10,21 @@ import '../../../../../css/users.css';
 import { Link } from "@inertiajs/react";
 import Dashboard from '@/Layouts/DashboardLayout';
 import UserTableRow from "@/Pages/Dashboard/features/Users/widgets/seeUsers/usertablerow";
+import ModalAction from "@/Components/ModalAction";
 
-export function UsersIndex({ auth, users }) {  
+export function UsersIndex({ auth, users, successMessage }) {  
 
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+      if (successMessage !== "") {
+        setShowModal(true);
+      }
+  }, [successMessage]);
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <Dashboard auth={auth}>
@@ -57,6 +70,14 @@ export function UsersIndex({ auth, users }) {
 
               </tbody>
             </table>
+
+            <ModalAction show={showModal} onClose={closeModal} maxWidth="2xl" closeable={true}>
+              <div className="p-4">
+                <h1 className="text-xl font-bold mb-4">{successMessage['type']}</h1>
+                <p>{successMessage['message']}</p>
+              </div>
+            </ModalAction>
+
           </CardBody>
         </Card>
       </div>

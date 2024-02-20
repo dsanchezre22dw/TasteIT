@@ -5,7 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
-import { validateFirstName, validateSurname } from '../../../../public/assets/js/validationUtils';
+import { validateFirstName, validateSurname, validateImage } from '../../../../public/assets/js/validationUtils';
 import ImageUploader from "../../Components/ImageUploader";
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
@@ -22,6 +22,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     const [errorMessages, setErrorMessages] = useState({
         firstname: '',
         surname: '',
+        image: '',
         // Otros campos que necesiten validación
     });
 
@@ -33,6 +34,10 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
         errors_exist += validateFirstName(data, setErrorMessages);
         errors_exist += validateSurname(data, setErrorMessages);
+
+        if (user.profileImg === "") {
+            errors_exist += validateImage(data, setErrorMessages);
+        }
 
         if (errors_exist === ""){
             post(route('profile.update'));
@@ -51,7 +56,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
-                <ImageUploader data={data} setData={setData} errors={errors} image={user.profileImg} width={200} className="m-auto"/> 
+                <ImageUploader data={data} setData={setData} errors={errors} errorMessages={errorMessages} setErrorMessages={setErrorMessages} image={user.profileImg} width={200} className="m-auto"/> 
                 <InputError className="mt-2" message={errors.image} />
 
                 <div>

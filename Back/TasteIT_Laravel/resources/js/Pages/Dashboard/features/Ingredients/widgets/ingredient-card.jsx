@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useForm } from '@inertiajs/react';
 import {
   Card,
@@ -12,6 +12,7 @@ import {
     PencilIcon,
     TrashIcon,
   } from "@heroicons/react/24/solid";
+import AnswerModal from '@/Components/AnswerModal';
 
 export default function IngredientCard({auth, ingredient}) {
     const {
@@ -23,10 +24,12 @@ export default function IngredientCard({auth, ingredient}) {
     const form = useForm({});
 
     const handleDelete = () => {
-      if (window.confirm(`Are you sure you want to delete the ingredient '${name}'?`)) {
-        form.delete(`/dashboard/ingredients/delete/${id}`);
-      }
+      form.delete(`/dashboard/ingredients/delete/${id}`);
+      
     };
+
+    var message = `Are you sure you want to delete the ingredient '${name}'?`;
+    const [showModal, setShowModal] = useState(false);
 
     return (
       <Card key={id} color="transparent" shadow={false} className="border border-blue-gray-200 rounded-xl">
@@ -51,11 +54,17 @@ export default function IngredientCard({auth, ingredient}) {
               </div>
               
               <div>
-                <button onClick={handleDelete}>
+                <button onClick={() => setShowModal(true)}>
                   <Tooltip content="Delete Ingredient">
                     <TrashIcon className="h-5 w-5 text-red-500 cursor-pointer mb-3" />
                   </Tooltip>
                 </button>
+                <AnswerModal
+                    show={showModal}
+                    onClose={() => setShowModal(false)}
+                    onConfirm={handleDelete}
+                    message={message}
+                />
               </div>
             </div>
         </CardFooter>

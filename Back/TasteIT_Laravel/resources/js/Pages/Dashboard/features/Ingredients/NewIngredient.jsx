@@ -1,5 +1,5 @@
 import { Button } from "@material-tailwind/react";
-import { useForm } from "@inertiajs/inertia-react";
+import { useForm } from "@inertiajs/react";
 
 export default function NewIngredient() {
     const {data, setData, post} = useForm({

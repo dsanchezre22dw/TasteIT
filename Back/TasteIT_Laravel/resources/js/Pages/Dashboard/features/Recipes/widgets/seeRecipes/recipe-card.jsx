@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from '@inertiajs/react';
 import { Link } from "@inertiajs/react";
 import {
@@ -18,6 +18,7 @@ import ClockIcon from '@/Components/ClockIcon';  // Asegúrate de importar Clock
 import StarIcon from '@/Components/StarIcon';
 import RecipeType from './recipetype-card';
 import SaveRecipe from '../saveRecipe/saveRecipe';
+import AnswerModal from '@/Components/AnswerModal';
 
 function RecipeCard({ auth, savedRecipesIds, recipe }) {
   const {
@@ -35,10 +36,11 @@ function RecipeCard({ auth, savedRecipesIds, recipe }) {
 
   const form = useForm({});
 
+  var message = 'Are you sure you want to delete this recipe?';
+  const [showModal, setShowModal] = useState(false);
+
   const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this recipe?')) {
-      form.delete(`/dashboard/recipes/delete/${id}`);
-    }
+    form.delete(`/dashboard/recipes/delete/${id}`);
   };
 
   return (
@@ -107,11 +109,17 @@ function RecipeCard({ auth, savedRecipesIds, recipe }) {
               </Link>
             </div>
             <div>
-              <button type="button" onClick={() => handleDelete(id)}>
+              <button type="button" onClick={() =>setShowModal(true)}>
                 <Tooltip content="Delete Recipe">
                   <TrashIcon className="h-5 w-5 text-red-500 cursor-pointer mb-3" />
                 </Tooltip>
               </button>
+              <AnswerModal
+                  show={showModal}
+                  onClose={() => setShowModal(false)}
+                  onConfirm={() => handleDelete(id)}
+                  message={message}
+              />
             </div>
           </div>
         )}

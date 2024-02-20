@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useForm } from '@inertiajs/inertia-react';
+import { useForm } from '@inertiajs/react';
 import AddedFridge from './AddedFridge';
 import { Button } from '@material-tailwind/react';
 export default function AddFridge({auth, fridge}) {
@@ -50,7 +50,6 @@ export default function AddFridge({auth, fridge}) {
             obj[element.name] = element.pivot.amount;
             array.push(element.name);
         });
-        console.log('a', obj);
         setData('amount', obj);
         setSelectedIngredients(array);
     },[])
@@ -59,7 +58,6 @@ export default function AddFridge({auth, fridge}) {
 
         setSelectedIngredients([...selectedIngredients, ingredient]);
         setSearchTerm(''); // Limpiar el término de búsqueda después de seleccionar un ingrediente
-console.log(selectedIngredients)
     };
 
     const filteredSuggestions = suggestions

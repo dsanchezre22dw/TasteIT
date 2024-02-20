@@ -66,20 +66,20 @@ class ShoppingListController extends Controller
     public function add($array)
     {
         $array = explode(',',$array);
-
         $user = Auth::user();
         $shopping_list = $user->shopping_list;
 
         $ingredient = Ingredient::find($array[0]);
 
         $amount = $shopping_list->ingredients()->find($array[0]);
+
         if ($amount) {
             $amount = $amount->pivot->amount;
+        }else{
+            $amount = 0;
         }
-
         $shopping_list->ingredients()->detach($array[0]);
-        $shopping_list->ingredients()->attach($ingredient,['amount' => $array[1]+$amount]);
-
+        $shopping_list->ingredients()->attach($ingredient->id,['amount' => $array[1]+$amount]);
         return redirect()->back();
     }
 
@@ -112,7 +112,7 @@ class ShoppingListController extends Controller
             $shopping_list->ingredients()->detach($ingredient);
         }
 
-        return redirect()->back();
+        return redirect('dashboard/shopping');
     }
 
     /**

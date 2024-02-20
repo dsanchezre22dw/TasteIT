@@ -156,6 +156,7 @@ export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_typ
         <div>
           <Typography variant="h6" color="blue-gray" className="mb-2">
             Recipes
+
           </Typography>
           <Typography
             variant="small"
@@ -201,9 +202,20 @@ export function RecipesSection({auth, recipesToShow, savedRecipesIds, recipe_typ
                 {difficulty.map(({ level, color }, index) => (
                   <div 
                     key={`${level}_${index}`} 
-                    className={`rounded-full cursor-pointer hover:bg-${color}-200 px-3 py-1 ${filteringDifficulties.includes(level) ? `bg-${color}-200` : `bg-${color}-100`}`}
+                    className={`rounded-full cursor-pointer hover:bg-${color}-200 px-3 py-1 ${
+                      filteringDifficulties.includes(level) ? 
+                        color === 'green' ? 'bg-green-500 text-black-800 dark:bg-green-900 dark:text-white-300' :
+                        color === 'yellow' ? 'bg-yellow-500 text-black-800 dark:bg-yellow-900 dark:text-white-300' :
+                        color === 'red' ? 'bg-red-500 text-black-800 dark:bg-red-900 dark:text-white-300' :
+                        ''
+                      : 
+                        color === 'green' ? 'bg-green-100 text-black-800 dark:bg-green-500 dark:text-white-300' :
+                        color === 'yellow' ? 'bg-yellow-100 text-black-800 dark:bg-yellow-500 dark:text-white-300' :
+                        color === 'red' ? 'bg-red-100 text-black-800 dark:bg-red-500 dark:text-white-300' :
+                        ''
+                    }`}
                     onClick={() => handleDifficultyFilter(level)}
-                    >
+                  >
                     {level}
                   </div>
                 ))}
