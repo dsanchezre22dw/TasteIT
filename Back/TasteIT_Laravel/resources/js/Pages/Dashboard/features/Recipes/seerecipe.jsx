@@ -20,20 +20,33 @@ import RecipeType from './widgets/seeRecipes/recipetype-card';
 import ValorationCard from '@/Pages/Dashboard/features/Recipes/widgets/valorateRecipe/valoration-card';
 import SaveRecipe from './widgets/saveRecipe/saveRecipe';
 import Dashboard from '@/Layouts/DashboardLayout';
+import AnswerModal from '@/Components/AnswerModal';
+import ModalAction from '@/Components/ModalAction';
+
 import { getDifficultyColorAndText } from '../../../../../../public/assets/js/validationUtils';
 
-export function SeeRecipe({auth, recipe, savedRecipesIds}) { 
+export function SeeRecipe({auth, recipe, savedRecipesIds, successMessage}) { 
 
   const { difficultyColor, difficultyText } = getDifficultyColorAndText(recipe.difficulty);
 
   const [description, setDesciption] = useState(recipe.description);
   const [lang, setLang] = useState(localStorage.getItem('preferredLang')??'en');
 
-  const [successMessage, setSuccessMessage] = useState('');
+  const form = useForm({});
 
-  const {post} = useForm({});
+  var http;
 
-  var http
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  useEffect(() => {
+      if (successMessage !== "") {
+        setShowSuccessModal(true);
+      }
+  }, [successMessage]);
+
+  const closeSuccessModal = () => {
+    setShowSuccessModal(false);
+  };
 
   useEffect (() => {
 
@@ -121,17 +134,19 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
     xhr.send(data);
   }
 
+  var message = 'Are you sure you want to delete this recipe?';
+  const [showModal, setShowModal] = useState(false);
+
   const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this recipe?')) {
-      form.delete(`/dashboard/recipes/delete/${id}`);
-    }
+    form.delete(`/dashboard/recipes/delete/${id}`);
+
   };
 
   function handleAddShopping(id, amount) {
 
     let array = [id, amount];
 
-    post(`/dashboard/shopping/add/${array}`);
+    form.post(`/dashboard/shopping/add/${array}`);
     
   }
 
@@ -158,7 +173,7 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
                   <Typography
                     variant="h1"
                   >
-                    {recipe.title} {successMessage && <div>{successMessage}</div>}
+                    {recipe.title}
                   </Typography>
                   
                   <div>
@@ -171,11 +186,17 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
                         </Link>
                       
                       
-                        <button type="button" onClick={() => handleDelete(recipe.id)}>
+                        <button type="button" onClick={() => setShowModal(true)}>
                           <Tooltip content="Delete Recipe">
                             <TrashIcon className="h-5 w-5 text-red-500 cursor-pointer mb-3" />
                           </Tooltip>
-                        </button>           
+                        </button>
+                        <AnswerModal
+                            show={showModal}
+                            onClose={() => setShowModal(false)}
+                            onConfirm={() => handleDelete(recipe.id)}
+                            message={message}
+                        />           
                       </div>
                     ) : (
                       <SaveRecipe savedRecipesIds={savedRecipesIds} recipe_id={recipe.id} width={35}/>
@@ -298,8 +319,14 @@ export function SeeRecipe({auth, recipe, savedRecipesIds}) {
                   ))}
 
               </div>
-        
 
+              <ModalAction show={showSuccessModal} onClose={closeSuccessModal} maxWidth="2xl" closeable={true}> 
+                <div className="p-4">
+                  <h1 className="text-xl font-bold mb-4">{successMessage['type']}</h1>
+                  <p>{successMessage['message']}</p>
+                </div>
+              </ModalAction>
+        
             </div>
 
           </CardBody>

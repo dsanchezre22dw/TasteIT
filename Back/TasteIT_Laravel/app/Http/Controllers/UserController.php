@@ -34,8 +34,11 @@ class UserController extends Controller
             $user->isSoftDeleted = $user->trashed();
         }
 
+        $successMessage = session('success') ?? "";
+
         return Inertia::render('Dashboard/features/Users/indexuser', [
             'users' => $users,
+            'successMessage' => $successMessage,
         ]);
     }
 
@@ -62,7 +65,7 @@ class UserController extends Controller
 
         return Inertia::render('Dashboard/features/Profile/profile', [
             'actualUser' => User::with(['followers', 'following', 'configuration'])->findOrFail(Auth::id()),
-            'user' => User::with(['followers', 'following'])->findOrFail($userId),
+            'user' => User::with(['followers', 'following', 'ingredients'])->findOrFail($userId),
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipes' => $recipesWithTypesAndAvgValorations,
             'recipe_types' => $recipe_types,
@@ -101,6 +104,9 @@ class UserController extends Controller
 
         $user->fridge()->create();
         $user->shopping_list()->create();
+
+        return redirect()->route('users.index')->with('success', ['message' => 'User ' . "'" . $request->username . "'" . ' created successfully', 'type' => 'User Created']);
+
     }
 
 

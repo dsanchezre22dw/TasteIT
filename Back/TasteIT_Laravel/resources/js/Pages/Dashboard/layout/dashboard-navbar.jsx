@@ -30,7 +30,7 @@ import {
 
 import '../../../../../public/assets/css/test.css';
 import { useEffect, useState } from "react";
-import { useForm } from "@inertiajs/inertia-react";
+import { useForm } from "@inertiajs/react";
 
 export function DashboardNavbar({ auth }) {
   const [controller, dispatch] = useMaterialTailwindController();

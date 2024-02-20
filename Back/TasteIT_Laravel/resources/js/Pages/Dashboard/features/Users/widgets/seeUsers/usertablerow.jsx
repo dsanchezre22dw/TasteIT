@@ -1,7 +1,8 @@
 // UserTableRow.js
-import React from "react";
+import React, { useState } from "react";
 import { Link, useForm } from "@inertiajs/react";
 import { Avatar, Typography, Chip } from "@material-tailwind/react";
+import AnswerModal from "@/Components/AnswerModal";
 
 const UserTableRow = ({ user, num}) => {
 
@@ -15,10 +16,11 @@ const UserTableRow = ({ user, num}) => {
     
   };
 
+  var message = `Are you sure you want to delete user '${user.username}'?`;
+  const [showModal, setShowModal] = useState(false);
+
   const handleDelete = (userId) => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
-      form.delete(`/dashboard/users/delete/${userId}`);
-    }
+    form.delete(`/dashboard/users/delete/${userId}`); 
   };
 
 
@@ -64,9 +66,17 @@ const UserTableRow = ({ user, num}) => {
 
       <td className={className}>
         { user.type !== "admin" && (
-          <button onClick={() => handleDelete(user.id)}>
+          <>
+          <button onClick={() => setShowModal(true)}>
             <span><i className="material-icons delete">&#xE5C9;</i></span>
           </button>
+          <AnswerModal
+              show={showModal}
+              onClose={() => setShowModal(false)}
+              onConfirm={() => handleDelete(user.id)}
+              message={message}
+          />
+          </>
         )}
       </td>
 

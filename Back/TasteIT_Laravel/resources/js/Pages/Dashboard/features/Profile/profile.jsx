@@ -12,8 +12,9 @@ import {
   HomeIcon,
   Cog6ToothIcon,
   BookmarkIcon,
-  PlusIcon,
-  NoSymbolIcon
+  ArrowUpOnSquareIcon,
+  NoSymbolIcon,
+  DocumentCheckIcon
 } from "@heroicons/react/24/solid";
 import UserInformation from "./widgets/UserInformation";
 import UserSettings from "./widgets/UserSettings";
@@ -21,6 +22,7 @@ import MyRecipes from "../Recipes/widgets/MyRecipes";
 import SavedRecipes from "../Recipes/widgets/SavedRecipes";
 import EditUserInformation from "./widgets/EditUserInformation";
 import BlockedUsers from "./widgets/BlockedUsers";
+import RequestedIngredientsByYou from "./widgets/RequestedIngredientsByYou";
 import { Link } from "@inertiajs/react";
 import Dashboard from '@/Layouts/DashboardLayout';
 import FollowUser from "@/Pages/Dashboard/features/Profile/widgets/followUser/followUser";
@@ -91,16 +93,19 @@ export function Profile({auth, actualUser, user, savedRecipesIds, recipes, recip
                         <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                       <Tab value="mine" className={activeTab == 'mine'?"text-red-400":''} onClick={() => setActiveTab("mine")}>
-                        <PlusIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
+                        <ArrowUpOnSquareIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                       <Tab value="saved" className={activeTab == 'saved'?"text-red-400":''} onClick={() => setActiveTab("saved")}>
                         <BookmarkIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
                       </Tab>
-                      <Tab value="settings" className={activeTab == 'settings'?"text-red-400":''} onClick={() => setActiveTab("settings")}>
-                        <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
+                      <Tab value="requested" className={activeTab == 'requested'?"text-red-400":''} onClick={() => setActiveTab("requested")}>
+                        <DocumentCheckIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                       <Tab value="blocked" className={activeTab == 'blocked'?"text-red-400":''} onClick={() => setActiveTab("blocked")}>
                         <NoSymbolIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
+                      </Tab>
+                      <Tab value="settings" className={activeTab == 'settings'?"text-red-400":''} onClick={() => setActiveTab("settings")}>
+                        <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       </Tab>
                     </TabsHeader>
                   </Tabs>
@@ -112,8 +117,9 @@ export function Profile({auth, actualUser, user, savedRecipesIds, recipes, recip
             {activeTab === "info" && <UserInformation auth={auth} user={user} followers={user.followers} following={user.following} setActiveTab={setActiveTab}/>}
             {activeTab === "mine" && <MyRecipes auth={auth} user={user} savedRecipesIds={savedRecipesIds} recipes={recipes} recipe_types={recipe_types} ingredients={ingredients} show={user.id === auth.user.id}/>}
             {activeTab === "saved" && <SavedRecipes auth={auth} savedRecipesIds={savedRecipesIds} recipes={recipes} recipe_types={recipe_types} ingredients={ingredients}/>}
-            {activeTab === "settings" && <UserSettings actualUser={actualUser}/>}
+            {activeTab === "requested" && <RequestedIngredientsByYou user={user}/>}
             {activeTab === "blocked" && <BlockedUsers user={user} followers={user.followers} following={user.following} setActiveTab={setActiveTab}/>}
+            {activeTab === "settings" && <UserSettings actualUser={actualUser}/>}
             {activeTab === "edit" && <EditUserInformation user={user}/>}
 
 

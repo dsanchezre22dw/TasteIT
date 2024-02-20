@@ -10,12 +10,16 @@ import Hero from '@/Pages/Landing/Hero';
 import Stats from '@/Pages/Landing/StatsSection/Stats';
 import Testimonials from '@/Pages/Landing/TestimonialsSection/Testimonials';
 import WhyUs from '@/Pages/Landing/WhyUsSection/WhyUs';
-
 import '../../../css/landing.css'
+import { useEffect, useState } from 'react';
 
+export default function Landing({ reload }) {
 
-export default function Landing({ }) {
-
+  useEffect(() => {
+      if (reload) {
+          window.location.reload();
+      }
+  }, [reload]);
 
     return (
         <>

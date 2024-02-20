@@ -64,7 +64,7 @@ export default function UsersAdd({auth}) {
         errors_exist += validatePassword(data, setErrorMessages);
 
         if (errors_exist === ""){
-            post('/dashboard/users/add');
+            post('/dashboard/users/store');
         }
 
     };

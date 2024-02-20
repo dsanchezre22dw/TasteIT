@@ -38,6 +38,7 @@ class RecipeController extends Controller
 
         $recipe_types = Recipe_type::all();
         $ingredients = Ingredient::all();
+        $successMessage = session('success') ?? "";
 
     
         return Inertia::render('Dashboard/features/Recipes/indexrecipe', [
@@ -46,6 +47,7 @@ class RecipeController extends Controller
             'recipes' => $recipesWithTypesAndAvgValorations,
             'recipe_types' => $recipe_types,
             'ingredients' => $ingredients,
+            'successMessage' => $successMessage, 
         ]);
     }
 
@@ -58,11 +60,14 @@ class RecipeController extends Controller
         $recipe = Recipe::with(['recipe_types', 'valorations', 'ingredients', 'user'])->findOrFail($recipeId);
 
         $recipe->avg_valoration = number_format($recipe->valorations->avg('pivot.valoration'), 2);
-        $recipe->amount_valorations = $recipe->valorations->count();;
-    
+        $recipe->amount_valorations = $recipe->valorations->count();
+
+        $successMessage = session('success') ?? "";
+
         return Inertia::render('Dashboard/features/Recipes/seerecipe', [
             'savedRecipesIds' => Auth::user()->saves()->pluck('recipe_id')->toArray(),
             'recipe' => $recipe,
+            'successMessage' => $successMessage,
         ]);
     }
     
@@ -131,7 +136,7 @@ class RecipeController extends Controller
             }
         }
 
-        return redirect()->route('recipes.index');
+        return redirect()->route('recipes.index')->with('success', ['message' => 'Recipe ' . "'" . $request->title . "'" . ' created successfully', 'type' => 'New recipe']);
     }
 
     public function save(Request $request, $recipe_id)
@@ -211,7 +216,7 @@ class RecipeController extends Controller
     public function update(Request $request, $recipeID)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:60',
             'duration_mins' => 'required|numeric',
             'difficulty' => 'required|in:beginner,medium,expert',
             'description' => 'required|string|max:1024',
@@ -263,7 +268,8 @@ class RecipeController extends Controller
             }
         }
 
-        return redirect()->route('recipes.show',$recipeID);
+        return redirect()->route('recipes.show',$recipeID)->with('success', ['message' => 'Recipe ' . "'" . $request->title . "'" . ' updated successfully', 'type' => 'Recipe Updated']);
+
     }
 
     /**

@@ -178,13 +178,21 @@ export function validateImage(data, setErrorMessages){
 }
 
 export function validateRecipeTitle(data, setErrorMessages){
-  if (!(allLetter(data.title))){
-      setErrorMessages((prevErrors) => ({
-          ...prevErrors,
-          title: 'Field title can only contain letters',
-      }));
+  if (!(allLetterAndSpaces(data.title))){
+    setErrorMessages((prevErrors) => ({
+        ...prevErrors,
+        title: 'Field title can only contain letters',
+    }));
 
-      return "yes";
+    return "yes";
+
+  }else if (data.title.length > 60) {
+    setErrorMessages((prevErrors) => ({
+        ...prevErrors,
+        title: 'Field title cannot have more than 60 caracters',
+    }));
+
+    return "yes";
 
   }else{
 
@@ -198,13 +206,21 @@ export function validateRecipeTitle(data, setErrorMessages){
 }
 
 export function validateRecipeDescription(data, setErrorMessages){
-  if (!(allLetter(data.description))){
+  if (!(allLetterAndSpaces(data.description))){
       setErrorMessages((prevErrors) => ({
           ...prevErrors,
           description: 'Field description can only contain letters',
       }));
 
       return "yes";
+
+  }else if (data.title.length > 1024) {
+    setErrorMessages((prevErrors) => ({
+        ...prevErrors,
+        description: 'Field description cannot have more than 1024 caracters',
+    }));
+
+    return "yes";
 
   }else{
 
@@ -238,7 +254,7 @@ export function validateRecipeIngredients(data, setErrorMessages){
 }
 
 export function validateIngredientName(data, setErrorMessages){
-  if (!(allLetter(data.name))){
+  if (!(allLetterAndSpaces(data.name))){
       setErrorMessages((prevErrors) => ({
           ...prevErrors,
           name: 'Field name can only contain letters',
@@ -267,6 +283,17 @@ function allLetter(inputtxt){
     }else{
         return false;
     }
+}
+
+function allLetterAndSpaces(inputtxt){
+
+  var letters = /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ, \n]+$/;
+
+  if (inputtxt.match(letters)){
+      return true;
+  }else{
+      return false;
+  }
 }
 
 export function setupStarRating(setData) {

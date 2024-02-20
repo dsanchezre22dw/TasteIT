@@ -113,7 +113,7 @@ export default function RecipeForm( {auth, recipe="", recipe_types} ) {
                                 isFocused={true}
                                 onChange={(e) => setData('title', e.target.value)}
                                 required
-                                maxLength='255'
+                                maxLength='60'
                             />
 
                             <InputError message={errorMessages.title} className="mt-2" />
@@ -184,7 +184,7 @@ export default function RecipeForm( {auth, recipe="", recipe_types} ) {
                     <InputLabel htmlFor="description" value="How to Prepare*" />
 
                     <textarea name="description" id="" className="mt-1 block w-[100%] border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"  
-                    rows="10" placeholder="How to prepare the recipe..." defaultValue={data.description} onChange={(e) => setData('description', e.target.value)} required></textarea>
+                    rows="10" placeholder="How to prepare the recipe..." defaultValue={data.description} onChange={(e) => setData('description', e.target.value)} required maxLength='1024'></textarea>
             
                     <InputError message={errorMessages.description} className="mt-2" />
                     <InputError message={errors.description} className="mt-2" />

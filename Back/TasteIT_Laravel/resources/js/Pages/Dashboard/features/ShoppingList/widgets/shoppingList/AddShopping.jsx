@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useForm } from '@inertiajs/inertia-react';
+import { useForm } from '@inertiajs/react';
 import Addedshopping from './AddedShoping';
 import { Button } from '@material-tailwind/react';
+
 export default function AddShopping({auth, shoppingList}) {
 
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -15,9 +16,9 @@ export default function AddShopping({auth, shoppingList}) {
 
         post('/dashboard/shopping/update');
     };
+
     const clear = (e) => {
         e.preventDefault();
-
         postC('/dashboard/shopping/clear');
     };
 
@@ -40,7 +41,7 @@ export default function AddShopping({auth, shoppingList}) {
           } else {
             fetchSuggestions();
           }
-        
+        console.log("esto=" + selectedIngredients)
     }, [searchTerm]);
 
     useEffect(() => {
