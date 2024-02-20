@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
 
             $table->string('username')->unique();
-            $table->string('firstname');
+            $table->string('firstname')->nullable();
             $table->string('surname')->nullable();
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('profileImg')->nullable();
+            $table->string('profileImg');
             $table->enum('type',['standard','chef','admin'])->default('standard');
             $table->boolean('enabled')->default(true);
             $table->rememberToken();

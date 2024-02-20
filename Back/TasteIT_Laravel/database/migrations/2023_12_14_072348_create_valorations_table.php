@@ -18,10 +18,12 @@ return new class extends Migration
             $table->foreignId('recipe_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
 
             $table->string('title',150)->nullable();
-            $table->enum('valoration',[1,2,3,4,5])->nullable();
+            $table->enum('valoration',[1,2,3,4,5]);
             $table->string('description',1024)->nullable();
 
             $table->timestamps();
+            $table->unique(['user_id', 'recipe_id']);
+
         });
     }
 

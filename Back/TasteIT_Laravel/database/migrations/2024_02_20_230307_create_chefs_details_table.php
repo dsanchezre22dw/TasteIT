@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('shopping_lists', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+        Schema::create('chefs_details', function (Blueprint $table) {
+            $table->id();
+            $table->string('restaurant');
+            $table->string('description')->nullable();
         });
     }
 
@@ -21,9 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('shopping_lists', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
-        });
+        Schema::dropIfExists('chefs_details');
     }
 };

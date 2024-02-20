@@ -11,12 +11,14 @@ import Stats from '@/Pages/Landing/StatsSection/Stats';
 import Testimonials from '@/Pages/Landing/TestimonialsSection/Testimonials';
 import WhyUs from '@/Pages/Landing/WhyUsSection/WhyUs';
 import '../../../css/landing.css'
-import { useEffect, useState } from 'react';
+import '../../../css/carousel.css'
+import { useEffect } from 'react';
+
 
 export default function Landing({ reload }) {
 
   useEffect(() => {
-      if (reload) {
+      if (reload !== "") {
           window.location.reload();
       }
   }, [reload]);

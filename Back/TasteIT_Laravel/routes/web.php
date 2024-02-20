@@ -29,6 +29,8 @@ Route::get('/', function () {
     if (!(auth()->check())) {
 
         $reload = session('reload') ?? "";
+
+
         return Inertia::render("Landing/Landing", ["reload"=>$reload]);
 
     }

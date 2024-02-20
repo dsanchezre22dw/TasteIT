@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('shopping_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('fridge_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('shopping_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('restrict');
+            $table->foreignId('fridge_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('restrict');
         });
     }
 
@@ -23,11 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['shopping_list_id']);
-            $table->dropColumn('shopping_list_id');
-
-            $table->dropForeign(['fridge_id']);
-            $table->dropColumn('fridge_id');
+            $table->dropForeign(['shopping_list_id', 'fridge_id']);
+            $table->dropColumn(['shopping_list_id', 'fridge_id']);
         });
     }
 };

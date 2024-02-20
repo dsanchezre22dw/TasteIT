@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('fridge_ingredient', function (Blueprint $table) {
             $table->foreignId('fridge_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('ingredient_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->integer('amount');
-
+            $table->integer('amount')->default(1);
             $table->timestamps();
+            $table->unique(['fridge_id', 'ingredient_id']);
+
         });
     }
 
