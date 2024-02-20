@@ -63,7 +63,7 @@ export function DashboardNavbar({ auth }) {
       http = new XMLHttpRequest();
     }
 
-    let url = 'http://localhost:8000/api/search/'+term;
+    let url = '/api/search/'+term;
 
     http.open('get', url, true);
 

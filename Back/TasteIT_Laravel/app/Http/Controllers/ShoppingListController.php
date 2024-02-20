@@ -112,7 +112,7 @@ class ShoppingListController extends Controller
             $shopping_list->ingredients()->detach($ingredient);
         }
 
-        return redirect('dashboard/shopping');
+        return redirect()->route('shopping.index');
     }
 
     /**

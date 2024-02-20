@@ -19,6 +19,18 @@ export default function AddShopping({auth, shoppingList}) {
 
     const clear = (e) => {
         e.preventDefault();
+
+        let array = data.amount;
+        for (let i = 0; i < dataC.checked.length; i++) {
+            setSelectedIngredients(prevState =>
+                prevState.filter(ingrediente => ingrediente !== dataC.checked[i])
+            );
+            
+            delete array[dataC.checked[i]];
+
+        }
+        setData('amount', array);
+
         postC('/dashboard/shopping/clear');
     };
 
@@ -30,7 +42,6 @@ export default function AddShopping({auth, shoppingList}) {
         
         const fetchSuggestions = async () => {
         const response = await axios.get(`/api/ingredients?term=${searchTerm}`);
-        console.log(response.data.suggestions);
         
         setSuggestions(response.data.suggestions);
         };
@@ -41,7 +52,6 @@ export default function AddShopping({auth, shoppingList}) {
           } else {
             fetchSuggestions();
           }
-        console.log("esto=" + selectedIngredients)
     }, [searchTerm]);
 
     useEffect(() => {
@@ -51,7 +61,6 @@ export default function AddShopping({auth, shoppingList}) {
             obj[element.name] = element.pivot.amount;
             array.push(element.name);
         });
-        console.log('a', obj);
         setData('amount', obj);
         setSelectedIngredients(array);
     },[])
@@ -60,7 +69,7 @@ export default function AddShopping({auth, shoppingList}) {
 
         setSelectedIngredients([...selectedIngredients, ingredient]);
         setSearchTerm(''); // Limpiar el término de búsqueda después de seleccionar un ingrediente
-console.log(selectedIngredients)
+
     };
 
     const filteredSuggestions = suggestions
