@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('chefs_details', function (Blueprint $table) {
             $table->id();
             $table->string('restaurant');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
         });
     }
 

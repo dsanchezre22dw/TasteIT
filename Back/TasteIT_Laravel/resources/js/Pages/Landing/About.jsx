@@ -9,7 +9,7 @@ const About = ()=>{
           <SectionTitle title="About Us" color="What is" span="Taste IT?"/>
 
           <div className="row gy-4">
-          <div className="col-lg-7 position-relative about-img" style={{ backgroundImage: 'url(assets/img/about-4.jpg)', backgroundSize: 'cover' }} data-aos="fade-up" data-aos-delay="150">              <div className="call-us position-absolute">
+          <div className="col-lg-7 position-relative about-img" style={{ backgroundImage: 'url(assets/img/landing/about-4.jpg)', backgroundSize: 'cover' }} data-aos="fade-up" data-aos-delay="150">              <div className="call-us position-absolute">
                 <h4>Contact Us</h4>
                 <div className="text-center"><a href="#contact"><button type="submit">Send Message</button></a></div>
               </div>
@@ -31,7 +31,7 @@ const About = ()=>{
                 </p>
 
                 <div className="position-relative mt-4">
-                  <img src="assets/img/about-2.jpg" className="img-fluid" alt=""/>
+                  <img src="assets/img/landing/about-2.jpg" className="img-fluid" alt=""/>
                   <a href="https://www.youtube.com/watch?v=b1DC4TxeSdE" className="glightbox play-btn"></a>
                 </div>
               </div>

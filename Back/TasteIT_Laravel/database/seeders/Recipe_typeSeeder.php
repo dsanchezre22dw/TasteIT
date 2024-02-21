@@ -11,8 +11,17 @@ class Recipe_typeSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run()
     {
-        Recipe_type::factory(200)->create();
+        $types = [
+            'spicy', 'salty', 'sweet', 'vegan', 'vegetarian', 'cold', 'hot',
+            'gluten-free', 'low-carb', 'keto', 'paleo', 'mediterranean',
+            'asian', 'mexican', 'italian', 'spanish', 'indian',
+            'american', 'chinese', 'french', 'healthy'
+        ];
+
+        foreach ($types as $type) {
+            Recipe_type::create(['name' => $type]);
+        }
     }
 }

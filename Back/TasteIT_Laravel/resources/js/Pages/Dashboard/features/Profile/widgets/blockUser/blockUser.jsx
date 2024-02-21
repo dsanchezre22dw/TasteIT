@@ -17,7 +17,7 @@ function BlockUser({blocked, follower_id, width}) {
   return (
     <button type="button" className="flex items-center" onClick={save}>
       <img
-        src={data.blocked ? "/assets/img/unblock.png" : "/assets/img/block.png"}
+        src={data.blocked ? "/assets/img/profile/unblock.png" : "/assets/img/profile/block.png"}
         alt="Block/unblock"
         width={width}
       />

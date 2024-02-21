@@ -155,7 +155,7 @@ export function SeeRecipe({auth, recipe, savedRecipesIds, successMessage}) {
   return (
     <>
       <Dashboard auth={auth}>
-        <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
+        <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/assets/img/backgrounds/background-image.png')] bg-cover	bg-center">
         
           <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
         </div>

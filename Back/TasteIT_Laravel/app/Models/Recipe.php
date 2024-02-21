@@ -14,6 +14,7 @@ class Recipe extends Model
         'description',
         'duration_mins',
         'difficulty',
+        'rating',
         'user_id',
     ];
     

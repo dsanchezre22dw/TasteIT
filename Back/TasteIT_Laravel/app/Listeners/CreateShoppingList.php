@@ -22,10 +22,6 @@ class CreateShoppingList
      */
     public function handle(CreatedUser $event): void
     {
-        $shopping_list = Shopping_list::create([
-            'user_id' => $event->user->id,
-        ]);
-
-        $event->user->update(['shopping_list_id' => $shopping_list->id]);
+        $event->user->shopping_list()->create();
     }
 }

@@ -242,7 +242,7 @@ class RecipeController extends Controller
             $imageName = time() . '.' . $file->getClientOriginalExtension();
 
             // Guardar la imagen en la carpeta 'public/img'
-            $file->move(public_path('assets/img/recipes'), $imageName);
+            $file->move(public_path($path), $imageName);
 
             $recipe->image = "/".$path."/".$imageName;
 

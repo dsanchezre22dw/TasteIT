@@ -33,7 +33,7 @@ const UserTableRow = ({ user, num}) => {
     <tr key={user.username}>
       <td className={className}>
         <div className="flex items-center gap-4">
-          <Avatar src="/img/team-2.jpeg" alt={user.username} size="sm" variant="rounded" />
+          <Avatar src={user.profileImg} alt={user.username} size="sm" variant="rounded" />
           <div>
             <Link href={`/dashboard/users/${user.id}`}>
               <Typography variant="small" color="blue-gray" className="font-semibold">

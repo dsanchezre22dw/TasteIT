@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('surname')->nullable();
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('profileImg');
+            $table->string('profileImg')->default("/assets/img/profile/avatars/default_avatar.png");
             $table->enum('type',['standard','chef','admin'])->default('standard');
             $table->boolean('enabled')->default(true);
             $table->rememberToken();

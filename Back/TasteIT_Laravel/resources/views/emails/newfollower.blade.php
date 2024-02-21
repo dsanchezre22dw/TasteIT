@@ -45,7 +45,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="{{ $message->embed(public_path('assets/img/logo.png')) }}" width="200" height="200">
+        <img src="{{ $message->embed(public_path('assets/img/logos/logo.png')) }}" width="200" height="200">
         <h1>¡Nuevo seguidor!</h1>
         <p>Hola,</p>
         <p>¡Te informamos de que el usuario {{$followingUser->username}} ha empezado a seguirte! Esperamos que disfrutes de nuestra comunidad.</p>
