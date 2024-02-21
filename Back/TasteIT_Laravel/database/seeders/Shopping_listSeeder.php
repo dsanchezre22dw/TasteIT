@@ -10,7 +10,7 @@ class Shopping_listSeeder extends Seeder
 {
     public function run()
     {
-        for ($i = 1; $i <= 7; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             Shopping_list::create([
                 'id' => $i,
                 'user_id' => $i+1,

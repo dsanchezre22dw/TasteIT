@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Inertia\Inertia;
+use App\Mail\NewPost;
 use App\Models\Recipe;
-use App\Models\Recipe_type;
 use App\Models\Ingredient;
 use App\Models\Valoration;
+use App\Mail\NewValoration;
+use App\Models\Recipe_type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class RecipeController extends Controller
 {
@@ -136,6 +139,11 @@ class RecipeController extends Controller
             }
         }
 
+        foreach (Auth::user()->followers as $follower) {
+            if ($follower->configuration->post){
+                Mail::to($follower->email)->send(new NewPost);
+            }
+        }
         return redirect()->route('recipes.index')->with('success', ['message' => 'Recipe ' . "'" . $request->title . "'" . ' created successfully', 'type' => 'New recipe']);
     }
 
@@ -183,11 +191,16 @@ class RecipeController extends Controller
         ]);
         
         $user = Auth::user();
+        $recipe = Recipe::findOrFail($request->recipe_id);
 
         if ($user->valorations()->where('recipe_id', $request->recipe_id)->count() > 0){
             $user->valorations()->updateExistingPivot($request->recipe_id, ['valoration'=>$request->rating, 'title'=>$request->title, 'description'=>$request->message]);
         }else{
             $user->valorations()->attach($request->recipe_id, ["valoration" => $request->rating, "title" => $request->title, "description" => $request->message]);  
+        }
+
+        if ($recipe->user->configuration->valorate){
+            Mail::to($recipe->user->email)->send(new NewValoration);
         }
 
         $user->save(); 

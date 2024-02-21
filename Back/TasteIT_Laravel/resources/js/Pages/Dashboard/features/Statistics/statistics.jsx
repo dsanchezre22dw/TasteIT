@@ -148,8 +148,8 @@ export function Statistics({auth}) {
   function setUsersMonthlyChart(data){
     var chartConfig = {
       color: "white",
-      title: "Daily Sales",
-      description: "15% increase in today sales",
+      title: "Monthly users",
+      description: "New users in the last year by month",
       footer: "updated 4 min ago",
       chart: dailySalesChart,
     };
@@ -165,8 +165,8 @@ export function Statistics({auth}) {
   function setRecipesMonthlyChart(data){
     var chartConfig = {
       color: "white",
-      title: "Completed Tasks",
-      description: "Last Campaign Performance",
+      title: "Monthly recipes",
+      description: "New recipes in the last year by month",
       footer: "just updated",
       chart: completedTasksChart,
     };
