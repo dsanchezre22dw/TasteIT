@@ -46,7 +46,7 @@ export function IngredientSection({auth, ingredients}) {
   return (
     <>
       <Dashboard auth={auth}>
-          <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center"> 
+          <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/assets/img/backgrounds/background-image.png')] bg-cover	bg-center"> 
             <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
           </div>
           <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100 rounded-xl">

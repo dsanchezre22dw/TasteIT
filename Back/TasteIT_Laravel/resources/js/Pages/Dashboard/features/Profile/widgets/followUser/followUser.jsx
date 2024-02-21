@@ -17,7 +17,7 @@ function FollowUser({followingIds, following_id, width}) {
   return (
     <button type="button" className="flex items-center" onClick={save}>
       <img
-        src={data.following ? "/assets/img/unfollow.png" : "/assets/img/users.png"}
+        src={data.following ? "/assets/img/profile/unfollow.png" : "/assets/img/landing/users.png"}
         alt="Follow/unfollow"
         width={width}
       />

@@ -65,7 +65,7 @@ export default function Register() {
                         <div className="text-center">
                         <img
                             className="mx-auto w-48 mb-10"
-                            src="/assets/img/logo.png"
+                            src="/assets/img/logos/logo.png"
                             alt="logo"
                         />
 
@@ -210,7 +210,7 @@ export default function Register() {
                     className="flex items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none"
                     style={{
                         backgroundImage:
-                        `url("/assets/img/background_register.jpg")`,
+                        `url("/assets/img/auth/background_register.jpg")`,
                         backgroundSize: 'cover',
                     }}
                     >

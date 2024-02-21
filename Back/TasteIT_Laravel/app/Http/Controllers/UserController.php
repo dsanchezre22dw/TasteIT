@@ -235,7 +235,7 @@ class UserController extends Controller
                     'followingUser' => $user,
                 ];
 
-                Mail::to("dsanchezre22dw@ikzubirimanteo.com")->send(new NewFollower($data));
+                Mail::to($followingUser->email)->send(new NewFollower($data));
             }
         }else{
             $user->following()->detach($following_id);
@@ -300,10 +300,10 @@ class UserController extends Controller
 
     public function getTopUsers()
     {
-        $lastMonth = Carbon::now()->subMonth();
+        $lastYear = Carbon::now()->subYear();
     
         // Subconsulta para obtener el total de recetas en el último mes
-        $totalRecipesLastMonth = Recipe::where('created_at', '>=', $lastMonth)->count();
+        $totalRecipesLastYear = Recipe::where('created_at', '>=', $lastYear)->count();
     
         // Consulta para obtener los usuarios y contar cuántas recetas han subido en el último mes
         $topUsers = User::select(
@@ -311,10 +311,10 @@ class UserController extends Controller
                 'users.username',
                 'users.profileImg',
                 DB::raw('COUNT(recipes.id) as recipes_count'),
-                DB::raw("ROUND(COUNT(recipes.id) / $totalRecipesLastMonth * 100, 2) as recipes_percentage")
+                DB::raw("ROUND(COUNT(recipes.id) / $totalRecipesLastYear * 100, 2) as recipes_percentage")
             )
             ->leftJoin('recipes', 'users.id', '=', 'recipes.user_id')
-            ->where('recipes.created_at', '>=', $lastMonth)
+            ->where('recipes.created_at', '>=', $lastYear)
             ->groupBy('users.id', 'users.username', 'users.profileImg')
             ->orderByDesc('recipes_count')
             ->limit(10)

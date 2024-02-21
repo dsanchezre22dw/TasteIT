@@ -25,10 +25,7 @@ const Gallery = ()=>{
                       <h3 className="food-rating">
                         <span>4</span>
                         <div className="rating">
-                          <ion-icon name="star"></ion-icon>
-                          <ion-icon name="star"></ion-icon>
-                          <ion-icon name="star"></ion-icon>
-                          <ion-icon name="star"></ion-icon>
+                          <StarRating count={3} />
                         </div>
                       </h3>
                     </div>
@@ -187,6 +184,16 @@ const Gallery = ()=>{
         </div>
       </section>
     );
+}
+
+function StarRating({ count }) {
+  const generateStars = () => {
+    return Array.from({ length: count }, (_, index) => (
+      <ion-icon key={index} name="star"></ion-icon>
+    ));
+  };
+
+  return (generateStars());
 }
 
 export default Gallery;

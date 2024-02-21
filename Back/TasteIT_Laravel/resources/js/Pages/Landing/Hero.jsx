@@ -21,7 +21,7 @@ const Hero = ()=>{
             </div>
           </div>
           <div className="a col-lg-5 order-1 order-lg-2 text-center text-lg-start">
-            <img id="david" src="assets/img/hero-img.png" className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300"/>
+            <img id="david" src="assets/img/landing/hero-img.png" className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300"/>
           </div>
         </div>
       </div>

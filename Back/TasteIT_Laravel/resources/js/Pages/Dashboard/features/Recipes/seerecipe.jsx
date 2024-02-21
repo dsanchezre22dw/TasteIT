@@ -69,7 +69,7 @@ export function SeeRecipe({auth, recipe, savedRecipesIds, successMessage}) {
 
     http.open('GET', url);
 
-    http.setRequestHeader('X-RapidAPI-Key', 'd053a50a43mshd0f510119c71772p171242jsnc8753e52914d');
+    http.setRequestHeader('X-RapidAPI-Key', 'c806b15753mshe18ba4ea4b7846dp19c891jsnae02bf7926dd');
     http.setRequestHeader('X-RapidAPI-Host', 'google-translate1.p.rapidapi.com');
 
     http.send(null);
@@ -155,7 +155,7 @@ export function SeeRecipe({auth, recipe, savedRecipesIds, successMessage}) {
   return (
     <>
       <Dashboard auth={auth}>
-        <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
+        <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/assets/img/backgrounds/background-image.png')] bg-cover	bg-center">
         
           <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
         </div>

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('recipe_type_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
+            $table->unique(['recipe_id', 'recipe_type_id']);
+
         });
     }
 

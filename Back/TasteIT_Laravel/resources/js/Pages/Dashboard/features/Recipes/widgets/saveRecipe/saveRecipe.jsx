@@ -17,7 +17,7 @@ function SaveRecipe({savedRecipesIds, recipe_id, width}) {
   return (
     <button type="button" className="flex items-center" onClick={save}>
       <img
-        src={data.saved ? "/assets/img/saved.png" : "/assets/img/unsaved.png"}
+        src={data.saved ? "/assets/img/profile/saved.png" : "/assets/img/profile/unsaved.png"}
         alt="Guardar/No guardar"
         width={width}
       />

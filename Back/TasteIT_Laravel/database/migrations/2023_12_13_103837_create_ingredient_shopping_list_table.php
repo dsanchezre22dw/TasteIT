@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('ingredient_shopping_list', function (Blueprint $table) {
             $table->foreignId('ingredient_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('shopping_list_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->integer('amount');
-
+            $table->integer('amount')->default(1);
             $table->timestamps();
+            $table->unique(['shopping_list_id', 'ingredient_id']);
         });
     }
 

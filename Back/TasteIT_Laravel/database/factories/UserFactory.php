@@ -33,6 +33,9 @@ class UserFactory extends Factory
             'email' => $this->faker->email(),
             'password' => 'changeme1A',
             'enabled' => true,
+            'shopping_list_id' => null,
+            'fridge_id' => null,
+            'configuration_id' => null,
         ];
     }
 

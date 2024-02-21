@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('followed_id');
             $table->unsignedBigInteger('follower_id');
 
-            $table->foreign('followed_id')->references('id')->on('users');
-            $table->foreign('follower_id')->references('id')->on('users');
+            $table->foreign('followed_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('follower_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 
             $table->unique(['followed_id', 'follower_id']);
 

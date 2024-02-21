@@ -54,12 +54,12 @@ class ProfileController extends Controller
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $path = 'assets/img/recipes';
+            $path = 'assets/img/profile/avatars';
 
             $imageName = time() . '.' . $file->getClientOriginalExtension();
 
             // Guardar la imagen en la carpeta 'public/img'
-            $file->move(public_path('assets/img/recipes'), $imageName);
+            $file->move(public_path($path), $imageName);
 
             $user->profileImg = "/".$path."/".$imageName;
         }

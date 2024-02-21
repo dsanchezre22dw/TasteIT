@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('description',1024);
             $table->integer('duration_mins');
             $table->enum('difficulty',['beginner','medium','expert']);
-            $table->string('image')->nullable(); 
-            
+            $table->decimal('rating', 8, 2)->default(0)->nullable(); // 'rating' como valor decimal con 2 decimales
+            $table->string('image'); 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

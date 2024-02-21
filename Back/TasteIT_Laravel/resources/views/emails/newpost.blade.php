@@ -45,7 +45,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="{{ $message->embed(public_path('assets/img/logo.png')) }}" width="200" height="200">
+        <img src="{{ $message->embed(public_path('assets/img/logos/logo.png')) }}" width="200" height="200">
         <h1>Nueva receta de alguien que sigues</h1> <!-- Cambio de título -->
         <p>Hola,</p>
         <p>¡Te informamos de que alguien a quien sigues ha subido una nueva receta! Esperamos que te resulte interesante y deliciosa.</p> <!-- Cambio de texto -->

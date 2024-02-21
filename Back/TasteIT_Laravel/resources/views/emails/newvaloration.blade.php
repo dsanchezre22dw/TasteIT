@@ -45,7 +45,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="{{ $message->embed(public_path('assets/img/logo.png')) }}" width="200" height="200">
+        <img src="{{ $message->embed(public_path('assets/img/logos/logo.png')) }}" width="200" height="200">
         <h1>¡Nueva valoración!</h1> <!-- Cambio de título -->
         <p>Hola,</p>
         <p>¡Te informamos de que una de tus recetas ha sido valorada por un usuario! Esperamos que sigas compartiendo tus deliciosas recetas con nuestra comunidad.</p> <!-- Cambio de texto -->

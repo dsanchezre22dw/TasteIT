@@ -69,5 +69,7 @@ class User extends AuthenticatableUser implements MustVerifyEmail
         return $this->belongsTo('App\Models\Configuration');
     }
 
-
+    public function chef_detail() {
+        return $this->hasOne('App\Models\Chef_detail');
+    }
 }
