@@ -13,7 +13,7 @@ function ValorationCard({ user }) {
     <div className="border rounded-lg bg-red-100 p-5">
 
       <div className="flex items-center mb-2 gap-2">
-        <Avatar src="/img/team-2.jpeg" size="sm" variant="rounded" />
+        <Avatar src={user.profileImg} size="sm" variant="rounded" />
         <Typography
           variant="h6"
         >
